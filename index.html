@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YPO Atlantic 13 — Member Calendar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:       #1B2851;
+      --navy-dk:    #111c3d;
+      --navy-lt:    #253568;
+      --gold:       #C9A84C;
+      --gold-lt:    #e2c06c;
+      --gold-pale:  #f5edd8;
+      --cream:      #faf8f4;
+      --white:      #ffffff;
+      --text:       #1a1a2e;
+      --muted:      #777;
+      --border:     rgba(201,168,76,.18);
+      --shadow:     0 4px 24px rgba(17,28,61,.09);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+    /* ── LOCK SCREEN ─────────────────────────────────── */
+    #lockScreen {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(150deg, var(--navy-dk) 0%, var(--navy) 55%, #1e3260 100%);
+      padding: 2rem;
+    }
+    .lock-ornament {
+      width: 48px; height: 48px; border: 1px solid rgba(201,168,76,.4);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .lock-ornament svg { opacity: .7; }
+    .lock-eyebrow {
+      font-size: .7rem; font-weight: 500; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--gold); text-align: center; margin-bottom: .6rem;
+    }
+    .lock-title {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 3.2rem;
+      color: var(--white); text-align: center; line-height: 1.05; letter-spacing: .01em;
+    }
+    .lock-subtitle {
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem;
+      color: rgba(255,255,255,.5); text-align: center; margin-top: .4rem;
+    }
+    .lock-rule {
+      width: 48px; height: 1px; background: var(--gold); opacity: .45; margin: 2rem auto;
+    }
+    .lock-card {
+      width: 100%; max-width: 360px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(201,168,76,.22);
+      border-radius: 4px; padding: 2.25rem;
+      backdrop-filter: blur(12px);
+    }
+    .lock-label {
+      display: block; font-size: .66rem; font-weight: 500; letter-spacing: .2em;
+      text-transform: uppercase; color: rgba(255,255,255,.45); margin-bottom: .7rem;
+    }
+    .lock-input {
+      width: 100%; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14); border-radius: 2px;
+      padding: .8rem 1rem; font-family: 'Outfit', sans-serif; font-size: .95rem;
+      color: var(--white); outline: none; letter-spacing: .12em;
+      transition: border-color .2s;
+    }
+    .lock-input:focus { border-color: var(--gold); }
+    .lock-input::placeholder { color: rgba(255,255,255,.22); letter-spacing: .06em; }
+    .lock-error { color: #ff7b7b; font-size: .74rem; min-height: 1.3em; margin-top: .45rem; letter-spacing: .01em; }
+    .btn-enter {
+      width: 100%; margin-top: 1.4rem; background: var(--gold); color: var(--navy-dk);
+      border: none; border-radius: 2px; padding: .85rem 1rem; font-family: 'Outfit', sans-serif;
+      font-size: .72rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+      cursor: pointer; transition: background .2s, transform .1s;
+    }
+    .btn-enter:hover { background: var(--gold-lt); }
+    .btn-enter:active { transform: scale(.98); }
+    .lock-footer {
+      margin-top: 3rem; text-align: center; font-size: .65rem; letter-spacing: .1em;
+      text-transform: uppercase; color: rgba(255,255,255,.2);
+    }
+
+    /* ── APP SHELL ───────────────────────────────────── */
+    #app { display: none; flex-direction: column; min-height: 100vh; }
+
+    /* Header */
+    .hdr {
+      background: var(--navy); color: var(--white); height: 66px;
+      padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(201,168,76,.2);
+      position: sticky; top: 0; z-index: 200;
+    }
+    .hdr-brand { display: flex; flex-direction: column; }
+    .hdr-org {
+      font-size: .6rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: .1rem;
+    }
+    .hdr-chapter {
+      font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.3rem;
+      color: var(--white); letter-spacing: .03em;
+    }
+    .hdr-right { display: flex; align-items: center; gap: .875rem; }
+    .view-toggle {
+      display: flex; background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12); border-radius: 3px; overflow: hidden;
+    }
+    .view-btn {
+      background: none; border: none; padding: .42rem .9rem; cursor: pointer;
+      font-family: 'Outfit', sans-serif; font-size: .68rem; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.48);
+      display: flex; align-items: center; gap: .35rem; transition: all .2s;
+    }
+    .view-btn.active { background: var(--gold); color: var(--navy-dk); }
+    .view-btn:not(.active):hover { color: rgba(255,255,255,.8); }
+    .btn-out {
+      background: none; border: 1px solid rgba(201,168,76,.35); border-radius: 2px;
+      padding: .38rem .85rem; font-family: 'Outfit', sans-serif; font-size: .66rem;
+      font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.55); cursor: pointer; transition: all .2s;
+    }
+    .btn-out:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Sub-header */
+    .sub-hdr {
+      background: var(--white); border-bottom: 1px solid rgba(0,0,0,.06);
+      padding: 0 2.5rem; display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem; min-height: 50px;
+      flex-wrap: wrap;
+    }
+    .filters { display: flex; gap: .2rem; flex-wrap: wrap; }
+    .filter-btn {
+      background: none; border: 1px solid transparent; border-radius: 2px;
+      padding: .3rem .8rem; font-family: 'Outfit', sans-serif; font-size: .68rem;
+      font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; transition: all .2s;
+    }
+    .filter-btn:hover { color: var(--navy); border-color: rgba(27,40,81,.2); }
+    .filter-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .month-nav { display: flex; align-items: center; gap: .6rem; }
+    .month-nav-label {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600;
+      color: var(--navy); min-width: 170px; text-align: center;
+    }
+    .month-nav-btn {
+      background: none; border: 1px solid rgba(27,40,81,.2); border-radius: 2px;
+      width: 27px; height: 27px; cursor: pointer; color: var(--navy); font-size: 1rem;
+      display: flex; align-items: center; justify-content: center; transition: all .2s;
+    }
+    .month-nav-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+    /* Main */
+    .main { flex: 1; padding: 1.75rem 2.5rem; max-width: 1280px; margin: 0 auto; width: 100%; }
+
+    /* ── CALENDAR ────────────────────────────────────── */
+    .cal-grid {
+      background: var(--white); border: 1px solid rgba(0,0,0,.06);
+      border-radius: 4px; overflow: hidden; box-shadow: var(--shadow);
+    }
+    .cal-wkdays { display: grid; grid-template-columns: repeat(7, 1fr); background: var(--navy); }
+    .cal-wkday {
+      padding: .55rem; text-align: center; font-size: .62rem; font-weight: 500;
+      letter-spacing: .17em; text-transform: uppercase; color: rgba(255,255,255,.55);
+    }
+    .cal-cells { display: grid; grid-template-columns: repeat(7, 1fr); }
+    .cal-cell {
+      min-height: 96px; border-right: 1px solid rgba(0,0,0,.045);
+      border-bottom: 1px solid rgba(0,0,0,.045); padding: .45rem .4rem; position: relative;
+    }
+    .cal-cell:nth-child(7n) { border-right: none; }
+    .cal-cell.other-mo { background: #f7f7f5; }
+    .cal-cell.is-today { background: #fffdf4; }
+    .cal-num {
+      font-size: .75rem; font-weight: 500; color: var(--muted); margin-bottom: .2rem;
+      display: inline-block;
+    }
+    .cal-cell.is-today .cal-num {
+      background: var(--gold); color: var(--white); border-radius: 50%;
+      width: 21px; height: 21px; display: inline-flex; align-items: center;
+      justify-content: center; font-size: .68rem;
+    }
+    .cal-chip {
+      display: block; border-radius: 2px; padding: .13rem .3rem;
+      font-size: .6rem; font-weight: 500; margin-bottom: .12rem; cursor: pointer;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transition: opacity .15s, filter .15s; color: var(--white);
+    }
+    .cal-chip:hover { filter: brightness(1.15); }
+    .cal-chip.social    { background: #2a4a8a; }
+    .cal-chip.education { background: #1B2851; }
+    .cal-chip.business  { background: #46286e; }
+    .cal-chip.family    { background: #1e5c42; }
+
+    /* ── LIST VIEW ───────────────────────────────────── */
+    .list-wrap { display: flex; flex-direction: column; }
+    .list-mo-hdr {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400;
+      color: var(--navy); padding: 1.5rem 0 .6rem; border-bottom: 1px solid var(--border);
+      letter-spacing: .02em; margin-top: .25rem;
+    }
+    .list-mo-hdr:first-child { padding-top: 0; }
+    .list-card {
+      background: var(--white); border: 1px solid rgba(0,0,0,.055); border-radius: 3px;
+      padding: 1rem 1.25rem 1rem 1.5rem; display: flex; gap: 1.25rem;
+      align-items: flex-start; cursor: pointer; margin-bottom: .5rem; margin-top: .5rem;
+      transition: box-shadow .2s, border-color .2s; position: relative; overflow: hidden;
+    }
+    .list-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    }
+    .list-card.social::before    { background: #2a4a8a; }
+    .list-card.education::before { background: var(--navy); }
+    .list-card.business::before  { background: #46286e; }
+    .list-card.family::before    { background: #1e5c42; }
+    .list-card:hover { border-color: rgba(201,168,76,.4); box-shadow: 0 3px 16px rgba(27,40,81,.08); }
+    .list-date-col { min-width: 56px; text-align: center; }
+    .list-date-day {
+      font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600;
+      color: var(--navy); line-height: 1;
+    }
+    .list-date-mo {
+      font-size: .62rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); margin-top: .1rem;
+    }
+    .list-date-range {
+      font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 600;
+      color: var(--navy); line-height: 1.35; text-align: left;
+    }
+    .list-info { flex: 1; }
+    .list-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600;
+      color: var(--navy); margin-bottom: .3rem; line-height: 1.3;
+    }
+    .list-meta { display: flex; flex-wrap: wrap; gap: .6rem .85rem; font-size: .76rem; color: var(--muted); }
+    .list-meta-item { display: flex; align-items: center; gap: .3rem; }
+    .type-badge {
+      font-size: .6rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      padding: .15rem .5rem; border-radius: 2px;
+    }
+    .type-badge.social    { background: rgba(42,74,138,.1);  color: #2a4a8a; }
+    .type-badge.education { background: rgba(27,40,81,.1);   color: var(--navy); }
+    .type-badge.business  { background: rgba(70,40,110,.1);  color: #46286e; }
+    .type-badge.family    { background: rgba(30,92,66,.1);   color: #1e5c42; }
+    .cat-pill {
+      font-size: .6rem; color: var(--muted); border: 1px solid rgba(0,0,0,.12);
+      padding: .12rem .4rem; border-radius: 2px; letter-spacing: .05em;
+    }
+    .empty {
+      text-align: center; padding: 4rem 2rem;
+    }
+    .empty h3 {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+      color: var(--navy); margin-bottom: .5rem;
+    }
+    .empty p { font-size: .85rem; color: var(--muted); }
+
+    /* ── MODAL ───────────────────────────────────────── */
+    .overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(17,28,61,.55); z-index: 1000;
+      align-items: center; justify-content: center;
+      padding: 1rem; backdrop-filter: blur(5px);
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 4px;
+      max-width: 580px; width: 100%; max-height: 88vh; overflow-y: auto;
+      position: relative; box-shadow: 0 20px 60px rgba(17,28,61,.3);
+    }
+    .modal-hdr {
+      background: var(--navy); padding: 1.6rem 1.75rem 1.4rem;
+      position: relative;
+    }
+    .modal-eyebrow {
+      font-size: .62rem; font-weight: 500; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: .5rem;
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: 1.75rem; color: var(--white); line-height: 1.2;
+      padding-right: 2rem;
+    }
+    .modal-close {
+      position: absolute; top: 1.1rem; right: 1.1rem;
+      background: rgba(255,255,255,.1); border: none; color: rgba(255,255,255,.65);
+      width: 28px; height: 28px; border-radius: 2px; cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center; transition: all .2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,.2); color: var(--white); }
+    .modal-body { padding: 1.5rem 1.75rem; }
+    .modal-meta-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .modal-meta-item { display: flex; flex-direction: column; gap: .18rem; }
+    .modal-meta-lbl {
+      font-size: .6rem; font-weight: 500; letter-spacing: .17em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .modal-meta-val { font-size: .88rem; color: var(--text); font-weight: 400; line-height: 1.4; }
+    .modal-desc {
+      font-size: .875rem; line-height: 1.75; color: #555;
+      border-top: 1px solid rgba(0,0,0,.07); padding-top: 1.25rem; margin-bottom: 1.5rem;
+    }
+    .modal-desc p + p { margin-top: .75rem; }
+    .modal-desc h4 {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--navy);
+      margin-top: 1.1rem; margin-bottom: .3rem; font-weight: 600;
+    }
+    .modal-desc ul { padding-left: 1.2rem; }
+    .modal-desc li { margin-bottom: .25rem; }
+    .btn-gcal {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      width: 100%; background: var(--gold); color: var(--navy-dk); border: none;
+      border-radius: 2px; padding: .85rem; font-family: 'Outfit', sans-serif;
+      font-size: .7rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer; transition: background .2s;
+    }
+    .btn-gcal:hover { background: var(--gold-lt); }
+    .modal-nodesc { padding-bottom: 0; }
+
+    /* ── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 680px) {
+      .hdr { padding: 0 1rem; }
+      .sub-hdr { padding: 0 1rem; }
+      .main { padding: 1rem; }
+      .hdr-chapter { font-size: 1.1rem; }
+      .cal-cell { min-height: 62px; }
+      .cal-chip { font-size: .52rem; }
+      .modal-meta-grid { grid-template-columns: 1fr; }
+      .month-nav-label { min-width: 130px; font-size: .9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ LOCK SCREEN ══════════════════ -->
+<div id="lockScreen">
+  <div class="lock-ornament">
+    <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
+      <rect x="3" y="9" width="12" height="10" rx="1.5" stroke="#C9A84C" stroke-width="1.5"/>
+      <path d="M5 9V6a4 4 0 0 1 8 0v3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="9" cy="14" r="1.5" fill="#C9A84C"/>
+    </svg>
+  </div>
+  <div class="lock-eyebrow">Young Presidents' Organization</div>
+  <h1 class="lock-title">Atlantic 13</h1>
+  <p class="lock-subtitle">Member Event Calendar · FY 2026–2027</p>
+  <div class="lock-rule"></div>
+  <div class="lock-card">
+    <label class="lock-label" for="pwInput">Chapter Password</label>
+    <input class="lock-input" type="password" id="pwInput" placeholder="••••••••••" autocomplete="off">
+    <div class="lock-error" id="lockErr" aria-live="polite"></div>
+    <button class="btn-enter" onclick="tryLogin()">Enter</button>
+  </div>
+  <div class="lock-footer">Members only &nbsp;·&nbsp; View only</div>
+</div>
+
+<!-- ══════════════════ APP ══════════════════ -->
+<div id="app">
+  <header class="hdr">
+    <div class="hdr-brand">
+      <span class="hdr-org">Young Presidents' Organization</span>
+      <span class="hdr-chapter">Atlantic 13 Chapter</span>
+    </div>
+    <div class="hdr-right">
+      <div class="view-toggle">
+        <button class="view-btn active" id="btnCal" onclick="setView('cal')">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor">
+            <rect x="0" y="0" width="4.5" height="4.5" rx=".5"/>
+            <rect x="6.5" y="0" width="4.5" height="4.5" rx=".5"/>
+            <rect x="0" y="6.5" width="4.5" height="4.5" rx=".5"/>
+            <rect x="6.5" y="6.5" width="4.5" height="4.5" rx=".5"/>
+          </svg>
+          Calendar
+        </button>
+        <button class="view-btn" id="btnList" onclick="setView('list')">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="currentColor">
+            <rect x="0" y="0" width="11" height="1.8" rx=".4"/>
+            <rect x="0" y="3.6" width="11" height="1.8" rx=".4"/>
+            <rect x="0" y="7.2" width="11" height="1.8" rx=".4"/>
+          </svg>
+          List
+        </button>
+      </div>
+      <button class="btn-out" onclick="signOut()">Sign Out</button>
+    </div>
+  </header>
+
+  <div class="sub-hdr">
+    <div class="filters" id="filterRow">
+      <button class="filter-btn active" data-f="all"       onclick="setFilter('all')">All Events</button>
+      <button class="filter-btn"        data-f="social"    onclick="setFilter('social')">Social</button>
+      <button class="filter-btn"        data-f="education" onclick="setFilter('education')">Education</button>
+      <button class="filter-btn"        data-f="business"  onclick="setFilter('business')">Business</button>
+      <button class="filter-btn"        data-f="family"    onclick="setFilter('family')">Family</button>
+    </div>
+    <div class="month-nav" id="monthNav">
+      <button class="month-nav-btn" onclick="stepMonth(-1)">&#8249;</button>
+      <span class="month-nav-label" id="monthLabel"></span>
+      <button class="month-nav-btn" onclick="stepMonth(1)">&#8250;</button>
+    </div>
+  </div>
+
+  <main class="main">
+    <div id="calView"></div>
+    <div id="lstView" style="display:none"></div>
+  </main>
+</div>
+
+<!-- ══════════════════ MODAL ══════════════════ -->
+<div class="overlay" id="overlay" onclick="overlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-hdr">
+      <div class="modal-eyebrow" id="mEyebrow"></div>
+      <div class="modal-title"   id="mTitle"></div>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta-grid">
+        <div class="modal-meta-item">
+          <span class="modal-meta-lbl">Date</span>
+          <span class="modal-meta-val" id="mDate"></span>
+        </div>
+        <div class="modal-meta-item">
+          <span class="modal-meta-lbl">Location</span>
+          <span class="modal-meta-val" id="mLoc"></span>
+        </div>
+        <div class="modal-meta-item">
+          <span class="modal-meta-lbl">Day Chair</span>
+          <span class="modal-meta-val" id="mChair"></span>
+        </div>
+        <div class="modal-meta-item">
+          <span class="modal-meta-lbl">Event Type</span>
+          <span class="modal-meta-val" id="mType"></span>
+        </div>
+      </div>
+      <div class="modal-desc" id="mDesc"></div>
+      <a class="btn-gcal" id="mGcal" href="#" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/>
+        </svg>
+        Add to Google Calendar
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ───────────────────────────────────────────────────
+   EVENT DATA — sourced from Google Drive
+   File: YPO A13 Learning Calendar Data (FY27)
+   Folder: 1-i_-By_G62x-A0W2oTuTtCQzg0ioBV9B
+─────────────────────────────────────────────────── */
+const EVENTS = [
+  {
+    id: 1,
+    title: "US Open",
+    label: "Aug 31 – Sep 1, 2026",
+    start: "2026-08-31",
+    end:   "2026-09-01",
+    monthOnly: false,
+    location: "New York, NY",
+    chair: "Raghav",
+    category: "Core Event",
+    type: "social",
+    desc: ""
+  },
+  {
+    id: 2,
+    title: "Inside the FBI: Leadership Under Pressure",
+    label: "October 13, 2026",
+    start: "2026-10-13",
+    end:   "2026-10-13",
+    monthOnly: false,
+    location: "Washington, DC",
+    chair: "Mark Stephenson",
+    category: "Core Event",
+    type: "education",
+    desc: `<p>Step inside the FBI for an unprecedented leadership immersion focused on decision-making under pressure. Participants will explore how the FBI leads during complex crises, through tours, case briefings, and direct dialogue with senior executives.</p>
+<p>Attendees will visit the Director's Strategic Intelligence Center (DSIC) and The FBI Experience, take part in a real-world counterintelligence case briefing, and join a Senior Executive Panel on leadership and resilience in high-stakes environments.</p>
+<h4>Learning Objectives</h4>
+<ul>
+<li>Understand leadership decision-making in times of crisis.</li>
+<li>Learn how the FBI coordinates intelligence and operations under pressure.</li>
+<li>Examine real counterintelligence cases relevant to the private sector.</li>
+<li>Engage with senior FBI executives on resilience, teamwork, and leadership.</li>
+</ul>`
+  },
+  {
+    id: 3,
+    title: "Holiday Party",
+    label: "December 1, 2026",
+    start: "2026-12-01",
+    end:   "2026-12-01",
+    monthOnly: false,
+    location: "New York, NY",
+    chair: "Jacqueline Lane",
+    category: "Core Event",
+    type: "social",
+    desc: ""
+  },
+  {
+    id: 4,
+    title: "Boston — MIT / HBS",
+    label: "February 2027",
+    start: "2027-02-01",
+    end:   "2027-02-28",
+    monthOnly: true,
+    location: "Boston, MA",
+    chair: "Max Winthrop & Tara Fung",
+    category: "Core Event",
+    type: "education",
+    desc: "<p>Chapter learning experience hosted at MIT and Harvard Business School in Boston. Exact dates to be confirmed.</p>"
+  },
+  {
+    id: 5,
+    title: "Spain",
+    label: "May 12–16, 2027",
+    start: "2027-05-12",
+    end:   "2027-05-16",
+    monthOnly: false,
+    location: "Valencia, Spain",
+    chair: "Richard",
+    category: "Core Event",
+    type: "social",
+    desc: "<p>Multi-day international chapter experience in Valencia, Spain. Note: May 16 is the departure day.</p>"
+  },
+  {
+    id: 6,
+    title: "Family Governance",
+    label: "November 12, 2026",
+    start: "2026-11-12",
+    end:   "2026-11-12",
+    monthOnly: false,
+    location: "Virtual",
+    chair: "William Tenenbaum",
+    category: "Virtual Event",
+    type: "family",
+    desc: ""
+  },
+  {
+    id: 7,
+    title: "Scale",
+    label: "January 2027",
+    start: "2027-01-01",
+    end:   "2027-01-31",
+    monthOnly: true,
+    location: "Virtual",
+    chair: "MichaelAaron Flicker",
+    category: "Virtual Event",
+    type: "business",
+    desc: ""
+  },
+  {
+    id: 8,
+    title: "Capital Allocation",
+    label: "March 2027",
+    start: "2027-03-01",
+    end:   "2027-03-31",
+    monthOnly: true,
+    location: "Virtual",
+    chair: "Asif Zaman",
+    category: "Virtual Event",
+    type: "business",
+    desc: ""
+  },
+  {
+    id: 9,
+    title: "Management System",
+    label: "April 2027",
+    start: "2027-04-01",
+    end:   "2027-04-30",
+    monthOnly: true,
+    location: "Virtual",
+    chair: "Andrew Halliday",
+    category: "Virtual Event",
+    type: "business",
+    desc: ""
+  },
+  {
+    id: 10,
+    title: "AI Show & Tell",
+    label: "June 2027",
+    start: "2027-06-01",
+    end:   "2027-06-30",
+    monthOnly: true,
+    location: "Virtual",
+    chair: "Tara Fung",
+    category: "Virtual Event",
+    type: "education",
+    desc: ""
+  },
+  {
+    id: 11,
+    title: "Family Farm Day",
+    label: "September 26, 2026",
+    start: "2026-09-26",
+    end:   "2026-09-26",
+    monthOnly: false,
+    location: "Chatsworth, NJ",
+    chair: "William Tenenbaum & Victoria Bowley",
+    category: "Optional Event",
+    type: "family",
+    desc: `<p><strong>Berry Good Health: Cranberries, Chocolate &amp; Wellness</strong></p>
+<p>New Jersey is a leading cranberry-producing state. Join us at Lee Brothers Cranberry Bog in Chatsworth — New Jersey's largest Ocean Spray supplier — for a wellness-focused farm day during peak harvest season.</p>
+<p>The 1,800-acre, family-owned farm has been operated by three generations since 1868, growing cranberries on 135 acres with the remaining land preserved as an active watershed. Lee family owners Jenn and Steven Lee III will provide a personal tour of their operations.</p>
+<p>Enjoy a sandwich picnic and blueberry/cranberry treats, observe the peak harvest, and take home berry-inspired gift bags. Learn about the health benefits of cranberries from Dr. Deena Adimoolam (primary care &amp; endocrinology) and Heather Robbie (weight management expert). For a sweet finale, 2 Chicks with Chocolate will host a hands-on chocolate-making table.</p>
+<p><em>Note: This tour includes walking up to ¾ mile over unpaved gravel roadways, some of which may be wet. Comfortable, appropriate footwear is required.</em></p>`
+  },
+  {
+    id: 12,
+    title: "Winter Escape",
+    label: "January 2027",
+    start: "2027-01-01",
+    end:   "2027-01-31",
+    monthOnly: true,
+    location: "Vermont",
+    chair: "Chez Perfetto",
+    category: "Optional Event",
+    type: "social",
+    desc: ""
+  },
+  {
+    id: 13,
+    title: "Couples Retreat",
+    label: "April 9–11, 2027",
+    start: "2027-04-09",
+    end:   "2027-04-11",
+    monthOnly: false,
+    location: "Aspen, CO",
+    chair: "Glen Kunofsky",
+    category: "Optional Event",
+    type: "family",
+    desc: ""
+  }
+];
+
+/* ───────────────────────────────────────────────────
+   STATE
+─────────────────────────────────────────────────── */
+const PW = "atlantic13";
+let view   = "cal";
+let filter = "all";
+let calY   = 2026;
+let calM   = 7; // August (0-indexed) — first event month
+
+const MONTHS_LONG  = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MONTHS_SHORT = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const WKDAYS       = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+/* ───────────────────────────────────────────────────
+   AUTH
+─────────────────────────────────────────────────── */
+function tryLogin() {
+  const v = document.getElementById("pwInput").value;
+  if (v === PW) {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("app").style.display = "flex";
+    document.getElementById("app").style.flexDirection = "column";
+    render();
+  } else {
+    document.getElementById("lockErr").textContent = "Incorrect password — please try again.";
+    document.getElementById("pwInput").value = "";
+    document.getElementById("pwInput").focus();
+  }
+}
+
+document.getElementById("pwInput").addEventListener("keydown", e => {
+  document.getElementById("lockErr").textContent = "";
+  if (e.key === "Enter") tryLogin();
+});
+
+function signOut() {
+  document.getElementById("app").style.display = "none";
+  document.getElementById("lockScreen").style.display = "flex";
+  document.getElementById("pwInput").value = "";
+  document.getElementById("lockErr").textContent = "";
+}
+
+/* ───────────────────────────────────────────────────
+   FILTER
+─────────────────────────────────────────────────── */
+function filteredEvents() {
+  return filter === "all" ? EVENTS : EVENTS.filter(e => e.type === filter);
+}
+
+function setFilter(f) {
+  filter = f;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b.dataset.f === f));
+  render();
+}
+
+/* ───────────────────────────────────────────────────
+   VIEW SWITCH
+─────────────────────────────────────────────────── */
+function setView(v) {
+  view = v;
+  document.getElementById("btnCal").classList.toggle("active",  v === "cal");
+  document.getElementById("btnList").classList.toggle("active", v === "list");
+  document.getElementById("calView").style.display  = v === "cal"  ? "block" : "none";
+  document.getElementById("lstView").style.display  = v === "list" ? "block" : "none";
+  document.getElementById("monthNav").style.display = v === "cal"  ? "flex"  : "none";
+  render();
+}
+
+/* ───────────────────────────────────────────────────
+   CALENDAR RENDER
+─────────────────────────────────────────────────── */
+function stepMonth(d) {
+  calM += d;
+  if (calM < 0)  { calM = 11; calY--; }
+  if (calM > 11) { calM = 0;  calY++; }
+  renderCal();
+}
+
+function renderCal() {
+  const evts  = filteredEvents();
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  document.getElementById("monthLabel").textContent = `${MONTHS_LONG[calM]} ${calY}`;
+
+  const firstDOW  = new Date(calY, calM, 1).getDay();
+  const daysInMo  = new Date(calY, calM + 1, 0).getDate();
+  const prevDays  = new Date(calY, calM, 0).getDate();
+  const totalCells = Math.ceil((firstDOW + daysInMo) / 7) * 7;
+
+  let html = `<div class="cal-grid">
+    <div class="cal-wkdays">${WKDAYS.map(d => `<div class="cal-wkday">${d}</div>`).join("")}</div>
+    <div class="cal-cells">`;
+
+  for (let i = 0; i < totalCells; i++) {
+    let day, mo = calM, yr = calY, otherMo = false;
+    if (i < firstDOW) {
+      day = prevDays - firstDOW + i + 1; mo = calM - 1; if (mo < 0) { mo = 11; yr--; } otherMo = true;
+    } else if (i >= firstDOW + daysInMo) {
+      day = i - firstDOW - daysInMo + 1; mo = calM + 1; if (mo > 11) { mo = 0; yr++; } otherMo = true;
+    } else {
+      day = i - firstDOW + 1;
+    }
+
+    const cellDate = new Date(yr, mo, day); cellDate.setHours(0,0,0,0);
+    const isToday  = cellDate.getTime() === today.getTime();
+
+    const chips = evts.filter(ev => {
+      const s = parseDate(ev.start);
+      const e = parseDate(ev.end);
+      if (ev.monthOnly) return cellDate.getTime() === s.getTime();
+      return cellDate >= s && cellDate <= e;
+    });
+
+    html += `<div class="cal-cell${otherMo ? " other-mo" : ""}${isToday ? " is-today" : ""}">
+      <span class="cal-num">${day}</span>
+      ${chips.map(ev => `<span class="cal-chip ${ev.type}" onclick="openModal(${ev.id})">${ev.title}</span>`).join("")}
+    </div>`;
+  }
+
+  html += `</div></div>`;
+  document.getElementById("calView").innerHTML = html;
+}
+
+/* ───────────────────────────────────────────────────
+   LIST RENDER
+─────────────────────────────────────────────────── */
+function renderList() {
+  const evts = filteredEvents().slice().sort((a, b) => a.start.localeCompare(b.start));
+
+  if (!evts.length) {
+    document.getElementById("lstView").innerHTML = `
+      <div class="empty">
+        <h3>No events found</h3>
+        <p>Try selecting a different filter category.</p>
+      </div>`;
+    return;
+  }
+
+  // Group by month
+  const groups = {};
+  evts.forEach(ev => {
+    const d   = parseDate(ev.start);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+    const lbl = `${MONTHS_LONG[d.getMonth()]} ${d.getFullYear()}`;
+    if (!groups[key]) groups[key] = { lbl, evts: [] };
+    groups[key].evts.push(ev);
+  });
+
+  let html = '<div class="list-wrap">';
+  Object.keys(groups).sort().forEach(key => {
+    const g = groups[key];
+    html += `<div class="list-mo-hdr">${g.lbl}</div>`;
+    g.evts.forEach(ev => {
+      const d = parseDate(ev.start);
+      const isRange = ev.start !== ev.end;
+      const dateHtml = (isRange || ev.monthOnly)
+        ? `<div class="list-date-range">${ev.label}</div>`
+        : `<div class="list-date-day">${d.getDate()}</div><div class="list-date-mo">${MONTHS_SHORT[d.getMonth()]}</div>`;
+
+      html += `<div class="list-card ${ev.type}" onclick="openModal(${ev.id})">
+        <div class="list-date-col">${dateHtml}</div>
+        <div class="list-info">
+          <div class="list-title">${ev.title}</div>
+          <div class="list-meta">
+            <span class="list-meta-item">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
+                <path d="M5 0C3.07 0 1.5 1.57 1.5 3.5c0 2.63 3.5 6.5 3.5 6.5s3.5-3.87 3.5-6.5C8.5 1.57 6.93 0 5 0zm0 4.75a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z" fill="currentColor" opacity=".5"/>
+              </svg>
+              ${ev.location}
+            </span>
+            <span class="list-meta-item">Chair: ${ev.chair}</span>
+            <span class="type-badge ${ev.type}">${cap(ev.type)}</span>
+            <span class="cat-pill">${ev.category}</span>
+          </div>
+        </div>
+      </div>`;
+    });
+  });
+  html += "</div>";
+  document.getElementById("lstView").innerHTML = html;
+}
+
+/* ───────────────────────────────────────────────────
+   MODAL
+─────────────────────────────────────────────────── */
+function openModal(id) {
+  const ev = EVENTS.find(e => e.id === id);
+  if (!ev) return;
+
+  document.getElementById("mEyebrow").textContent = `${ev.category}  ·  ${cap(ev.type)}`;
+  document.getElementById("mTitle").textContent   = ev.title;
+  document.getElementById("mDate").textContent    = ev.label;
+  document.getElementById("mLoc").textContent     = ev.location;
+  document.getElementById("mChair").textContent   = ev.chair;
+  document.getElementById("mType").textContent    = cap(ev.type);
+
+  const descEl = document.getElementById("mDesc");
+  if (ev.desc) {
+    descEl.innerHTML = ev.desc;
+    descEl.style.display = "block";
+    descEl.classList.remove("modal-nodesc");
+  } else {
+    descEl.innerHTML = "";
+    descEl.style.display = "none";
+    descEl.classList.add("modal-nodesc");
+  }
+
+  // Google Calendar URL (all-day event)
+  const startFmt  = ev.start.replace(/-/g, "");
+  const endExcl   = nextDay(ev.end).replace(/-/g, "");
+  const gcalText  = encodeURIComponent(ev.title);
+  const gcalLoc   = encodeURIComponent(ev.location);
+  const gcalDesc  = encodeURIComponent(
+    ev.desc ? ev.desc.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim()
+            : `YPO Atlantic 13 — ${ev.category}. Chair: ${ev.chair}`
+  );
+  document.getElementById("mGcal").href =
+    `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${gcalText}&dates=${startFmt}/${endExcl}&location=${gcalLoc}&details=${gcalDesc}`;
+
+  document.getElementById("overlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  document.getElementById("overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function overlayClick(e) {
+  if (e.target === document.getElementById("overlay")) closeModal();
+}
+
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+/* ───────────────────────────────────────────────────
+   HELPERS
+─────────────────────────────────────────────────── */
+function parseDate(s) {
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function nextDay(s) {
+  const d = parseDate(s);
+  d.setDate(d.getDate() + 1);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function render() {
+  if (view === "cal")  renderCal();
+  else                 renderList();
+}
+</script>
+</body>
+</html>
