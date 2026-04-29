@@ -374,6 +374,24 @@ html[data-theme="dark"] .member-name { color: var(--ink); }
   color: var(--ink-3); text-decoration: none; border: 1px solid var(--rule);
   padding: .2rem .5rem; border-radius: 2px; transition: border-color .2s, color .2s; }
 .member-ypo:hover { border-color: var(--harbor); color: var(--harbor); }
+.member-avatar.has-photo { cursor: zoom-in; }
+.member-avatar.has-photo:hover img { opacity: .85; transition: opacity .2s; }
+.photo-overlay { position: fixed; inset: 0; background: rgba(10,34,24,.7); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center; z-index: 1100;
+  opacity: 0; pointer-events: none; transition: opacity .25s; }
+.photo-overlay.show { opacity: 1; pointer-events: all; }
+.photo-lightbox { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.photo-lightbox img { width: min(340px, 80vw); height: min(340px, 80vw); border-radius: 50%;
+  object-fit: cover; object-position: center top; box-shadow: 0 24px 60px rgba(0,0,0,.4);
+  display: block; }
+.photo-lightbox-name { font-family: var(--serif); font-style: italic; font-size: 1.4rem;
+  color: #fff; text-align: center; }
+.photo-lightbox-role { font-family: var(--label); font-size: .65rem; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(255,255,255,.6); text-align: center; margin-top: -.5rem; }
+.photo-lightbox-close { position: fixed; top: 1.5rem; right: 1.5rem; background: none; border: none;
+  color: rgba(255,255,255,.7); font-size: 1.8rem; cursor: pointer; line-height: 1;
+  padding: .25rem .5rem; transition: color .15s; }
+.photo-lightbox-close:hover { color: #fff; }
 
 /* ─── MODAL ─────────────────────────────────────────────── */
 .overlay { display: none; position: fixed; inset: 0; background: rgba(8,18,12,.72);
@@ -589,6 +607,16 @@ html[data-theme="dark"] .member-name { color: var(--ink); }
     <div class="roster-section-label" style="margin-top:.5rem">Members</div>
     <div class="roster-grid" id="rosterGrid"></div>
   </section>
+</div>
+
+<!-- ══ PHOTO LIGHTBOX ══════════════════════════════════════ -->
+<div class="photo-overlay" id="photoOverlay" onclick="closePhotoLightbox(event)">
+  <div class="photo-lightbox" id="photoLightbox">
+    <button class="photo-lightbox-close" onclick="closePhotoLightbox()">&#x2715;</button>
+    <img id="photoLightboxImg" src="" alt="">
+    <div class="photo-lightbox-name" id="photoLightboxName"></div>
+    <div class="photo-lightbox-role" id="photoLightboxRole"></div>
+  </div>
 </div>
 
 <!-- ══ MODAL ══════════════════════════════════════════════ -->
@@ -1228,8 +1256,9 @@ function renderChallenge() {
 function memberCardHtml(m) {
   const userId = m.ypoUrl ? m.ypoUrl.split('/').pop() : null;
   const photoSrc = userId ? `assets/member-photos/${userId}.webp` : null;
+  const role = m.boardRole || "";
   const avatar = photoSrc
-    ? `<div class="member-avatar"><img src="${photoSrc}" alt="${m.name}" onerror="this.parentElement.style.background='${m.color}';this.parentElement.innerHTML='${m.initials}'"></div>`
+    ? `<div class="member-avatar has-photo" onclick="openPhotoLightbox('${photoSrc}','${m.name.replace(/'/g,"\\'")}','${role.replace(/'/g,"\\'")}')"><img src="${photoSrc}" alt="${m.name}" onerror="this.parentElement.classList.remove('has-photo');this.parentElement.style.background='${m.color}';this.parentElement.innerHTML='${m.initials}';this.parentElement.onclick=null"></div>`
     : `<div class="member-avatar" style="background:${m.color}">${m.initials}</div>`;
   return `
 <div class="member-card">
@@ -1320,7 +1349,26 @@ function closeModal() {
 }
 
 function bgClose(e) { if (e.target === document.getElementById("overlay")) closeModal(); }
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+function openPhotoLightbox(src, name, role) {
+  document.getElementById("photoLightboxImg").src = src;
+  document.getElementById("photoLightboxName").textContent = name;
+  document.getElementById("photoLightboxRole").textContent = role;
+  document.getElementById("photoOverlay").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closePhotoLightbox(e) {
+  if (e && e.target === document.getElementById("photoLightbox")) return;
+  document.getElementById("photoOverlay").classList.remove("show");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    closeModal();
+    closePhotoLightbox();
+  }
+});
 
 /* ═══════════════════════════════════════════════════════════
    ICS DOWNLOAD
