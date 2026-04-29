@@ -12,34 +12,25 @@
    TOKENS
 ───────────────────────────────────────────────────────── */
 :root {
-  /* Core palette */
   --navy:        #0A2218;
   --navy-mid:    #0E2D1F;
   --harbor:      #0D9488;
   --ivory:       #F1F7F3;
   --charcoal:    #1A2A1E;
-
-  /* Accent palette */
   --gold:        #22C55E;
   --gold-lt:     #4ADE80;
   --gold-dim:    rgba(34,197,94,.15);
   --cranberry:   #8A1E2D;
   --terracotta:  #B7603B;
   --pine:        #1F4A3C;
-
-  /* Neutrals */
   --white:       #FFFFFF;
   --ink:         #1A2A1E;
   --ink-2:       #3D5246;
   --ink-3:       #7A9A87;
   --rule:        rgba(10,34,24,.1);
-
-  /* Category colors */
   --cat-core:    #0A2218;
   --cat-virtual: #0D9488;
   --cat-opt:     #1F4A3C;
-
-  /* Typography */
   --serif:       'Playfair Display', Georgia, serif;
   --sans:        'Inter', system-ui, sans-serif;
   --label:       'Montserrat', system-ui, sans-serif;
@@ -71,16 +62,15 @@ body {
   flex-direction: column;
   justify-content: center;
   padding: 5rem;
-  border-right: 1px solid rgba(201,162,74,.12);
+  border-right: 1px solid rgba(34,197,94,.1);
   position: relative;
   overflow: hidden;
   background-image:
-    linear-gradient(rgba(34,197,94,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34,197,94,.05) 1px, transparent 1px);
+    linear-gradient(rgba(34,197,94,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,197,94,.045) 1px, transparent 1px);
   background-size: 52px 52px;
 }
 
-/* Radial glow */
 .lock-left::before {
   content: '';
   position: absolute;
@@ -139,7 +129,6 @@ body {
   position: relative;
 }
 
-/* 13-move pip path */
 .lock-path-wrap {
   position: relative;
   display: flex;
@@ -170,13 +159,12 @@ body {
   flex-shrink: 0;
   position: relative;
   z-index: 1;
-  transition: background .2s;
 }
 
 .pip:last-child {
   background: var(--gold);
   width: 10px; height: 10px;
-  box-shadow: 0 0 10px rgba(201,162,74,.55);
+  box-shadow: 0 0 10px rgba(34,197,94,.55);
 }
 
 .lock-pip-label {
@@ -188,7 +176,6 @@ body {
   color: rgba(255,255,255,.2);
 }
 
-/* Lock right — form panel */
 .lock-right {
   width: 420px;
   display: flex;
@@ -210,11 +197,7 @@ body {
   text-align: center;
 }
 
-.lock-field-wrap {
-  width: 100%;
-  position: relative;
-  margin-bottom: .5rem;
-}
+.lock-field-wrap { width: 100%; position: relative; margin-bottom: .5rem; }
 
 .lock-field-label {
   display: block;
@@ -231,7 +214,7 @@ body {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(201,162,74,.3);
+  border-bottom: 1px solid rgba(34,197,94,.3);
   padding: .6rem 0;
   font-family: var(--sans);
   font-size: .95rem;
@@ -286,7 +269,7 @@ body {
 ───────────────────────────────────────────────────────── */
 #app { display: none; flex-direction: column; min-height: 100vh; }
 
-/* Subtle board grid on the page body */
+/* Subtle board grid */
 #app::before {
   content: '';
   position: fixed;
@@ -299,7 +282,7 @@ body {
   z-index: 0;
 }
 
-/* Header */
+/* ─── Header ─── */
 .hdr {
   height: 62px;
   background: var(--white);
@@ -313,11 +296,7 @@ body {
   z-index: 200;
 }
 
-.hdr-brand {
-  display: flex;
-  flex-direction: column;
-  gap: .1rem;
-}
+.hdr-brand { display: flex; flex-direction: column; gap: .1rem; }
 
 .hdr-monogram {
   font-family: var(--serif);
@@ -328,11 +307,7 @@ body {
   line-height: 1;
 }
 
-.hdr-monogram em {
-  font-style: italic;
-  font-weight: 400;
-  color: var(--gold);
-}
+.hdr-monogram em { font-style: italic; font-weight: 400; color: var(--gold); }
 
 .hdr-tagline {
   font-family: var(--label);
@@ -343,37 +318,6 @@ body {
   color: var(--ink-3);
   line-height: 1;
 }
-
-.hdr-right { display: flex; align-items: center; gap: 1.25rem; }
-
-.view-tog {
-  display: flex;
-  gap: .1rem;
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.view-btn {
-  background: none;
-  border: none;
-  padding: .36rem .85rem;
-  font-family: var(--label);
-  font-size: .58rem;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  cursor: pointer;
-  transition: all .2s;
-}
-
-.view-btn.on {
-  background: var(--navy);
-  color: var(--white);
-}
-
-.view-btn:not(.on):hover { color: var(--ink); }
 
 .signout-btn {
   background: none;
@@ -392,74 +336,11 @@ body {
 
 .signout-btn:hover { color: var(--ink); border-bottom-color: var(--rule); }
 
-/* Sub-header */
-.sub {
-  background: var(--white);
-  border-bottom: 1px solid var(--rule);
-  padding: 0 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  min-height: 48px;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 100;
-}
-
-.filters { display: flex; gap: 0; }
-
-.filt-btn {
-  background: none;
-  border: none;
-  font-family: var(--label);
-  font-size: .58rem;
-  font-weight: 600;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  cursor: pointer;
-  padding: .5rem .85rem;
-  border-bottom: 2px solid transparent;
-  transition: color .2s, border-color .2s;
-  white-space: nowrap;
-}
-
-.filt-btn.on { color: var(--ink); border-bottom-color: var(--gold); }
-.filt-btn:not(.on):hover { color: var(--ink-2); }
-
-.mo-nav { display: flex; align-items: center; gap: .7rem; }
-
-.mo-lbl {
-  font-family: var(--serif);
-  font-size: .95rem;
-  font-weight: 500;
-  color: var(--navy);
-  min-width: 172px;
-  text-align: center;
-  letter-spacing: .01em;
-}
-
-.mo-btn {
-  background: none;
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  width: 26px; height: 26px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  color: var(--ink-2);
-  font-size: 1rem;
-  transition: all .2s;
-  flex-shrink: 0;
-}
-
-.mo-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
-
-/* Main */
+/* ─── Main ─── */
 .main {
   flex: 1;
-  padding: 2rem 2.5rem;
-  max-width: 1300px;
+  padding: 2.5rem;
+  max-width: 1080px;
   margin: 0 auto;
   width: 100%;
   position: relative;
@@ -467,273 +348,210 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────
-   CALENDAR
+   EVENT CARDS
 ───────────────────────────────────────────────────────── */
-.cal-wrap {
-  background: var(--white);
-  border: 1px solid var(--rule);
-}
+.ev-list { display: flex; flex-direction: column; }
 
-.cal-head { display: grid; grid-template-columns: repeat(7, 1fr); }
-
-.cal-wd {
-  padding: .55rem .4rem;
-  font-family: var(--label);
-  font-size: .54rem;
-  font-weight: 600;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  text-align: center;
-  border-bottom: 1px solid var(--rule);
-}
-
-.cal-body { display: grid; grid-template-columns: repeat(7, 1fr); }
-
-.cal-cell {
-  min-height: 108px;
-  border-right: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  padding: .5rem .45rem .4rem;
-  position: relative;
-}
-
-.cal-cell:nth-child(7n) { border-right: none; }
-.cal-cell.dim { background: rgba(11,31,51,.018); }
-.cal-cell.today { background: rgba(201,162,74,.04); }
-
-.cal-dn {
-  font-family: var(--sans);
-  font-size: .7rem;
-  font-weight: 400;
-  color: var(--ink-3);
-  display: inline-block;
-  width: 22px; height: 22px;
-  line-height: 22px;
-  text-align: center;
-  margin-bottom: .2rem;
-}
-
-.cal-cell.dim .cal-dn { opacity: .38; }
-
-.cal-cell.today .cal-dn {
-  background: var(--gold);
-  color: var(--white);
-  border-radius: 50%;
-  font-weight: 600;
-}
-
-.cal-ev {
-  display: block;
-  font-family: var(--sans);
-  font-size: .66rem;
-  font-weight: 500;
-  color: var(--white);
-  padding: .15rem .3rem .15rem .35rem;
-  margin-bottom: .18rem;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-left: 2px solid transparent;
-  border-radius: 1px;
-  transition: opacity .15s, filter .15s;
-  line-height: 1.5;
-}
-
-.cal-ev:hover { opacity: .85; filter: brightness(1.08); }
-
-/* Category color variants */
-.cal-ev.ev-core     { background: var(--cat-core);    border-left-color: rgba(201,162,74,.5); }
-.cal-ev.ev-virtual  { background: var(--cat-virtual); border-left-color: rgba(255,255,255,.25); }
-.cal-ev.ev-optional { background: var(--cat-opt);     border-left-color: rgba(255,255,255,.25); }
-
-/* Per-event accent override for border */
-.cal-ev.accent-gold        { border-left-color: var(--gold); }
-.cal-ev.accent-cranberry   { background: var(--cranberry); }
-.cal-ev.accent-terracotta  { background: var(--terracotta); }
-.cal-ev.accent-harbor      { background: var(--harbor); }
-.cal-ev.accent-pine        { background: var(--pine); }
-
-.cal-ev .cal-ev-move {
-  opacity: .55;
-  font-size: .58rem;
-  margin-right: .2rem;
-}
-
-/* ─────────────────────────────────────────────────────────
-   LIST VIEW
-───────────────────────────────────────────────────────── */
-.list-wrap { display: flex; flex-direction: column; }
-
-.list-mo {
+.ev-month {
   display: flex;
-  align-items: baseline;
-  gap: 1.25rem;
-  padding: 2rem 0 1rem;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: .25rem;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2.25rem 0 .85rem;
 }
 
-.list-mo:first-child { padding-top: 0; }
+.ev-month:first-child { padding-top: 0; }
 
-.list-mo-name {
+.ev-month-name {
   font-family: var(--serif);
-  font-size: 1.4rem;
+  font-size: 1.05rem;
   font-weight: 400;
+  font-style: italic;
   color: var(--navy);
-  letter-spacing: .01em;
   white-space: nowrap;
 }
 
-.list-mo-line {
+.ev-month-line {
   flex: 1;
   height: 1px;
   background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
-  opacity: .25;
-  margin-bottom: 3px;
+  opacity: .2;
 }
 
-.list-ev {
+/* Card */
+.ev-card {
   display: flex;
-  gap: 0;
-  align-items: stretch;
-  padding: 1.25rem 0;
-  border-bottom: 1px solid var(--rule);
+  background: var(--white);
+  border: 1px solid var(--rule);
+  overflow: hidden;
   cursor: pointer;
-  transition: background .2s;
+  margin-bottom: 1.25rem;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+
+.ev-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 52px rgba(10,34,24,.1);
+}
+
+/* Photo side */
+.ev-photo {
+  width: 42%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  background: var(--navy);
+}
+
+.ev-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .55s var(--ease);
+}
+
+.ev-card:hover .ev-photo img { transform: scale(1.05); }
+
+/* Photo fallback gradient (shown if image fails) */
+.ev-photo-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ev-photo-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 5rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.15);
+  line-height: 1;
+}
+
+/* Category strip at bottom of photo */
+.ev-photo-cat {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: .5rem .7rem;
+  font-family: var(--label);
+  font-size: .5rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.7);
+  background: linear-gradient(transparent, rgba(0,0,0,.4));
+}
+
+/* Upload button */
+.ev-upload-btn {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  background: rgba(0,0,0,.55);
+  border: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.9);
+  padding: .35rem .65rem;
+  font-family: var(--label);
+  font-size: .5rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .2s, background .2s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2;
   border-radius: 1px;
 }
 
-.list-ev:hover { background: rgba(201,162,74,.04); }
-.list-ev:last-child { border-bottom: none; }
+.ev-card:hover .ev-upload-btn { opacity: 1; }
+.ev-upload-btn:hover { background: rgba(0,0,0,.75); color: var(--white); }
 
-.list-date {
-  width: 72px;
-  flex-shrink: 0;
+/* Content side */
+.ev-content {
+  flex: 1;
+  padding: 2.25rem 2.5rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-right: 1.25rem;
-  border-right: 1px solid var(--rule);
-  margin-right: 1.5rem;
+  justify-content: center;
+  min-width: 0;
 }
 
-.list-dd {
-  font-family: var(--serif);
-  font-size: 2.4rem;
-  font-weight: 400;
-  line-height: 1;
-  color: var(--navy);
-}
-
-.list-dm {
-  font-family: var(--label);
-  font-size: .52rem;
-  font-weight: 600;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-top: .2rem;
-}
-
-.list-range {
-  font-family: var(--serif);
-  font-size: .88rem;
-  font-weight: 400;
-  color: var(--navy);
-  line-height: 1.35;
-  text-align: center;
-}
-
-.list-body { flex: 1; min-width: 0; }
-
-.list-move-row {
+.ev-meta-row {
   display: flex;
   align-items: center;
-  gap: .6rem;
+  gap: .65rem;
+  margin-bottom: .85rem;
+}
+
+.ev-num {
+  font-family: var(--label);
+  font-size: .5rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--white);
+  padding: .15rem .5rem;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.ev-cat-lbl {
+  font-family: var(--label);
+  font-size: .5rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.ev-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.85rem;
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.1;
   margin-bottom: .4rem;
 }
 
-.list-move {
-  font-family: var(--label);
-  font-size: .52rem;
-  font-weight: 700;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--white);
-  padding: .14rem .45rem;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.list-move.ev-core     { background: var(--cat-core); }
-.list-move.ev-virtual  { background: var(--cat-virtual); }
-.list-move.ev-optional { background: var(--cat-opt); }
-.list-move.accent-cranberry  { background: var(--cranberry); }
-.list-move.accent-terracotta { background: var(--terracotta); }
-
-.list-cat {
-  font-family: var(--label);
-  font-size: .52rem;
-  font-weight: 500;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.list-title {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.3rem;
-  font-weight: 400;
-  color: var(--navy);
-  line-height: 1.25;
-  margin-bottom: .28rem;
-}
-
-.list-subtitle {
+.ev-subtitle {
   font-family: var(--sans);
-  font-size: .78rem;
+  font-size: .82rem;
   font-weight: 400;
   color: var(--ink-2);
-  margin-bottom: .5rem;
-  line-height: 1.4;
+  line-height: 1.45;
+  margin-bottom: 1.5rem;
 }
 
-.list-meta {
+.ev-info {
   display: flex;
   flex-wrap: wrap;
-  gap: .3rem 1.25rem;
-  font-size: .72rem;
+  gap: .3rem 1.5rem;
+  font-size: .74rem;
   color: var(--ink-2);
+  border-top: 1px solid var(--rule);
+  padding-top: 1.1rem;
 }
 
-.list-meta-item { display: flex; align-items: center; gap: .35rem; }
+.ev-info-item { display: flex; align-items: center; gap: .4rem; }
 
-.list-meta-dot {
+.ev-info-dot {
   width: 3px; height: 3px;
   border-radius: 50%;
   background: var(--gold);
-  opacity: .6;
+  opacity: .7;
   flex-shrink: 0;
 }
-
-.empty {
-  text-align: center;
-  padding: 5rem 2rem;
-}
-
-.empty-t {
-  font-family: var(--serif);
-  font-size: 1.75rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--navy);
-  margin-bottom: .5rem;
-}
-
-.empty-s { font-size: .8rem; color: var(--ink-3); }
 
 /* ─────────────────────────────────────────────────────────
    MODAL
@@ -742,7 +560,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(8,18,32,.7);
+  background: rgba(8,18,12,.72);
   z-index: 900;
   align-items: center;
   justify-content: center;
@@ -776,7 +594,6 @@ body {
 .modal-hdr {
   padding: 2rem 2.25rem 1.75rem;
   position: relative;
-  transition: background .25s;
 }
 
 .modal-move {
@@ -785,7 +602,7 @@ body {
   font-weight: 700;
   letter-spacing: .3em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.55);
+  color: rgba(255,255,255,.5);
   margin-bottom: .55rem;
 }
 
@@ -795,7 +612,7 @@ body {
   font-weight: 600;
   letter-spacing: .26em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: rgba(255,255,255,.6);
   margin-bottom: .6rem;
 }
 
@@ -812,7 +629,6 @@ body {
 .modal-subtitle {
   font-family: var(--sans);
   font-size: .82rem;
-  font-weight: 400;
   color: rgba(255,255,255,.5);
   margin-top: .55rem;
   line-height: 1.4;
@@ -856,13 +672,7 @@ body {
   margin-bottom: .3rem;
 }
 
-.modal-val {
-  font-size: .88rem;
-  color: var(--ink);
-  line-height: 1.4;
-}
-
-.modal-val em { font-style: normal; color: var(--gold); font-weight: 500; }
+.modal-val { font-size: .88rem; color: var(--ink); line-height: 1.4; }
 
 .modal-desc-wrap {
   margin-bottom: 1.75rem;
@@ -870,14 +680,8 @@ body {
   padding-bottom: 1.5rem;
 }
 
-.modal-desc {
-  font-size: .875rem;
-  line-height: 1.8;
-  color: var(--ink-2);
-}
-
+.modal-desc { font-size: .875rem; line-height: 1.8; color: var(--ink-2); }
 .modal-desc p + p { margin-top: .75rem; }
-
 .modal-desc h4 {
   font-family: var(--serif);
   font-size: 1rem;
@@ -885,7 +689,6 @@ body {
   color: var(--navy);
   margin: 1.1rem 0 .4rem;
 }
-
 .modal-desc ul { padding-left: 1.1rem; }
 .modal-desc li { margin-bottom: .3rem; }
 .modal-desc strong { color: var(--ink); font-weight: 500; }
@@ -924,21 +727,21 @@ body {
   #lock { justify-content: center; }
 }
 
+@media (max-width: 700px) {
+  .ev-card { flex-direction: column; }
+  .ev-photo { width: 100%; min-height: 220px; }
+  .ev-content { padding: 1.5rem; }
+  .ev-title { font-size: 1.5rem; }
+}
+
 @media (max-width: 640px) {
   .hdr { padding: 0 1.25rem; }
-  .sub  { padding: 0 1.25rem; }
   .main { padding: 1.25rem; }
-  .cal-cell { min-height: 70px; }
-  .cal-ev { font-size: .6rem; }
-  .list-date { width: 58px; }
-  .list-dd { font-size: 1.8rem; }
   .modal { max-height: 95vh; }
   .modal-title { font-size: 1.5rem; }
   .modal-grid { grid-template-columns: 1fr; gap: .85rem; }
   .modal-hdr { padding: 1.5rem 1.5rem 1.25rem; }
   .modal-body { padding: 1.25rem 1.5rem; }
-  .lock-left { padding: 3rem 2rem; }
-  .lock-headline { font-size: 3.25rem; }
 }
 
 /* Scrollbar */
@@ -957,12 +760,10 @@ body {
       See the<br><strong>Whole Board</strong>
     </div>
     <div class="lock-rule"></div>
-    <p class="lock-tagline">Thirteen moves. One unforgettable year.<br>A chapter for leaders who play the long game.</p>
+    <p class="lock-tagline">Thirteen events. One unforgettable year.<br>A chapter for leaders who play the long game.</p>
     <div class="lock-path-wrap">
-      <div class="lock-pips" id="lockPips">
-        <!-- 13 pips rendered by JS -->
-      </div>
-      <div class="lock-pip-label">13 moves &nbsp;·&nbsp; FY 2026–2027</div>
+      <div class="lock-pips" id="lockPips"></div>
+      <div class="lock-pip-label">13 events &nbsp;·&nbsp; FY 2026–2027</div>
     </div>
   </div>
 
@@ -987,32 +788,11 @@ body {
       <span class="hdr-monogram">A<em>·</em>13</span>
       <span class="hdr-tagline">See the Whole Board</span>
     </div>
-    <div class="hdr-right">
-      <div class="view-tog">
-        <button class="view-btn on" id="btnCal"  onclick="setView('cal')">Calendar</button>
-        <button class="view-btn"     id="btnList" onclick="setView('list')">List</button>
-      </div>
-      <button class="signout-btn" onclick="signOut()">Sign Out</button>
-    </div>
+    <button class="signout-btn" onclick="signOut()">Sign Out</button>
   </header>
 
-  <div class="sub">
-    <div class="filters" id="filterRow">
-      <button class="filt-btn on" data-f="all"      onclick="setFilter('all')">All</button>
-      <button class="filt-btn"   data-f="core"      onclick="setFilter('core')">Core</button>
-      <button class="filt-btn"   data-f="virtual"   onclick="setFilter('virtual')">Virtual</button>
-      <button class="filt-btn"   data-f="optional"  onclick="setFilter('optional')">Optional</button>
-    </div>
-    <div class="mo-nav" id="moNav">
-      <button class="mo-btn" onclick="stepMo(-1)">&#8249;</button>
-      <span class="mo-lbl" id="moLbl"></span>
-      <button class="mo-btn" onclick="stepMo(1)">&#8250;</button>
-    </div>
-  </div>
-
   <main class="main">
-    <div id="calView"></div>
-    <div id="listView" style="display:none"></div>
+    <div id="evList"></div>
   </main>
 </div>
 
@@ -1058,71 +838,56 @@ body {
   </div>
 </div>
 
+<!-- Hidden file input for photo uploads -->
+<input type="file" id="photoUpload" accept="image/*" style="display:none">
+
 <script>
 /* ───────────────────────────────────────────────────────────
-   DATA — YPO A13 Learning Calendar FY2026–27
-   move:    chronological move number (string "01"–"13")
-   accent:  CSS class for chip/modal color override
-   accentBg: hex for modal header background
+   DATA
 ───────────────────────────────────────────────────────── */
 const EVT = [
   {
-    id: 1,
-    move:     "01",
+    id: 1, move: "01",
     title:    "US Open",
     subtitle: "How to View Excellence",
     label:    "Aug 31 – Sep 1, 2026",
-    start:    "2026-08-31",
-    end:      "2026-09-01",
-    mOnly:    false,
+    start:    "2026-08-31", end: "2026-09-01", mOnly: false,
     loc:      "New York, NY",
     chair:    "Raghav",
-    cat:      "core",
-    catLabel: "Core Event",
-    type:     "social",
-    accent:   "accent-gold",
+    cat: "core", catLabel: "Core Event", type: "social",
     accentBg: "#0A2218",
-    desc:     ""
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?tennis,usta,stadium&sig=101",
+    desc: ""
   },
   {
-    id: 11,
-    move:     "02",
+    id: 11, move: "02",
     title:    "Family Farm Day",
     subtitle: "Cranberries, Chocolate & Wellness",
     label:    "September 26, 2026",
-    start:    "2026-09-26",
-    end:      "2026-09-26",
-    mOnly:    false,
+    start:    "2026-09-26", end: "2026-09-26", mOnly: false,
     loc:      "Chatsworth, NJ",
     chair:    "William Tenenbaum &amp; Victoria Bowley",
-    cat:      "optional",
-    catLabel: "Optional Event",
-    type:     "family",
-    accent:   "accent-cranberry",
+    cat: "optional", catLabel: "Optional Event", type: "family",
     accentBg: "#8A1E2D",
-    desc:     `<p><strong>Berry Good Health: Cranberries, Chocolate &amp; Wellness</strong></p>
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?cranberry,farm,harvest&sig=102",
+    desc: `<p><strong>Berry Good Health: Cranberries, Chocolate &amp; Wellness</strong></p>
 <p>New Jersey is a leading cranberry-producing state. Join us at Lee Brothers Cranberry Bog in Chatsworth — New Jersey's largest Ocean Spray supplier — for a wellness-focused farm day during peak harvest season, with Lee family owners Jenn and Steven Lee III providing a personal tour of their operations.</p>
-<p>The 1,800-acre, family-owned farm has been operated by three generations since 1868, growing cranberries on 135 acres with the remaining land preserved as an active watershed system. Lee Brothers also spearheaded a partnership with Rutgers University through Integrity Propagation, cultivating cranberry plants featuring varieties including Crimson Queen, Mullica Queen, Haines, Demoranville, and Scarlet Knight.</p>
-<p>Enjoy a sandwich picnic and blueberry/cranberry treats, observe the peak harvest, and take home berry-inspired gift bags. Learn about the health benefits of cranberries from Dr. Deena Adimoolam (primary care &amp; endocrinology) and Heather Robbie (weight management). For a sweet finale, 2 Chicks with Chocolate will host a hands-on chocolate-making table.</p>
-<p><em>Note: This tour includes walking up to ¾ mile over unpaved gravel roadways. Comfortable footwear is required. Guests will not enter the water.</em></p>`
+<p>The 1,800-acre, family-owned farm has been operated by three generations since 1868, growing cranberries on 135 acres with the remaining land preserved as an active watershed system.</p>
+<p>Enjoy a sandwich picnic and blueberry/cranberry treats, observe the peak harvest, and take home berry-inspired gift bags. Learn about the health benefits of cranberries from Dr. Deena Adimoolam and Heather Robbie. For a sweet finale, 2 Chicks with Chocolate will host a hands-on chocolate-making table.</p>
+<p><em>Note: This tour includes walking up to ¾ mile over unpaved gravel roadways. Comfortable footwear is required.</em></p>`
   },
   {
-    id: 2,
-    move:     "03",
+    id: 2, move: "03",
     title:    "Inside the FBI",
     subtitle: "Leadership Under Pressure",
     label:    "October 13, 2026",
-    start:    "2026-10-13",
-    end:      "2026-10-13",
-    mOnly:    false,
+    start:    "2026-10-13", end: "2026-10-13", mOnly: false,
     loc:      "Washington, DC",
     chair:    "Mark Stephenson",
-    cat:      "core",
-    catLabel: "Core Event",
-    type:     "education",
-    accent:   "",
+    cat: "core", catLabel: "Core Event", type: "education",
     accentBg: "#0A2218",
-    desc:     `<p>Step inside the FBI for an unprecedented leadership immersion focused on decision-making under pressure. Participants will explore how the FBI leads during complex crises — through tours, case briefings, and direct dialogue with senior executives.</p>
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?washington,government,architecture&sig=103",
+    desc: `<p>Step inside the FBI for an unprecedented leadership immersion focused on decision-making under pressure. Participants will explore how the FBI leads during complex crises — through tours, case briefings, and direct dialogue with senior executives.</p>
 <p>Attendees will visit the Director's Strategic Intelligence Center (DSIC) and The FBI Experience, take part in a real-world counterintelligence case briefing, and join a Senior Executive Panel on leadership and resilience in high-stakes environments.</p>
 <h4>Learning Objectives</h4>
 <ul>
@@ -1133,184 +898,134 @@ const EVT = [
 </ul>`
   },
   {
-    id: 6,
-    move:     "04",
+    id: 6, move: "04",
     title:    "Family Governance",
     subtitle: "Designing the System Before It Is Needed",
     label:    "November 12, 2026",
-    start:    "2026-11-12",
-    end:      "2026-11-12",
-    mOnly:    false,
+    start:    "2026-11-12", end: "2026-11-12", mOnly: false,
     loc:      "Virtual",
     chair:    "William Tenenbaum",
-    cat:      "virtual",
-    catLabel: "Virtual Event",
-    type:     "family",
-    accent:   "accent-cranberry",
+    cat: "virtual", catLabel: "Virtual Event", type: "family",
     accentBg: "#8A1E2D",
-    desc:     ""
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?family,gathering,home&sig=104",
+    desc: ""
   },
   {
-    id: 3,
-    move:     "05",
+    id: 3, move: "05",
     title:    "Holiday Party",
     subtitle: "A Chapter Celebration in New York",
     label:    "December 1, 2026",
-    start:    "2026-12-01",
-    end:      "2026-12-01",
-    mOnly:    false,
+    start:    "2026-12-01", end: "2026-12-01", mOnly: false,
     loc:      "New York, NY",
     chair:    "Jacqueline Lane",
-    cat:      "core",
-    catLabel: "Core Event",
-    type:     "social",
-    accent:   "accent-gold",
+    cat: "core", catLabel: "Core Event", type: "social",
     accentBg: "#0A2218",
-    desc:     ""
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?new+york,dinner,celebration,restaurant&sig=105",
+    desc: ""
   },
   {
-    id: 7,
-    move:     "06",
+    id: 7, move: "06",
     title:    "Scale",
     subtitle: "Building the Company for the Next Level",
     label:    "January 2027",
-    start:    "2027-01-01",
-    end:      "2027-01-31",
-    mOnly:    true,
+    start:    "2027-01-01", end: "2027-01-31", mOnly: true,
     loc:      "Virtual",
     chair:    "MichaelAaron Flicker",
-    cat:      "virtual",
-    catLabel: "Virtual Event",
-    type:     "business",
-    accent:   "",
+    cat: "virtual", catLabel: "Virtual Event", type: "business",
     accentBg: "#0A4A43",
-    desc:     ""
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?business,skyscraper,growth&sig=106",
+    desc: ""
   },
   {
-    id: 12,
-    move:     "07",
+    id: 12, move: "07",
     title:    "Winter Escape",
     subtitle: "Connection by the Fire and on the Mountain",
     label:    "January 2027",
-    start:    "2027-01-01",
-    end:      "2027-01-31",
-    mOnly:    true,
+    start:    "2027-01-01", end: "2027-01-31", mOnly: true,
     loc:      "Vermont",
     chair:    "Chez Perfetto",
-    cat:      "optional",
-    catLabel: "Optional Event",
-    type:     "social",
-    accent:   "accent-pine",
-    accentBg: "#2F5D50",
-    desc:     ""
+    cat: "optional", catLabel: "Optional Event", type: "social",
+    accentBg: "#1F4A3C",
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?vermont,snow,mountain,winter&sig=107",
+    desc: ""
   },
   {
-    id: 4,
-    move:     "08",
+    id: 4, move: "08",
     title:    "Boston — MIT &amp; HBS",
     subtitle: "Capital, Innovation, and the Future of Decision-Making",
     label:    "February 2027",
-    start:    "2027-02-01",
-    end:      "2027-02-28",
-    mOnly:    true,
+    start:    "2027-02-01", end: "2027-02-28", mOnly: true,
     loc:      "Boston, MA",
     chair:    "Max Winthrop &amp; Tara Fung",
-    cat:      "core",
-    catLabel: "Core Event",
-    type:     "education",
-    accent:   "",
+    cat: "core", catLabel: "Core Event", type: "education",
     accentBg: "#0A2218",
-    desc:     "<p>Chapter learning experience in Boston, hosted at MIT and Harvard Business School. Exact dates to be confirmed.</p>"
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?boston,mit,harvard,campus&sig=108",
+    desc: "<p>Chapter learning experience in Boston, hosted at MIT and Harvard Business School. Exact dates to be confirmed.</p>"
   },
   {
-    id: 8,
-    move:     "09",
+    id: 8, move: "09",
     title:    "Capital Allocation",
     subtitle: "The CEO's Highest-Leverage Decision",
     label:    "March 2027",
-    start:    "2027-03-01",
-    end:      "2027-03-31",
-    mOnly:    true,
+    start:    "2027-03-01", end: "2027-03-31", mOnly: true,
     loc:      "Virtual",
     chair:    "Asif Zaman",
-    cat:      "virtual",
-    catLabel: "Virtual Event",
-    type:     "business",
-    accent:   "",
+    cat: "virtual", catLabel: "Virtual Event", type: "business",
     accentBg: "#0A4A43",
-    desc:     ""
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?finance,investment,capital&sig=109",
+    desc: ""
   },
   {
-    id: 9,
-    move:     "10",
+    id: 9, move: "10",
     title:    "Management System",
     subtitle: "Turning Strategy into Execution",
     label:    "April 2027",
-    start:    "2027-04-01",
-    end:      "2027-04-30",
-    mOnly:    true,
+    start:    "2027-04-01", end: "2027-04-30", mOnly: true,
     loc:      "Virtual",
     chair:    "Andrew Halliday",
-    cat:      "virtual",
-    catLabel: "Virtual Event",
-    type:     "business",
-    accent:   "",
+    cat: "virtual", catLabel: "Virtual Event", type: "business",
     accentBg: "#0A4A43",
-    desc:     ""
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?strategy,leadership,planning&sig=110",
+    desc: ""
   },
   {
-    id: 13,
-    move:     "11",
+    id: 13, move: "11",
     title:    "Couples Retreat",
     subtitle: "Alignment, Legacy, and the Life We Are Building",
     label:    "April 9–11, 2027",
-    start:    "2027-04-09",
-    end:      "2027-04-11",
-    mOnly:    false,
+    start:    "2027-04-09", end: "2027-04-11", mOnly: false,
     loc:      "Aspen, CO",
     chair:    "Glen Kunofsky",
-    cat:      "optional",
-    catLabel: "Optional Event",
-    type:     "family",
-    accent:   "accent-terracotta",
+    cat: "optional", catLabel: "Optional Event", type: "family",
     accentBg: "#B7603B",
-    desc:     ""
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?aspen,colorado,mountain,luxury&sig=111",
+    desc: ""
   },
   {
-    id: 5,
-    move:     "12",
+    id: 5, move: "12",
     title:    "Spain Presidents Retreat",
-    subtitle: "The Final Move",
+    subtitle: "The Final Event",
     label:    "May 12–16, 2027",
-    start:    "2027-05-12",
-    end:      "2027-05-16",
-    mOnly:    false,
+    start:    "2027-05-12", end: "2027-05-16", mOnly: false,
     loc:      "Valencia, Spain",
     chair:    "Richard",
-    cat:      "core",
-    catLabel: "Core Event",
-    type:     "social",
-    accent:   "accent-terracotta",
+    cat: "core", catLabel: "Core Event", type: "social",
     accentBg: "#B7603B",
-    desc:     "<p>Multi-day international chapter experience in Valencia, Spain. The final move of the year — May 16 is the departure day.</p>"
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?spain,valencia,mediterranean,architecture&sig=112",
+    desc: "<p>Multi-day international chapter experience in Valencia, Spain. The final event of the year — May 16 is the departure day.</p>"
   },
   {
-    id: 10,
-    move:     "13",
+    id: 10, move: "13",
     title:    "AI Show &amp; Tell",
     subtitle: "What Leaders Are Actually Using",
     label:    "June 2027",
-    start:    "2027-06-01",
-    end:      "2027-06-30",
-    mOnly:    true,
+    start:    "2027-06-01", end: "2027-06-30", mOnly: true,
     loc:      "Virtual",
     chair:    "Tara Fung",
-    cat:      "virtual",
-    catLabel: "Virtual Event",
-    type:     "education",
-    accent:   "",
+    cat: "virtual", catLabel: "Virtual Event", type: "education",
     accentBg: "#0A4A43",
-    desc:     ""
+    defaultPhoto: "https://source.unsplash.com/random/800x600/?technology,artificial+intelligence,innovation&sig=113",
+    desc: ""
   }
 ];
 
@@ -1318,14 +1033,11 @@ const EVT = [
    STATE
 ─────────────────────────────────────────────────────────── */
 const PW = "atlantic13";
-let view   = "cal";
-let filter = "all";
-let calY   = 2026;
-let calM   = 7;  // Aug 2026
 
-const MO_L = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-const MO_S = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const WD   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MO_L = ["January","February","March","April","May","June",
+              "July","August","September","October","November","December"];
+const MO_S = ["Jan","Feb","Mar","Apr","May","Jun",
+              "Jul","Aug","Sep","Oct","Nov","Dec"];
 
 /* ───────────────────────────────────────────────────────────
    LOCK PIPS
@@ -1341,6 +1053,44 @@ const WD   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 })();
 
 /* ───────────────────────────────────────────────────────────
+   PHOTO STORAGE
+─────────────────────────────────────────────────────────── */
+function getPhoto(id) {
+  return localStorage.getItem("a13_photo_" + id) || EVT.find(e => e.id === id).defaultPhoto;
+}
+
+function triggerUpload(evId, e) {
+  e.stopPropagation();
+  const inp = document.getElementById("photoUpload");
+  inp.dataset.evId = evId;
+  inp.click();
+}
+
+document.getElementById("photoUpload").addEventListener("change", function () {
+  const id   = parseInt(this.dataset.evId);
+  const file = this.files[0];
+  if (!file) return;
+  if (file.size > 8 * 1024 * 1024) {
+    alert("Photo must be under 8 MB.");
+    this.value = "";
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    localStorage.setItem("a13_photo_" + id, e.target.result);
+    renderList();
+  };
+  reader.readAsDataURL(file);
+  this.value = "";
+});
+
+function handleImgError(img, bg) {
+  img.style.display = "none";
+  img.parentElement.style.background =
+    "linear-gradient(160deg, " + bg + " 0%, " + bg + "99 100%)";
+}
+
+/* ───────────────────────────────────────────────────────────
    AUTH
 ─────────────────────────────────────────────────────────── */
 function tryLogin() {
@@ -1348,9 +1098,9 @@ function tryLogin() {
   if (val === PW) {
     document.getElementById("lock").style.display = "none";
     const a = document.getElementById("app");
-    a.style.display = "flex";
+    a.style.display    = "flex";
     a.style.flexDirection = "column";
-    render();
+    renderList();
   } else {
     document.getElementById("lockErr").textContent = "Incorrect password. Please try again.";
     document.getElementById("pw").value = "";
@@ -1364,161 +1114,101 @@ document.getElementById("pw").addEventListener("keydown", e => {
 });
 
 function signOut() {
-  document.getElementById("app").style.display = "none";
+  document.getElementById("app").style.display  = "none";
   document.getElementById("lock").style.display = "flex";
   document.getElementById("pw").value = "";
   document.getElementById("lockErr").textContent = "";
 }
 
 /* ───────────────────────────────────────────────────────────
-   FILTER
+   CATEGORY HELPERS
 ─────────────────────────────────────────────────────────── */
-function filtered() {
-  if (filter === "all") return EVT;
-  return EVT.filter(e => e.cat === filter);
-}
-
-function setFilter(f) {
-  filter = f;
-  document.querySelectorAll(".filt-btn").forEach(b => b.classList.toggle("on", b.dataset.f === f));
-  render();
+function catBg(cat) {
+  if (cat === "virtual")  return "var(--cat-virtual)";
+  if (cat === "optional") return "var(--cat-opt)";
+  return "var(--cat-core)";
 }
 
 /* ───────────────────────────────────────────────────────────
-   VIEW
-─────────────────────────────────────────────────────────── */
-function setView(v) {
-  view = v;
-  document.getElementById("btnCal").classList.toggle("on",  v === "cal");
-  document.getElementById("btnList").classList.toggle("on", v === "list");
-  document.getElementById("calView").style.display   = v === "cal"  ? "block" : "none";
-  document.getElementById("listView").style.display  = v === "list" ? "block" : "none";
-  document.getElementById("moNav").style.display     = v === "cal"  ? "flex"  : "none";
-  render();
-}
-
-/* ───────────────────────────────────────────────────────────
-   CALENDAR
-─────────────────────────────────────────────────────────── */
-function stepMo(d) {
-  calM += d;
-  if (calM < 0)  { calM = 11; calY--; }
-  if (calM > 11) { calM = 0;  calY++; }
-  renderCal();
-}
-
-function catClass(cat) {
-  if (cat === "core")     return "ev-core";
-  if (cat === "virtual")  return "ev-virtual";
-  if (cat === "optional") return "ev-optional";
-  return "ev-core";
-}
-
-function renderCal() {
-  const evts  = filtered();
-  const today = new Date(); today.setHours(0,0,0,0);
-  document.getElementById("moLbl").textContent = `${MO_L[calM]} ${calY}`;
-
-  const startDow  = new Date(calY, calM, 1).getDay();
-  const daysInMo  = new Date(calY, calM + 1, 0).getDate();
-  const prevTotal = new Date(calY, calM, 0).getDate();
-  const cellCount = Math.ceil((startDow + daysInMo) / 7) * 7;
-
-  let html = `<div class="cal-wrap">
-    <div class="cal-head">${WD.map(d => `<div class="cal-wd">${d}</div>`).join("")}</div>
-    <div class="cal-body">`;
-
-  for (let i = 0; i < cellCount; i++) {
-    let d, m = calM, y = calY, dim = false;
-    if (i < startDow) {
-      d = prevTotal - startDow + i + 1; m = calM - 1; if (m < 0) { m = 11; y--; } dim = true;
-    } else if (i >= startDow + daysInMo) {
-      d = i - startDow - daysInMo + 1; m = calM + 1; if (m > 11) { m = 0; y++; } dim = true;
-    } else {
-      d = i - startDow + 1;
-    }
-    const cell = new Date(y, m, d); cell.setHours(0,0,0,0);
-    const isTd = cell.getTime() === today.getTime();
-
-    const chips = evts.filter(ev => {
-      const s = pDate(ev.start), e = pDate(ev.end);
-      return ev.mOnly ? cell.getTime() === s.getTime() : (cell >= s && cell <= e);
-    });
-
-    html += `<div class="cal-cell${dim ? " dim" : ""}${isTd ? " today" : ""}">
-      <span class="cal-dn">${d}</span>
-      ${chips.map(ev => {
-        const cls = `cal-ev ${catClass(ev.cat)}${ev.accent ? " " + ev.accent : ""}`;
-        return `<span class="${cls}" onclick="openModal(${ev.id})"><span class="cal-ev-move">${ev.move}</span>${ev.title.replace(/&amp;/g,'&')}</span>`;
-      }).join("")}
-    </div>`;
-  }
-  html += `</div></div>`;
-  document.getElementById("calView").innerHTML = html;
-}
-
-/* ───────────────────────────────────────────────────────────
-   LIST
+   RENDER
 ─────────────────────────────────────────────────────────── */
 function renderList() {
-  const evts = filtered().slice().sort((a, b) => a.start.localeCompare(b.start));
+  const evts = EVT.slice().sort((a, b) => a.start.localeCompare(b.start));
 
-  if (!evts.length) {
-    document.getElementById("listView").innerHTML =
-      `<div class="empty"><div class="empty-t">No events</div><div class="empty-s">Try a different filter.</div></div>`;
-    return;
-  }
-
+  // Group by month
   const groups = {};
   evts.forEach(ev => {
     const d   = pDate(ev.start);
-    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
-    const lbl = `${MO_L[d.getMonth()]} ${d.getFullYear()}`;
+    const key = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+    const lbl = MO_L[d.getMonth()] + " " + d.getFullYear();
     if (!groups[key]) groups[key] = { lbl, evts: [] };
     groups[key].evts.push(ev);
   });
 
-  let html = '<div class="list-wrap">';
+  let html = '<div class="ev-list">';
+
   Object.keys(groups).sort().forEach(key => {
     const g = groups[key];
-    html += `<div class="list-mo">
-      <div class="list-mo-name">${g.lbl}</div>
-      <div class="list-mo-line"></div>
+    html += `<div class="ev-month">
+      <div class="ev-month-name">${g.lbl}</div>
+      <div class="ev-month-line"></div>
     </div>`;
+
     g.evts.forEach(ev => {
-      const d    = pDate(ev.start);
-      const isR  = ev.start !== ev.end;
-      const dateFrag = (isR || ev.mOnly)
-        ? `<div class="list-range">${ev.label}</div>`
-        : `<div class="list-dd">${d.getDate()}</div><div class="list-dm">${MO_S[d.getMonth()]}</div>`;
+      const photoSrc = getPhoto(ev.id);
+      const numBg    = catBg(ev.cat);
 
-      const moveCls = `list-move ${catClass(ev.cat)}${ev.accent === "accent-cranberry" ? " accent-cranberry" : ev.accent === "accent-terracotta" ? " accent-terracotta" : ""}`;
+      html += `
+      <div class="ev-card" onclick="openModal(${ev.id})">
 
-      html += `<div class="list-ev" onclick="openModal(${ev.id})">
-        <div class="list-date">${dateFrag}</div>
-        <div class="list-body">
-          <div class="list-move-row">
-            <span class="${moveCls}">Move ${ev.move}</span>
-            <span class="list-cat">${ev.catLabel}</span>
+        <div class="ev-photo" style="background:${ev.accentBg}">
+          <img
+            src="${photoSrc}"
+            alt="${ev.title.replace(/&amp;/g,'&')}"
+            loading="lazy"
+            onerror="handleImgError(this,'${ev.accentBg}')"
+          >
+          <div class="ev-photo-fallback">
+            <span class="ev-photo-num">${ev.move}</span>
           </div>
-          <div class="list-title">${ev.title.replace(/&amp;/g,'&')}</div>
-          ${ev.subtitle ? `<div class="list-subtitle">${ev.subtitle}</div>` : ''}
-          <div class="list-meta">
-            <span class="list-meta-item">
-              <span class="list-meta-dot"></span>
+          <div class="ev-photo-cat">${ev.catLabel}</div>
+          <button class="ev-upload-btn" onclick="triggerUpload(${ev.id},event)" title="Change photo">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+            </svg>
+            Change Photo
+          </button>
+        </div>
+
+        <div class="ev-content">
+          <div class="ev-meta-row">
+            <span class="ev-num" style="background:${numBg}">Event ${ev.move}</span>
+            <span class="ev-cat-lbl">${ev.catLabel}</span>
+          </div>
+          <div class="ev-title">${ev.title.replace(/&amp;/g,'&')}</div>
+          ${ev.subtitle ? `<div class="ev-subtitle">${ev.subtitle}</div>` : ''}
+          <div class="ev-info">
+            <span class="ev-info-item">
+              <span class="ev-info-dot"></span>
+              ${ev.label}
+            </span>
+            <span class="ev-info-item">
+              <span class="ev-info-dot"></span>
               ${ev.loc}
             </span>
-            <span class="list-meta-item">
-              <span class="list-meta-dot"></span>
+            <span class="ev-info-item">
+              <span class="ev-info-dot"></span>
               Chair: ${ev.chair.replace(/&amp;/g,'&')}
             </span>
           </div>
         </div>
+
       </div>`;
     });
   });
+
   html += "</div>";
-  document.getElementById("listView").innerHTML = html;
+  document.getElementById("evList").innerHTML = html;
 }
 
 /* ───────────────────────────────────────────────────────────
@@ -1528,17 +1218,16 @@ function openModal(id) {
   const ev = EVT.find(e => e.id === id);
   if (!ev) return;
 
-  document.getElementById("mMove").textContent    = `Move ${ev.move}`;
-  document.getElementById("mTag").textContent     = `${ev.catLabel}  ·  ${cap(ev.type)}`;
-  document.getElementById("mTitle").innerHTML     = ev.title;
+  document.getElementById("mMove").textContent     = "Event " + ev.move;
+  document.getElementById("mTag").textContent      = ev.catLabel + "  ·  " + cap(ev.type);
+  document.getElementById("mTitle").innerHTML      = ev.title;
   document.getElementById("mSubtitle").textContent = ev.subtitle || "";
-  document.getElementById("mDate").textContent    = ev.label;
-  document.getElementById("mLoc").textContent     = ev.loc;
-  document.getElementById("mChair").innerHTML     = ev.chair;
-  document.getElementById("mCat").textContent     = ev.catLabel;
+  document.getElementById("mDate").textContent     = ev.label;
+  document.getElementById("mLoc").textContent      = ev.loc;
+  document.getElementById("mChair").innerHTML      = ev.chair;
+  document.getElementById("mCat").textContent      = ev.catLabel;
 
-  // Accent background on modal header
-  document.getElementById("modalHdr").style.background = ev.accentBg || "#0B1F33";
+  document.getElementById("modalHdr").style.background = ev.accentBg || "#0A2218";
 
   const dw = document.getElementById("mDescWrap");
   const dd = document.getElementById("mDesc");
@@ -1550,18 +1239,18 @@ function openModal(id) {
     dw.style.display = "none";
   }
 
-  // Google Calendar link
   const s  = ev.start.replace(/-/g, "");
   const en = nextDay(ev.end).replace(/-/g, "");
   const plainDesc = ev.desc
     ? ev.desc.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").replace(/&amp;/g,"&").trim()
-    : `YPO Atlantic 13 — ${ev.catLabel}. Chair: ${ev.chair.replace(/&amp;/g,"&")}`;
+    : "YPO Atlantic 13 — " + ev.catLabel + ". Chair: " + ev.chair.replace(/&amp;/g,"&");
+
   document.getElementById("mGcal").href =
-    `https://calendar.google.com/calendar/render?action=TEMPLATE` +
-    `&text=${enc(ev.title.replace(/&amp;/g,"&"))}` +
-    `&dates=${s}/${en}` +
-    `&location=${enc(ev.loc)}` +
-    `&details=${enc(plainDesc)}`;
+    "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+    "&text="     + enc(ev.title.replace(/&amp;/g,"&")) +
+    "&dates="    + s + "/" + en +
+    "&location=" + enc(ev.loc) +
+    "&details="  + enc(plainDesc);
 
   const ov = document.getElementById("overlay");
   ov.classList.add("show");
@@ -1597,11 +1286,6 @@ function nextDay(s) {
 }
 function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 function enc(s) { return encodeURIComponent(s); }
-
-function render() {
-  if (view === "cal")  renderCal();
-  else                 renderList();
-}
 </script>
 </body>
 </html>
