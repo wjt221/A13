@@ -396,21 +396,21 @@ body {
 }
 
 /* Core — large, navy */
-.ev-card--core { border-left-color: #0A2218; }
-.ev-card--core .ev-photo { width: 44%; min-height: 300px; }
+.ev-card--core { border-left-color: #0A2218; height: 300px; }
+.ev-card--core .ev-photo { width: 44%; }
 .ev-card--core .ev-title { font-size: 1.85rem; }
 .ev-card--core .ev-content { padding: 2.25rem 2.5rem; background: var(--white); }
 
 /* Optional — medium, terracotta/warm */
-.ev-card--optional { border-left-color: #B7603B; }
-.ev-card--optional .ev-photo { width: 34%; min-height: 195px; }
+.ev-card--optional { border-left-color: #B7603B; height: 200px; }
+.ev-card--optional .ev-photo { width: 34%; }
 .ev-card--optional .ev-title { font-size: 1.35rem; }
 .ev-card--optional .ev-content { padding: 1.5rem 1.75rem; background: #FDF8F3; }
 .ev-card--optional .ev-info-dot { background: #B7603B; }
 
 /* Virtual — compact, teal */
-.ev-card--virtual { border-left-color: #0D9488; }
-.ev-card--virtual .ev-photo { width: 28%; min-height: 160px; }
+.ev-card--virtual { border-left-color: #0D9488; height: 160px; }
+.ev-card--virtual .ev-photo { width: 28%; }
 .ev-card--virtual .ev-title { font-size: 1.25rem; }
 .ev-card--virtual .ev-content { padding: 1.25rem 1.5rem; background: #F0FAF8; }
 .ev-card--virtual .ev-info-dot { background: #0D9488; }
@@ -422,6 +422,7 @@ body {
   position: relative;
   overflow: hidden;
   background: var(--navy);
+  align-self: stretch;
 }
 
 .ev-photo img {
@@ -846,7 +847,7 @@ const EVT = [
     chair:    "Raghav",
     cat: "core", catLabel: "Core Event", type: "social",
     accentBg: "#0A2218",
-    defaultPhoto: "https://images.unsplash.com/photo-1568663469495-b09d5e3c2e07?auto=format&fit=crop&w=900&q=80",
+    defaultPhoto: "assets/us-open.avif",
     desc: ""
   },
   {
@@ -859,7 +860,7 @@ const EVT = [
     chair:    "William Tenenbaum &amp; Victoria Bowley",
     cat: "optional", catLabel: "Optional Event", type: "family",
     accentBg: "#8A1E2D",
-    defaultPhoto: "https://images.unsplash.com/photo-1759502046558-7059bd3a1baf?auto=format&fit=crop&w=900&q=80",
+    defaultPhoto: "assets/cranberry.avif",
     desc: `<p><strong>Berry Good Health: Cranberries, Chocolate &amp; Wellness</strong></p>
 <p>New Jersey is a leading cranberry-producing state. Join us at Lee Brothers Cranberry Bog in Chatsworth — New Jersey's largest Ocean Spray supplier — for a wellness-focused farm day during peak harvest season, with Lee family owners Jenn and Steven Lee III providing a personal tour of their operations.</p>
 <p>The 1,800-acre, family-owned farm has been operated by three generations since 1868, growing cranberries on 135 acres with the remaining land preserved as an active watershed system.</p>
@@ -876,7 +877,7 @@ const EVT = [
     chair:    "Mark Stephenson",
     cat: "core", catLabel: "Core Event", type: "education",
     accentBg: "#0A2218",
-    defaultPhoto: "https://images.unsplash.com/photo-1681938759329-384ea2d92bc7?auto=format&fit=crop&w=900&q=80",
+    defaultPhoto: "assets/fbi-event.avif",
     desc: `<p>Step inside the FBI for an unprecedented leadership immersion focused on decision-making under pressure. Participants will explore how the FBI leads during complex crises — through tours, case briefings, and direct dialogue with senior executives.</p>
 <p>Attendees will visit the Director's Strategic Intelligence Center (DSIC) and The FBI Experience, take part in a real-world counterintelligence case briefing, and join a Senior Executive Panel on leadership and resilience in high-stakes environments.</p>
 <h4>Learning Objectives</h4>
@@ -910,7 +911,7 @@ const EVT = [
     chair:    "Jacqueline Lane",
     cat: "core", catLabel: "Core Event", type: "social",
     accentBg: "#0A2218",
-    defaultPhoto: "https://images.unsplash.com/photo-1765741836925-5363bbaa6507?auto=format&fit=crop&w=900&q=80",
+    defaultPhoto: "assets/holiday-party.avif",
     desc: ""
   },
   {
@@ -936,7 +937,7 @@ const EVT = [
     chair:    "Chez Perfetto",
     cat: "optional", catLabel: "Optional Event", type: "social",
     accentBg: "#1F4A3C",
-    defaultPhoto: "https://images.unsplash.com/photo-1676661647337-1036036e1d5e?auto=format&fit=crop&w=900&q=80",
+    defaultPhoto: "assets/vermont.avif",
     desc: ""
   },
   {
@@ -949,7 +950,7 @@ const EVT = [
     chair:    "Max Winthrop &amp; Tara Fung",
     cat: "core", catLabel: "Core Event", type: "education",
     accentBg: "#0A2218",
-    defaultPhoto: "https://images.unsplash.com/photo-1630408653504-20c9d4849b72?auto=format&fit=crop&w=900&q=80",
+    defaultPhoto: "assets/harvard.avif",
     desc: "<p>Chapter learning experience in Boston, hosted at MIT and Harvard Business School. Exact dates to be confirmed.</p>"
   },
   {
@@ -988,7 +989,7 @@ const EVT = [
     chair:    "Glen Kunofsky",
     cat: "optional", catLabel: "Optional Event", type: "family",
     accentBg: "#B7603B",
-    defaultPhoto: "https://images.unsplash.com/photo-1674534628798-88946422e3bf?auto=format&fit=crop&w=900&q=80",
+    defaultPhoto: "assets/aspen.avif",
     desc: ""
   },
   {
@@ -1001,7 +1002,7 @@ const EVT = [
     chair:    "Richard",
     cat: "core", catLabel: "Core Event", type: "social",
     accentBg: "#B7603B",
-    defaultPhoto: "https://images.unsplash.com/photo-1763569716272-eb4417f7440c?auto=format&fit=crop&w=900&q=80",
+    defaultPhoto: "assets/valencia.avif",
     desc: "<p>Multi-day international chapter experience in Valencia, Spain. The final event of the year — May 16 is the departure day.</p>"
   },
   {
