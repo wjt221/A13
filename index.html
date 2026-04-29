@@ -377,11 +377,13 @@ body {
   opacity: .2;
 }
 
-/* Card */
+/* Card — base */
 .ev-card {
   display: flex;
   background: var(--white);
   border: 1px solid var(--rule);
+  border-left-width: 4px;
+  border-left-style: solid;
   overflow: hidden;
   cursor: pointer;
   margin-bottom: 1.25rem;
@@ -393,13 +395,32 @@ body {
   box-shadow: 0 18px 52px rgba(10,34,24,.1);
 }
 
-/* Photo side */
+/* Core — large, navy */
+.ev-card--core { border-left-color: #0A2218; }
+.ev-card--core .ev-photo { width: 44%; min-height: 300px; }
+.ev-card--core .ev-title { font-size: 1.85rem; }
+.ev-card--core .ev-content { padding: 2.25rem 2.5rem; background: var(--white); }
+
+/* Optional — medium, terracotta/warm */
+.ev-card--optional { border-left-color: #B7603B; }
+.ev-card--optional .ev-photo { width: 34%; min-height: 195px; }
+.ev-card--optional .ev-title { font-size: 1.35rem; }
+.ev-card--optional .ev-content { padding: 1.5rem 1.75rem; background: #FDF8F3; }
+.ev-card--optional .ev-info-dot { background: #B7603B; }
+
+/* Virtual — compact, teal */
+.ev-card--virtual { border-left-color: #0D9488; }
+.ev-card--virtual .ev-photo { width: 28%; min-height: 160px; }
+.ev-card--virtual .ev-title { font-size: 1.25rem; }
+.ev-card--virtual .ev-content { padding: 1.25rem 1.5rem; background: #F0FAF8; }
+.ev-card--virtual .ev-info-dot { background: #0D9488; }
+.ev-card--virtual .ev-subtitle { margin-bottom: 1rem; }
+
+/* Photo side — shared */
 .ev-photo {
-  width: 42%;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
-  min-height: 280px;
   background: var(--navy);
 }
 
@@ -447,8 +468,6 @@ body {
   background: linear-gradient(transparent, rgba(0,0,0,.4));
 }
 
-/* Category left border */
-.ev-card { border-left-width: 4px; border-left-style: solid; }
 
 /* Content side */
 .ev-content {
@@ -827,7 +846,7 @@ const EVT = [
     chair:    "Raghav",
     cat: "core", catLabel: "Core Event", type: "social",
     accentBg: "#0A2218",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?tennis,usta,stadium&sig=101",
+    defaultPhoto: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=900&q=80",
     desc: ""
   },
   {
@@ -840,7 +859,7 @@ const EVT = [
     chair:    "William Tenenbaum &amp; Victoria Bowley",
     cat: "optional", catLabel: "Optional Event", type: "family",
     accentBg: "#8A1E2D",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?cranberry,farm,harvest&sig=102",
+    defaultPhoto: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=900&q=80",
     desc: `<p><strong>Berry Good Health: Cranberries, Chocolate &amp; Wellness</strong></p>
 <p>New Jersey is a leading cranberry-producing state. Join us at Lee Brothers Cranberry Bog in Chatsworth — New Jersey's largest Ocean Spray supplier — for a wellness-focused farm day during peak harvest season, with Lee family owners Jenn and Steven Lee III providing a personal tour of their operations.</p>
 <p>The 1,800-acre, family-owned farm has been operated by three generations since 1868, growing cranberries on 135 acres with the remaining land preserved as an active watershed system.</p>
@@ -857,7 +876,7 @@ const EVT = [
     chair:    "Mark Stephenson",
     cat: "core", catLabel: "Core Event", type: "education",
     accentBg: "#0A2218",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?washington,government,architecture&sig=103",
+    defaultPhoto: "https://images.unsplash.com/photo-1501466044931-62695aada8e9?auto=format&fit=crop&w=900&q=80",
     desc: `<p>Step inside the FBI for an unprecedented leadership immersion focused on decision-making under pressure. Participants will explore how the FBI leads during complex crises — through tours, case briefings, and direct dialogue with senior executives.</p>
 <p>Attendees will visit the Director's Strategic Intelligence Center (DSIC) and The FBI Experience, take part in a real-world counterintelligence case briefing, and join a Senior Executive Panel on leadership and resilience in high-stakes environments.</p>
 <h4>Learning Objectives</h4>
@@ -878,7 +897,7 @@ const EVT = [
     chair:    "William Tenenbaum",
     cat: "virtual", catLabel: "Virtual Event", type: "family",
     accentBg: "#8A1E2D",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?family,gathering,home&sig=104",
+    defaultPhoto: "https://images.unsplash.com/photo-1511895426328-dc8714191011?auto=format&fit=crop&w=900&q=80",
     desc: ""
   },
   {
@@ -891,7 +910,7 @@ const EVT = [
     chair:    "Jacqueline Lane",
     cat: "core", catLabel: "Core Event", type: "social",
     accentBg: "#0A2218",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?new+york,dinner,celebration,restaurant&sig=105",
+    defaultPhoto: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80",
     desc: ""
   },
   {
@@ -904,7 +923,7 @@ const EVT = [
     chair:    "MichaelAaron Flicker",
     cat: "virtual", catLabel: "Virtual Event", type: "business",
     accentBg: "#0A4A43",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?business,skyscraper,growth&sig=106",
+    defaultPhoto: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80",
     desc: ""
   },
   {
@@ -917,7 +936,7 @@ const EVT = [
     chair:    "Chez Perfetto",
     cat: "optional", catLabel: "Optional Event", type: "social",
     accentBg: "#1F4A3C",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?vermont,snow,mountain,winter&sig=107",
+    defaultPhoto: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80",
     desc: ""
   },
   {
@@ -930,7 +949,7 @@ const EVT = [
     chair:    "Max Winthrop &amp; Tara Fung",
     cat: "core", catLabel: "Core Event", type: "education",
     accentBg: "#0A2218",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?boston,mit,harvard,campus&sig=108",
+    defaultPhoto: "https://images.unsplash.com/photo-1569510697534-8523c98ec74a?auto=format&fit=crop&w=900&q=80",
     desc: "<p>Chapter learning experience in Boston, hosted at MIT and Harvard Business School. Exact dates to be confirmed.</p>"
   },
   {
@@ -943,7 +962,7 @@ const EVT = [
     chair:    "Asif Zaman",
     cat: "virtual", catLabel: "Virtual Event", type: "business",
     accentBg: "#0A4A43",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?finance,investment,capital&sig=109",
+    defaultPhoto: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80",
     desc: ""
   },
   {
@@ -956,7 +975,7 @@ const EVT = [
     chair:    "Andrew Halliday",
     cat: "virtual", catLabel: "Virtual Event", type: "business",
     accentBg: "#0A4A43",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?strategy,leadership,planning&sig=110",
+    defaultPhoto: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80",
     desc: ""
   },
   {
@@ -969,7 +988,7 @@ const EVT = [
     chair:    "Glen Kunofsky",
     cat: "optional", catLabel: "Optional Event", type: "family",
     accentBg: "#B7603B",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?aspen,colorado,mountain,luxury&sig=111",
+    defaultPhoto: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80",
     desc: ""
   },
   {
@@ -982,7 +1001,7 @@ const EVT = [
     chair:    "Richard",
     cat: "core", catLabel: "Core Event", type: "social",
     accentBg: "#B7603B",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?spain,valencia,mediterranean,architecture&sig=112",
+    defaultPhoto: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80",
     desc: "<p>Multi-day international chapter experience in Valencia, Spain. The final event of the year — May 16 is the departure day.</p>"
   },
   {
@@ -995,7 +1014,7 @@ const EVT = [
     chair:    "Tara Fung",
     cat: "virtual", catLabel: "Virtual Event", type: "education",
     accentBg: "#0A4A43",
-    defaultPhoto: "https://source.unsplash.com/random/800x600/?technology,artificial+intelligence,innovation&sig=113",
+    defaultPhoto: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=900&q=80",
     desc: ""
   }
 ];
@@ -1095,11 +1114,10 @@ function renderList() {
     </div>`;
 
     g.evts.forEach(ev => {
-      const numBg     = catBg(ev.cat);
-      const borderClr = ev.cat === 'virtual' ? 'var(--cat-virtual)' : ev.cat === 'optional' ? '#B7603B' : 'var(--cat-core)';
+      const numBg = catBg(ev.cat);
 
       html += `
-      <div class="ev-card" style="border-left-color:${borderClr}" onclick="openModal(${ev.id})">
+      <div class="ev-card ev-card--${ev.cat}" onclick="openModal(${ev.id})">
 
         <div class="ev-photo" style="background:${ev.accentBg}">
           <img
