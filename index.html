@@ -850,64 +850,65 @@ const TEAMS = [
 ];
 
 /* Members — add photos (assets/members/name.jpg) and bios when ready */
+const YPO = "https://www2.ypoconnect.org";
 const MEMBERS = [
-  { name: "George Abatjoglou",      initials: "GA",  color: "#0A2218", location: "Marblehead, MA",    email: "" },
-  { name: "Mark Allen",             initials: "MA",  color: "#0D9488", location: "Parkland, FL",       email: "mark.jf.allen@gmail.com" },
-  { name: "Steven Alperin",         initials: "SA",  color: "#1F4A3C", location: "New York, NY",       email: "steve@survivornet.com" },
-  { name: "Emily Bailey",           initials: "EB",  color: "#B7603B", location: "Calhoun, GA",        email: "ebailey@racemark.com" },
-  { name: "Abhayjit Bedi",          initials: "AB",  color: "#8A1E2D", location: "Sterling, MA",       email: "abhayjit.bedi@gmail.com" },
-  { name: "Ross Berntson",          initials: "RB",  color: "#0A4A43", location: "Clinton, NY",        email: "rberntson@indium.com" },
-  { name: "Scott Bryant",           initials: "SB",  color: "#0A2218", location: "Rockville, MD",      email: "sbryant@fireriskalliance.com" },
-  { name: "Kristen Bunnell",        initials: "KB",  color: "#0D9488", location: "Rumson, NJ",         email: "kbunnell@navesinkco.com" },
-  { name: "Keegan Caldwell",        initials: "KC",  color: "#1F4A3C", location: "Boston, MA",         email: "keegan@caldwelllaw.com" },
-  { name: "Amy Chin",               initials: "AC",  color: "#B7603B", location: "New York, NY",       email: "amy.chin@corpay.com" },
-  { name: "David Curtin",           initials: "DC",  color: "#8A1E2D", location: "Baltimore, MD",      email: "" },
-  { name: "Sandra DeSilva",         initials: "SD",  color: "#0A4A43", location: "Baltimore, MD",      email: "sdesilva@mythen.com" },
-  { name: "Andrew Fisher",          initials: "AF",  color: "#0A2218", location: "New York, NY",       email: "andrew.fisher@gmail.com" },
-  { name: "MichaelAaron Flicker",   initials: "MF",  color: "#0D9488", location: "New York, NY",       email: "mflicker@xenopsi.com" },
-  { name: "Tara Fung",              initials: "TF",  color: "#1F4A3C", location: "Baltimore, MD",      email: "tara@usecocreate.io" },
-  { name: "Remy Garson",            initials: "RG",  color: "#B7603B", location: "New York, NY",       email: "remy@ibrandsglobal.com" },
-  { name: "Chris Haimbach",         initials: "CH",  color: "#8A1E2D", location: "Madison, NJ",        email: "chaimbac@gmail.com" },
-  { name: "Andrew Halliday",        initials: "AH",  color: "#0A4A43", location: "Slingerlands, NY",   email: "andrew.w.halliday@nm.com" },
-  { name: "Paul Karger",            initials: "PK",  color: "#0A2218", location: "Boston, MA",         email: "pk@twinfocus.com" },
-  { name: "David Kaufman",          initials: "DK",  color: "#0D9488", location: "New York, NY",       email: "dkaufman@acquisconsulting.com" },
-  { name: "Chris Keith",            initials: "CK",  color: "#1F4A3C", location: "New York, NY",       email: "cmkeith221@gmail.com" },
-  { name: "Glen Kunofsky",          initials: "GK",  color: "#B7603B", location: "New York, NY",       email: "gkunofsky@surmount.com" },
-  { name: "Jacquelyn Lane",         initials: "JL",  color: "#8A1E2D", location: "New York, NY",       email: "jacquelyn@100coaches.com" },
-  { name: "Janica Lane",            initials: "JaL", color: "#0A4A43", location: "Boston, MA",         email: "janica.lane@psc.com" },
-  { name: "Daniel Lederman",        initials: "DL",  color: "#0A2218", location: "New York, NY",       email: "dlederman@mskyline.com" },
-  { name: "Guyan Liu",              initials: "GL",  color: "#0D9488", location: "New York, NY",       email: "guyan.liu@gmail.com" },
-  { name: "Alan Marash",            initials: "AM",  color: "#1F4A3C", location: "New York, NY",       email: "alan@jatspartners.com" },
-  { name: "Luis Maseda",            initials: "LM",  color: "#B7603B", location: "Centerport, NY",     email: "lmaseda@sloan.mit.edu" },
-  { name: "William McDonald",       initials: "WM",  color: "#8A1E2D", location: "New York, NY",       email: "willsm@rugpadusa.com" },
-  { name: "John McLoughlin",        initials: "JM",  color: "#0A4A43", location: "",                   email: "jmcloughlin@onesa.com" },
-  { name: "Michael Mellott",        initials: "MM",  color: "#0A2218", location: "Columbia, MD",       email: "mike@xpertechs.com" },
-  { name: "Brooke Neblett",         initials: "BN",  color: "#0D9488", location: "Great Falls, VA",    email: "bneblett@fyinfo.com" },
-  { name: "Noah Ostroff",           initials: "NO",  color: "#1F4A3C", location: "Philadelphia, PA",   email: "noah@phillyliving.com" },
-  { name: "John Parkes",            initials: "JP",  color: "#B7603B", location: "Alexandria, VA",     email: "jdparkes@parrylabs.com" },
-  { name: "Anup Patel",             initials: "AP",  color: "#8A1E2D", location: "New York, NY",       email: "apatel@archstreetcapital.com" },
-  { name: "Ryan Payne",             initials: "RP",  color: "#0A4A43", location: "New York, NY",       email: "ryan.payne@paynecm.com" },
-  { name: "Ben Pearson",            initials: "BP",  color: "#0A2218", location: "Honeoye Falls, NY",  email: "pearson.benjamin@enalasgroup.com" },
-  { name: "Chez Perfetto",          initials: "CP",  color: "#0D9488", location: "Brooklyn, NY",       email: "cperfettojr@perfettocontracting.com" },
-  { name: "Ingrid Prasatya",        initials: "IP",  color: "#1F4A3C", location: "",                   email: "ingrid@entebe.com.sg" },
-  { name: "Omar Rahman",            initials: "OR",  color: "#B7603B", location: "Baltimore, MD",      email: "" },
-  { name: "Richard Resnick",        initials: "RR",  color: "#8A1E2D", location: "Awendaw, SC",        email: "richardres@gmail.com" },
-  { name: "Brett Rogoff",           initials: "BR",  color: "#0A4A43", location: "Southampton, NY",    email: "brett@strategicgroup.tv" },
-  { name: "Raghav Sapra",           initials: "RS",  color: "#0A2218", location: "Baltimore, MD",      email: "raghav@maypolegroup.com" },
-  { name: "Michael Schmidt",        initials: "MSc", color: "#0D9488", location: "",                   email: "mschmidt@whitecapwaste.com" },
-  { name: "Nick Shajwani",          initials: "NS",  color: "#1F4A3C", location: "Kennedyville, MD",   email: "" },
-  { name: "Suhail Sitaf",           initials: "SS",  color: "#B7603B", location: "",                   email: "ssitaf@salzgroup.com" },
-  { name: "Ryan Smith",             initials: "RSm", color: "#8A1E2D", location: "Baltimore, MD",      email: "ryangregorysmith@gmail.com" },
-  { name: "Mark Stephenson",        initials: "MS",  color: "#0A4A43", location: "Alexandria, VA",     email: "mark@redoakstrategic.com" },
-  { name: "Mohammad Tabiekh",       initials: "MT",  color: "#0A2218", location: "Baltimore, MD",      email: "" },
-  { name: "Michael Tarshi",         initials: "MTa", color: "#0D9488", location: "",                   email: "mtarshi@hotmail.com" },
-  { name: "William Tenenbaum",      initials: "WT",  color: "#1F4A3C", location: "Far Hills, NJ",      email: "william@lodestoneglobal.com" },
-  { name: "Raj Thakkar",            initials: "RT",  color: "#B7603B", location: "New York, NY",       email: "rthakkar@csbm.com" },
-  { name: "Arjun Thummalachetty",   initials: "AT",  color: "#8A1E2D", location: "New York, NY",       email: "" },
-  { name: "Divakar Vijayasarathy",  initials: "DV",  color: "#0A4A43", location: "",                   email: "divakar@onedvs.com" },
-  { name: "Joshua Wilson",          initials: "JW",  color: "#0A2218", location: "Tysons, VA",         email: "" },
-  { name: "Max Winthrop",           initials: "MW",  color: "#0D9488", location: "Boston, MA",         email: "max.winthrop@winthropwealth.com" },
-  { name: "Asif Zaman",             initials: "AZ",  color: "#1F4A3C", location: "Brea, CA",           email: "asifzaman7@outlook.com" },
+  { name: "George Abatjoglou",      initials: "GA",  color: "#0A2218", location: "Marblehead, MA",    email: "",                                    ypoUrl: YPO+"/users/3347432" },
+  { name: "Mark Allen",             initials: "MA",  color: "#0D9488", location: "Parkland, FL",       email: "mark.jf.allen@gmail.com",             ypoUrl: YPO+"/users/3355299" },
+  { name: "Steven Alperin",         initials: "SA",  color: "#1F4A3C", location: "New York, NY",       email: "steve@survivornet.com",               ypoUrl: YPO+"/users/3375023" },
+  { name: "Emily Bailey",           initials: "EB",  color: "#B7603B", location: "Calhoun, GA",        email: "ebailey@racemark.com",                ypoUrl: YPO+"/users/3321722" },
+  { name: "Abhayjit Bedi",          initials: "AB",  color: "#8A1E2D", location: "Sterling, MA",       email: "abhayjit.bedi@gmail.com",             ypoUrl: YPO+"/users/3378953" },
+  { name: "Ross Berntson",          initials: "RB",  color: "#0A4A43", location: "Clinton, NY",        email: "rberntson@indium.com",                ypoUrl: YPO+"/users/3339775" },
+  { name: "Scott Bryant",           initials: "SB",  color: "#0A2218", location: "Rockville, MD",      email: "sbryant@fireriskalliance.com",         ypoUrl: YPO+"/users/6828126" },
+  { name: "Kristen Bunnell",        initials: "KB",  color: "#0D9488", location: "Rumson, NJ",         email: "kbunnell@navesinkco.com",             ypoUrl: YPO+"/users/3371925" },
+  { name: "Keegan Caldwell",        initials: "KC",  color: "#1F4A3C", location: "Boston, MA",         email: "keegan@caldwelllaw.com",              ypoUrl: YPO+"/users/3495898" },
+  { name: "Amy Chin",               initials: "AC",  color: "#B7603B", location: "New York, NY",       email: "amy.chin@corpay.com",                 ypoUrl: YPO+"/users/3331839" },
+  { name: "David Curtin",           initials: "DC",  color: "#8A1E2D", location: "Baltimore, MD",      email: "",                                    ypoUrl: YPO+"/users/3840036" },
+  { name: "Sandra DeSilva",         initials: "SD",  color: "#0A4A43", location: "Baltimore, MD",      email: "sdesilva@mythen.com",                 ypoUrl: YPO+"/users/3379282" },
+  { name: "Andrew Fisher",          initials: "AF",  color: "#0A2218", location: "New York, NY",       email: "andrew.fisher@gmail.com",             ypoUrl: YPO+"/users/3331674" },
+  { name: "MichaelAaron Flicker",   initials: "MF",  color: "#0D9488", location: "New York, NY",       email: "mflicker@xenopsi.com",                ypoUrl: YPO+"/users/3320776" },
+  { name: "Tara Fung",              initials: "TF",  color: "#1F4A3C", location: "Baltimore, MD",      email: "tara@usecocreate.io",                 ypoUrl: YPO+"/users/5105285" },
+  { name: "Remy Garson",            initials: "RG",  color: "#B7603B", location: "New York, NY",       email: "remy@ibrandsglobal.com",              ypoUrl: YPO+"/users/3320975" },
+  { name: "Chris Haimbach",         initials: "CH",  color: "#8A1E2D", location: "Madison, NJ",        email: "chaimbac@gmail.com",                  ypoUrl: YPO+"/users/3330096" },
+  { name: "Andrew Halliday",        initials: "AH",  color: "#0A4A43", location: "Slingerlands, NY",   email: "andrew.w.halliday@nm.com",            ypoUrl: YPO+"/users/5438245" },
+  { name: "Paul Karger",            initials: "PK",  color: "#0A2218", location: "Boston, MA",         email: "pk@twinfocus.com",                    ypoUrl: YPO+"/users/3371245" },
+  { name: "David Kaufman",          initials: "DK",  color: "#0D9488", location: "New York, NY",       email: "dkaufman@acquisconsulting.com",        ypoUrl: YPO+"/users/3334522" },
+  { name: "Chris Keith",            initials: "CK",  color: "#1F4A3C", location: "New York, NY",       email: "cmkeith221@gmail.com",                ypoUrl: YPO+"/users/3370462" },
+  { name: "Glen Kunofsky",          initials: "GK",  color: "#B7603B", location: "New York, NY",       email: "gkunofsky@surmount.com",              ypoUrl: YPO+"/users/3373532" },
+  { name: "Jacquelyn Lane",         initials: "JL",  color: "#8A1E2D", location: "New York, NY",       email: "jacquelyn@100coaches.com",            ypoUrl: YPO+"/users/7266075" },
+  { name: "Janica Lane",            initials: "JaL", color: "#0A4A43", location: "Boston, MA",         email: "janica.lane@psc.com",                 ypoUrl: YPO+"/users/3832083" },
+  { name: "Daniel Lederman",        initials: "DL",  color: "#0A2218", location: "New York, NY",       email: "dlederman@mskyline.com",              ypoUrl: YPO+"/users/7467980" },
+  { name: "Guyan Liu",              initials: "GL",  color: "#0D9488", location: "New York, NY",       email: "guyan.liu@gmail.com",                 ypoUrl: YPO+"/users/6809831" },
+  { name: "Alan Marash",            initials: "AM",  color: "#1F4A3C", location: "New York, NY",       email: "alan@jatspartners.com",               ypoUrl: YPO+"/users/3364565" },
+  { name: "Luis Maseda",            initials: "LM",  color: "#B7603B", location: "Centerport, NY",     email: "lmaseda@sloan.mit.edu",               ypoUrl: YPO+"/users/3378760" },
+  { name: "William McDonald",       initials: "WM",  color: "#8A1E2D", location: "New York, NY",       email: "willsm@rugpadusa.com",                ypoUrl: YPO+"/users/3324069" },
+  { name: "John McLoughlin",        initials: "JM",  color: "#0A4A43", location: "",                   email: "jmcloughlin@onesa.com",               ypoUrl: "" },
+  { name: "Michael Mellott",        initials: "MM",  color: "#0A2218", location: "Columbia, MD",       email: "mike@xpertechs.com",                  ypoUrl: YPO+"/users/7056457" },
+  { name: "Brooke Neblett",         initials: "BN",  color: "#0D9488", location: "Great Falls, VA",    email: "bneblett@fyinfo.com",                 ypoUrl: YPO+"/users/5278125" },
+  { name: "Noah Ostroff",           initials: "NO",  color: "#1F4A3C", location: "Philadelphia, PA",   email: "noah@phillyliving.com",               ypoUrl: YPO+"/users/6828505" },
+  { name: "John Parkes",            initials: "JP",  color: "#B7603B", location: "Alexandria, VA",     email: "jdparkes@parrylabs.com",              ypoUrl: YPO+"/users/3377937" },
+  { name: "Anup Patel",             initials: "AP",  color: "#8A1E2D", location: "New York, NY",       email: "apatel@archstreetcapital.com",         ypoUrl: YPO+"/users/3377065" },
+  { name: "Ryan Payne",             initials: "RP",  color: "#0A4A43", location: "New York, NY",       email: "ryan.payne@paynecm.com",              ypoUrl: YPO+"/users/3377976" },
+  { name: "Ben Pearson",            initials: "BP",  color: "#0A2218", location: "Honeoye Falls, NY",  email: "pearson.benjamin@enalasgroup.com",     ypoUrl: YPO+"/users/3347569" },
+  { name: "Chez Perfetto",          initials: "CP",  color: "#0D9488", location: "Brooklyn, NY",       email: "cperfettojr@perfettocontracting.com", ypoUrl: YPO+"/users/3317924" },
+  { name: "Ingrid Prasatya",        initials: "IP",  color: "#1F4A3C", location: "",                   email: "ingrid@entebe.com.sg",                ypoUrl: "" },
+  { name: "Omar Rahman",            initials: "OR",  color: "#B7603B", location: "Baltimore, MD",      email: "",                                    ypoUrl: YPO+"/users/8215996" },
+  { name: "Richard Resnick",        initials: "RR",  color: "#8A1E2D", location: "Awendaw, SC",        email: "richardres@gmail.com",                ypoUrl: YPO+"/users/18061322" },
+  { name: "Brett Rogoff",           initials: "BR",  color: "#0A4A43", location: "Southampton, NY",    email: "brett@strategicgroup.tv",             ypoUrl: YPO+"/users/3357991" },
+  { name: "Raghav Sapra",           initials: "RS",  color: "#0A2218", location: "Baltimore, MD",      email: "raghav@maypolegroup.com",             ypoUrl: YPO+"/users/3331815" },
+  { name: "Michael Schmidt",        initials: "MSc", color: "#0D9488", location: "",                   email: "mschmidt@whitecapwaste.com",           ypoUrl: "" },
+  { name: "Nick Shajwani",          initials: "NS",  color: "#1F4A3C", location: "Kennedyville, MD",   email: "",                                    ypoUrl: YPO+"/users/8281123" },
+  { name: "Suhail Sitaf",           initials: "SS",  color: "#B7603B", location: "",                   email: "ssitaf@salzgroup.com",                ypoUrl: "" },
+  { name: "Ryan Smith",             initials: "RSm", color: "#8A1E2D", location: "Baltimore, MD",      email: "ryangregorysmith@gmail.com",          ypoUrl: YPO+"/users/3701509" },
+  { name: "Mark Stephenson",        initials: "MS",  color: "#0A4A43", location: "Alexandria, VA",     email: "mark@redoakstrategic.com",            ypoUrl: YPO+"/users/6828792" },
+  { name: "Mohammad Tabiekh",       initials: "MT",  color: "#0A2218", location: "Baltimore, MD",      email: "",                                    ypoUrl: YPO+"/users/6825557" },
+  { name: "Michael Tarshi",         initials: "MTa", color: "#0D9488", location: "",                   email: "mtarshi@hotmail.com",                 ypoUrl: "" },
+  { name: "William Tenenbaum",      initials: "WT",  color: "#1F4A3C", location: "Far Hills, NJ",      email: "william@lodestoneglobal.com",         ypoUrl: YPO+"/users/5307847" },
+  { name: "Raj Thakkar",            initials: "RT",  color: "#B7603B", location: "New York, NY",       email: "rthakkar@csbm.com",                   ypoUrl: YPO+"/users/3321389" },
+  { name: "Arjun Thummalachetty",   initials: "AT",  color: "#8A1E2D", location: "New York, NY",       email: "",                                    ypoUrl: YPO+"/users/8118029" },
+  { name: "Divakar Vijayasarathy",  initials: "DV",  color: "#0A4A43", location: "",                   email: "divakar@onedvs.com",                  ypoUrl: "" },
+  { name: "Joshua Wilson",          initials: "JW",  color: "#0A2218", location: "Tysons, VA",         email: "",                                    ypoUrl: YPO+"/users/18009921" },
+  { name: "Max Winthrop",           initials: "MW",  color: "#0D9488", location: "Boston, MA",         email: "max.winthrop@winthropwealth.com",     ypoUrl: YPO+"/users/3320894" },
+  { name: "Asif Zaman",             initials: "AZ",  color: "#1F4A3C", location: "Brea, CA",           email: "asifzaman7@outlook.com",              ypoUrl: YPO+"/users/6950012" },
 ];
 
 /* ═══════════════════════════════════════════════════════════
@@ -1183,17 +1184,14 @@ function renderChallenge() {
    ROSTER
 ═══════════════════════════════════════════════════════════ */
 function renderRoster() {
-  const html = MEMBERS.map(m => {
-    const ypoUrl = `https://www2.ypoconnect.org/people?who=${encodeURIComponent(m.name)}&sub_network_ids=%5B20757%5D`;
-    return `
+  const html = MEMBERS.map(m => `
   <div class="member-card">
     <div class="member-avatar" style="background:${m.color}">${m.initials}</div>
     <div class="member-name">${m.name}</div>
     ${m.location ? `<div class="member-location">${m.location}</div>` : '<div class="member-location">&nbsp;</div>'}
     ${m.email ? `<div class="member-email"><a href="mailto:${m.email}">${m.email}</a></div>` : ''}
-    <a class="member-ypo" href="${ypoUrl}" target="_blank" rel="noopener">YPO Connect ↗</a>
-  </div>`;
-  }).join("");
+    ${m.ypoUrl ? `<a class="member-ypo" href="${m.ypoUrl}" target="_blank" rel="noopener">YPO Connect ↗</a>` : ''}
+  </div>`).join("");
   document.getElementById("rosterGrid").innerHTML = html;
 }
 
