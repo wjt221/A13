@@ -1,0 +1,14 @@
+{
+  "name": "A13 — See the Whole Board",
+  "short_name": "A13",
+  "description": "YPO Atlantic 13 Learning Year 2026–2027",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0A2218",
+  "theme_color": "#0A2218",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "assets/YPO_US_Atlantic13White-01.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/YPO_US_Atlantic13White-01.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

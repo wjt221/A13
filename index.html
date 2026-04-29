@@ -1,746 +1,464 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A2218">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="A13">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/YPO_US_Atlantic13White-01.png">
   <title>A13 — See the Whole Board</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-/* ─────────────────────────────────────────────────────────
-   TOKENS
-───────────────────────────────────────────────────────── */
+/* ─── TOKENS ───────────────────────────────────────────── */
 :root {
-  --navy:        #0A2218;
-  --navy-mid:    #0E2D1F;
-  --harbor:      #0D9488;
-  --ivory:       #F1F7F3;
-  --charcoal:    #1A2A1E;
-  --gold:        #22C55E;
-  --gold-lt:     #4ADE80;
-  --gold-dim:    rgba(34,197,94,.15);
-  --cranberry:   #8A1E2D;
-  --terracotta:  #B7603B;
-  --pine:        #1F4A3C;
-  --white:       #FFFFFF;
-  --ink:         #1A2A1E;
-  --ink-2:       #3D5246;
-  --ink-3:       #7A9A87;
-  --rule:        rgba(10,34,24,.1);
-  --cat-core:    #0A2218;
-  --cat-virtual: #0D9488;
-  --cat-opt:     #1F4A3C;
-  --serif:       'Playfair Display', Georgia, serif;
-  --sans:        'Inter', system-ui, sans-serif;
-  --label:       'Montserrat', system-ui, sans-serif;
-  --ease:        cubic-bezier(.25,.46,.45,.94);
+  --navy:      #0A2218;
+  --harbor:    #0D9488;
+  --ivory:     #F1F7F3;
+  --charcoal:  #1A2A1E;
+  --gold:      #22C55E;
+  --gold-lt:   #4ADE80;
+  --cranberry: #8A1E2D;
+  --terra:     #B7603B;
+  --pine:      #1F4A3C;
+  --white:     #FFFFFF;
+  --ink:       #1A2A1E;
+  --ink-2:     #3D5246;
+  --ink-3:     #7A9A87;
+  --rule:      rgba(10,34,24,.1);
+  --serif:     'Playfair Display', Georgia, serif;
+  --sans:      'Inter', system-ui, sans-serif;
+  --label:     'Montserrat', system-ui, sans-serif;
+  --ease:      cubic-bezier(.25,.46,.45,.94);
+  --r-card:    2px;
+}
+
+/* ─── DARK MODE ─────────────────────────────────────────── */
+html[data-theme="dark"] {
+  --ivory:  #0C1610;
+  --white:  #111A14;
+  --ink:    #DFF0E5;
+  --ink-2:  #9DC4A8;
+  --ink-3:  #5A8A68;
+  --rule:   rgba(34,197,94,.1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body {
-  font-family: var(--sans);
-  background: var(--ivory);
-  color: var(--ink);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
+body { font-family: var(--sans); background: var(--ivory); color: var(--ink);
+       min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-/* ─────────────────────────────────────────────────────────
-   LOCK SCREEN
-───────────────────────────────────────────────────────── */
-#lock {
-  display: flex;
-  min-height: 100vh;
-  background: var(--navy);
-}
+/* ─── LOCK SCREEN ───────────────────────────────────────── */
+#lock { display: flex; min-height: 100vh; background: var(--navy); }
 
 .lock-left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 5rem;
-  border-right: 1px solid rgba(34,197,94,.1);
-  position: relative;
-  overflow: hidden;
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+  padding: 5rem; border-right: 1px solid rgba(34,197,94,.1);
+  position: relative; overflow: hidden;
   background-image:
     linear-gradient(rgba(34,197,94,.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(34,197,94,.045) 1px, transparent 1px);
   background-size: 52px 52px;
 }
-
 .lock-left::before {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ''; position: absolute; inset: 0;
   background: radial-gradient(ellipse at 35% 55%, rgba(13,148,136,.35) 0%, transparent 65%);
   pointer-events: none;
 }
-
-.lock-eyebrow {
-  font-family: var(--label);
-  font-size: .58rem;
-  font-weight: 600;
-  letter-spacing: .32em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 2.75rem;
-  position: relative;
-}
-
 .lock-headline {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-style: italic;
-  font-size: clamp(3.5rem, 6vw, 5.75rem);
-  line-height: .92;
-  color: var(--white);
-  margin-bottom: 2.75rem;
-  letter-spacing: -.015em;
-  position: relative;
+  font-family: var(--serif); font-weight: 400; font-style: italic;
+  font-size: clamp(3.5rem, 6vw, 5.75rem); line-height: .92;
+  color: var(--white); margin-bottom: 2.75rem; letter-spacing: -.015em; position: relative;
 }
-
-.lock-headline strong {
-  font-style: normal;
-  font-weight: 700;
-  display: block;
-  color: var(--white);
-}
-
-.lock-rule {
-  width: 44px;
-  height: 1px;
-  background: var(--gold);
-  opacity: .45;
-  margin-bottom: 1.75rem;
-  position: relative;
-}
-
-.lock-tagline {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1rem;
-  color: rgba(255,255,255,.45);
-  margin-bottom: 3.25rem;
-  line-height: 1.55;
-  max-width: 340px;
-  position: relative;
-}
-
-.lock-path-wrap {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: .75rem;
-}
-
-.lock-pips {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  position: relative;
-}
-
-.lock-pips::before {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  top: 50%;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(34,197,94,.35) 0%, rgba(34,197,94,.1) 100%);
-}
-
-.pip {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: rgba(34,197,94,.38);
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-}
-
-.pip:last-child {
-  background: var(--gold);
-  width: 10px; height: 10px;
-  box-shadow: 0 0 10px rgba(34,197,94,.55);
-}
-
-.lock-pip-label {
-  font-family: var(--label);
-  font-size: .5rem;
-  font-weight: 500;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.2);
-}
-
-.lock-right {
-  width: 420px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 3.5rem;
-  background: rgba(255,255,255,.022);
-}
-
-.lock-form-eyebrow {
-  font-family: var(--label);
-  font-size: .58rem;
-  font-weight: 600;
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 2.5rem;
-  text-align: center;
-}
-
-.lock-field-wrap { width: 100%; position: relative; margin-bottom: .5rem; }
-
-.lock-field-label {
-  display: block;
-  font-family: var(--label);
-  font-size: .55rem;
-  font-weight: 600;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.28);
-  margin-bottom: .7rem;
-}
-
-.lock-field {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(34,197,94,.3);
-  padding: .6rem 0;
-  font-family: var(--sans);
-  font-size: .95rem;
-  color: var(--white);
-  outline: none;
-  letter-spacing: .1em;
-  transition: border-color .25s var(--ease);
-}
-
+.lock-headline strong { font-style: normal; font-weight: 700; display: block; }
+.lock-rule { width: 44px; height: 1px; background: var(--gold); opacity: .45; margin-bottom: 1.75rem; position: relative; }
+.lock-tagline { font-family: var(--serif); font-style: italic; font-size: 1rem;
+  color: rgba(255,255,255,.45); margin-bottom: 3.25rem; line-height: 1.55;
+  max-width: 340px; position: relative; }
+.lock-pips { display: flex; align-items: center; gap: 13px; position: relative; }
+.lock-pips::before { content: ''; position: absolute; left: 0; right: 0; top: 50%;
+  height: 1px; background: linear-gradient(90deg, rgba(34,197,94,.35) 0%, rgba(34,197,94,.1) 100%); }
+.pip { width: 7px; height: 7px; border-radius: 50%; background: rgba(34,197,94,.38);
+  flex-shrink: 0; position: relative; z-index: 1; }
+.pip:last-child { background: var(--gold); width: 10px; height: 10px; box-shadow: 0 0 10px rgba(34,197,94,.55); }
+.lock-pip-label { font-family: var(--label); font-size: .5rem; font-weight: 500;
+  letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.2); margin-top: .75rem; }
+.lock-right { width: 420px; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 4rem 3.5rem; background: rgba(255,255,255,.022); }
+.lock-form-eyebrow { font-family: var(--label); font-size: .58rem; font-weight: 600;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 2.5rem; text-align: center; }
+.lock-field-label { display: block; font-family: var(--label); font-size: .55rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.28); margin-bottom: .7rem; }
+.lock-field { width: 100%; background: transparent; border: none;
+  border-bottom: 1px solid rgba(34,197,94,.3); padding: .6rem 0;
+  font-family: var(--sans); font-size: .95rem; color: var(--white); outline: none;
+  letter-spacing: .1em; transition: border-color .25s var(--ease); }
 .lock-field:focus { border-bottom-color: var(--gold); }
 .lock-field::placeholder { color: rgba(255,255,255,.16); letter-spacing: .06em; }
+.lock-error { min-height: 1.4em; font-size: .7rem; color: #E07070; margin-top: .45rem; }
+.lock-btn { width: 100%; margin-top: 2rem; background: var(--gold); color: var(--navy);
+  border: none; padding: .9rem 1.5rem; font-family: var(--label); font-size: .62rem;
+  font-weight: 700; letter-spacing: .3em; text-transform: uppercase; cursor: pointer;
+  transition: background .2s; }
+.lock-btn:hover { background: var(--gold-lt); }
+.lock-footnote { margin-top: 3rem; font-family: var(--label); font-size: .52rem;
+  letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.16); text-align: center; }
 
-.lock-error {
-  min-height: 1.4em;
-  font-size: .7rem;
-  color: #E07070;
-  margin-top: .45rem;
-  letter-spacing: .01em;
-}
-
-.lock-btn {
-  width: 100%;
-  margin-top: 2rem;
-  background: var(--gold);
-  color: var(--navy);
-  border: none;
-  padding: .9rem 1.5rem;
-  font-family: var(--label);
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background .2s var(--ease), transform .1s;
-}
-
-.lock-btn:hover  { background: var(--gold-lt); }
-.lock-btn:active { transform: scale(.98); }
-
-.lock-footnote {
-  margin-top: 3rem;
-  font-family: var(--label);
-  font-size: .52rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.16);
-  text-align: center;
-}
-
-/* ─────────────────────────────────────────────────────────
-   APP
-───────────────────────────────────────────────────────── */
+/* ─── APP SHELL ─────────────────────────────────────────── */
 #app { display: none; flex-direction: column; min-height: 100vh; }
-
-/* Subtle board grid */
-#app::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(10,34,24,.028) 1px, transparent 1px),
+#app::before { content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(10,34,24,.028) 1px, transparent 1px),
     linear-gradient(90deg, rgba(10,34,24,.028) 1px, transparent 1px);
-  background-size: 52px 52px;
-  pointer-events: none;
-  z-index: 0;
-}
+  background-size: 52px 52px; pointer-events: none; z-index: 0; }
+html[data-theme="dark"] #app::before {
+  background-image: linear-gradient(rgba(34,197,94,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,197,94,.04) 1px, transparent 1px); }
 
-/* ─── Header ─── */
-.hdr {
-  height: 62px;
-  background: var(--white);
-  border-bottom: 1px solid var(--rule);
-  padding: 0 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 200;
-}
+/* ─── HEADER ────────────────────────────────────────────── */
+.hdr { height: 62px; background: var(--white); border-bottom: 1px solid var(--rule);
+  padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200; gap: 1rem; }
+.hdr-brand img { height: 34px; width: auto; display: block; }
+html[data-theme="dark"] .hdr-brand img { filter: invert(1) brightness(2); }
 
-.hdr-brand { display: flex; flex-direction: column; gap: .1rem; }
+.hdr-nav { display: flex; gap: .2rem; background: var(--ivory); border: 1px solid var(--rule);
+  border-radius: 3px; padding: .2rem; }
+.nav-pill { padding: .28rem .9rem; font-family: var(--label); font-size: .55rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase; border: none; background: transparent;
+  color: var(--ink-3); cursor: pointer; border-radius: 2px; transition: all .2s; white-space: nowrap; }
+.nav-pill.active { background: var(--navy); color: var(--white); }
+html[data-theme="dark"] .hdr-nav { background: rgba(34,197,94,.06); }
+html[data-theme="dark"] .nav-pill.active { background: var(--gold); color: var(--navy); }
 
-.hdr-monogram {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--navy);
-  letter-spacing: -.01em;
-  line-height: 1;
-}
-
-.hdr-monogram em { font-style: italic; font-weight: 400; color: var(--gold); }
-
-.hdr-tagline {
-  font-family: var(--label);
-  font-size: .48rem;
-  font-weight: 600;
-  letter-spacing: .25em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  line-height: 1;
-}
-
-.signout-btn {
-  background: none;
-  border: none;
-  font-family: var(--label);
-  font-size: .58rem;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  cursor: pointer;
-  padding: .36rem 0;
-  border-bottom: 1px solid transparent;
-  transition: color .2s, border-color .2s;
-}
-
+.hdr-actions { display: flex; align-items: center; gap: .5rem; }
+.icon-btn { background: none; border: 1px solid var(--rule); color: var(--ink-3);
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border-radius: 2px; transition: all .2s; flex-shrink: 0; }
+.icon-btn:hover { border-color: var(--gold); color: var(--gold); }
+.signout-btn { background: none; border: none; font-family: var(--label); font-size: .55rem;
+  font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+  cursor: pointer; padding: .36rem 0; border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s; white-space: nowrap; }
 .signout-btn:hover { color: var(--ink); border-bottom-color: var(--rule); }
 
-/* ─── Main ─── */
-.main {
-  flex: 1;
-  padding: 2.5rem;
-  max-width: 1080px;
-  margin: 0 auto;
-  width: 100%;
-  position: relative;
-  z-index: 1;
-}
+/* ─── SECTIONS ──────────────────────────────────────────── */
+.section { position: relative; z-index: 1; }
+.section[hidden] { display: none; }
+.main { max-width: 1080px; margin: 0 auto; padding: 2rem 2.5rem; width: 100%; }
 
-/* ─────────────────────────────────────────────────────────
-   EVENT CARDS
-───────────────────────────────────────────────────────── */
+/* ─── HERO BANNER ───────────────────────────────────────── */
+.hero {
+  background: var(--navy); padding: 2rem 2.5rem; position: relative; overflow: hidden;
+  background-image: linear-gradient(rgba(34,197,94,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,197,94,.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.hero::before { content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(13,148,136,.2) 0%, transparent 60%);
+  pointer-events: none; }
+.hero-inner { max-width: 1080px; margin: 0 auto; display: flex;
+  align-items: center; justify-content: space-between; gap: 2rem; position: relative; }
+.hero-left { flex: 1; min-width: 0; }
+.hero-eyebrow { font-family: var(--label); font-size: .54rem; font-weight: 700;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+.hero-title { font-family: var(--serif); font-style: italic; font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--white); line-height: 1.1; margin-bottom: .3rem; }
+.hero-subtitle { font-size: .82rem; color: rgba(255,255,255,.5); margin-bottom: 1rem; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: .3rem 1.5rem; font-size: .74rem;
+  color: rgba(255,255,255,.4); }
+.hero-meta span { display: flex; align-items: center; gap: .4rem; }
+.hero-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: .6; }
+
+.hero-right { flex-shrink: 0; text-align: center; }
+.hero-count { display: flex; flex-direction: column; align-items: center; }
+.hero-days { font-family: var(--serif); font-size: clamp(3rem, 6vw, 5rem); font-weight: 700;
+  color: var(--white); line-height: 1; letter-spacing: -.03em; }
+.hero-days-label { font-family: var(--label); font-size: .52rem; font-weight: 600;
+  letter-spacing: .28em; text-transform: uppercase; color: var(--gold); margin-top: .2rem; }
+.hero-gcal { display: inline-flex; align-items: center; gap: .4rem; margin-top: 1rem;
+  background: rgba(34,197,94,.15); border: 1px solid rgba(34,197,94,.3); color: var(--gold);
+  padding: .4rem .85rem; font-family: var(--label); font-size: .52rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase; cursor: pointer; text-decoration: none;
+  transition: background .2s; border-radius: 1px; }
+.hero-gcal:hover { background: rgba(34,197,94,.25); }
+
+/* ─── LIST TOOLBAR ──────────────────────────────────────── */
+.list-toolbar { display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 0 .5rem; flex-wrap: wrap; gap: .75rem; }
+.list-toolbar-title { font-family: var(--serif); font-style: italic; font-size: 1.35rem;
+  color: var(--navy); }
+html[data-theme="dark"] .list-toolbar-title { color: var(--gold); }
+.ics-btn { display: inline-flex; align-items: center; gap: .5rem; background: none;
+  border: 1px solid var(--rule); color: var(--ink-2); padding: .45rem .9rem;
+  font-family: var(--label); font-size: .54rem; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; cursor: pointer; transition: all .2s; border-radius: 2px; }
+.ics-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ─── EVENT CARDS ───────────────────────────────────────── */
 .ev-list { display: flex; flex-direction: column; }
+.ev-month { display: flex; align-items: center; gap: 1.5rem; padding: 2rem 0 .75rem; }
+.ev-month:first-child { padding-top: .25rem; }
+.ev-month-name { font-family: var(--serif); font-size: 1rem; font-weight: 400;
+  font-style: italic; color: var(--navy); white-space: nowrap; }
+html[data-theme="dark"] .ev-month-name { color: var(--gold); }
+.ev-month-line { flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--gold) 0%, transparent 100%); opacity: .2; }
 
-.ev-month {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 2.25rem 0 .85rem;
-}
+.ev-card { display: flex; background: var(--white); border: 1px solid var(--rule);
+  border-left-width: 4px; overflow: hidden; cursor: pointer; margin-bottom: 1.1rem;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+.ev-card:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(10,34,24,.1); }
+html[data-theme="dark"] .ev-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,.4); }
+.ev-card.past { opacity: .65; }
+.ev-card.past:hover { opacity: .85; }
 
-.ev-month:first-child { padding-top: 0; }
-
-.ev-month-name {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--navy);
-  white-space: nowrap;
-}
-
-.ev-month-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
-  opacity: .2;
-}
-
-/* Card — base */
-.ev-card {
-  display: flex;
-  background: var(--white);
-  border: 1px solid var(--rule);
-  border-left-width: 4px;
-  border-left-style: solid;
-  overflow: hidden;
-  cursor: pointer;
-  margin-bottom: 1.25rem;
-  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
-}
-
-.ev-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 52px rgba(10,34,24,.1);
-}
-
-/* Core — large, navy */
-.ev-card--core { border-left-color: #0A2218; height: 300px; }
-.ev-card--core .ev-photo { width: 44%; }
-.ev-card--core .ev-title { font-size: 1.85rem; }
-.ev-card--core .ev-content { padding: 2.25rem 2.5rem; background: var(--white); }
-
-/* Optional — medium, terracotta/warm */
-.ev-card--optional { border-left-color: #B7603B; height: 200px; }
-.ev-card--optional .ev-photo { width: 34%; }
-.ev-card--optional .ev-title { font-size: 1.35rem; }
-.ev-card--optional .ev-content { padding: 1.5rem 1.75rem; background: #FDF8F3; }
-.ev-card--optional .ev-info-dot { background: #B7603B; }
-
-/* Virtual — compact, teal */
+/* Sizes by category */
+.ev-card--core    { border-left-color: #0A2218; height: 300px; }
+.ev-card--optional{ border-left-color: #B7603B; height: 200px; }
 .ev-card--virtual { border-left-color: #0D9488; height: 160px; }
-.ev-card--virtual .ev-photo { width: 28%; }
-.ev-card--virtual .ev-title { font-size: 1.25rem; }
-.ev-card--virtual .ev-content { padding: 1.25rem 1.5rem; background: #F0FAF8; }
-.ev-card--virtual .ev-info-dot { background: #0D9488; }
-.ev-card--virtual .ev-subtitle { margin-bottom: 1rem; }
+.ev-card--core    .ev-photo { width: 44%; }
+.ev-card--optional .ev-photo { width: 34%; }
+.ev-card--virtual  .ev-photo { width: 28%; }
+.ev-card--core    .ev-title { font-size: 1.85rem; }
+.ev-card--optional .ev-title { font-size: 1.35rem; }
+.ev-card--virtual  .ev-title { font-size: 1.25rem; }
+.ev-card--core    .ev-content { padding: 2.25rem 2.5rem; background: var(--white); }
+.ev-card--optional .ev-content { padding: 1.5rem 1.75rem; background: #FDF8F3; }
+.ev-card--virtual  .ev-content { padding: 1.25rem 1.5rem; background: #F0FAF8; }
+.ev-card--optional .ev-info-dot { background: #B7603B; }
+.ev-card--virtual  .ev-info-dot { background: #0D9488; }
+.ev-card--virtual  .ev-subtitle { margin-bottom: .75rem; }
+html[data-theme="dark"] .ev-card--core    .ev-content { background: var(--white); }
+html[data-theme="dark"] .ev-card--optional .ev-content { background: rgba(183,96,59,.08); }
+html[data-theme="dark"] .ev-card--virtual  .ev-content { background: rgba(13,148,136,.08); }
 
-/* Photo side — shared */
-.ev-photo {
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-  background: var(--navy);
-  align-self: stretch;
-}
-
-.ev-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform .55s var(--ease);
-}
-
+.ev-photo { flex-shrink: 0; position: relative; overflow: hidden;
+  background: var(--navy); align-self: stretch; }
+.ev-photo img { width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .55s var(--ease); }
 .ev-card:hover .ev-photo img { transform: scale(1.05); }
+.ev-photo-fallback { position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center; }
+.ev-photo-num { font-family: var(--serif); font-style: italic; font-size: 5rem;
+  font-weight: 300; color: rgba(255,255,255,.15); line-height: 1; }
+.ev-photo-cat { position: absolute; bottom: 0; left: 0; right: 0; padding: .5rem .7rem;
+  font-family: var(--label); font-size: .5rem; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(255,255,255,.7);
+  background: linear-gradient(transparent, rgba(0,0,0,.4)); }
+.past-badge { position: absolute; top: .6rem; left: .6rem; background: rgba(0,0,0,.55);
+  color: rgba(255,255,255,.7); font-family: var(--label); font-size: .48rem; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase; padding: .2rem .5rem;
+  backdrop-filter: blur(4px); border-radius: 1px; }
 
-/* Photo fallback gradient (shown if image fails) */
-.ev-photo-fallback {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ev-photo-num {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 5rem;
-  font-weight: 300;
-  color: rgba(255,255,255,.15);
-  line-height: 1;
-}
-
-/* Category strip at bottom of photo */
-.ev-photo-cat {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: .5rem .7rem;
-  font-family: var(--label);
-  font-size: .5rem;
-  font-weight: 700;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.7);
-  background: linear-gradient(transparent, rgba(0,0,0,.4));
-}
-
-
-/* Content side */
-.ev-content {
-  flex: 1;
-  padding: 2.25rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 0;
-}
-
-.ev-meta-row {
-  display: flex;
-  align-items: center;
-  gap: .65rem;
-  margin-bottom: .85rem;
-}
-
-.ev-num {
-  font-family: var(--label);
-  font-size: .5rem;
-  font-weight: 700;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--white);
-  padding: .15rem .5rem;
-  border-radius: 1px;
-  flex-shrink: 0;
-}
-
-.ev-cat-lbl {
-  font-family: var(--label);
-  font-size: .5rem;
-  font-weight: 500;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.ev-title {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.85rem;
-  font-weight: 400;
-  color: var(--navy);
-  line-height: 1.1;
-  margin-bottom: .4rem;
-}
-
-.ev-subtitle {
-  font-family: var(--sans);
-  font-size: .82rem;
-  font-weight: 400;
-  color: var(--ink-2);
-  line-height: 1.45;
-  margin-bottom: 1.5rem;
-}
-
-.ev-info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .3rem 1.5rem;
-  font-size: .74rem;
-  color: var(--ink-2);
-  border-top: 1px solid var(--rule);
-  padding-top: 1.1rem;
-}
-
+.ev-content { flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.ev-meta-row { display: flex; align-items: center; gap: .65rem; margin-bottom: .75rem; }
+.ev-num { font-family: var(--label); font-size: .5rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--white);
+  padding: .15rem .5rem; border-radius: 1px; flex-shrink: 0; }
+.ev-cat-lbl { font-family: var(--label); font-size: .5rem; font-weight: 500;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+.ev-title { font-family: var(--serif); font-style: italic; font-weight: 400;
+  color: var(--navy); line-height: 1.1; margin-bottom: .35rem; }
+html[data-theme="dark"] .ev-title { color: var(--ink); }
+.ev-subtitle { font-family: var(--sans); font-size: .82rem; color: var(--ink-2);
+  line-height: 1.45; margin-bottom: 1.25rem; }
+.ev-info { display: flex; flex-wrap: wrap; gap: .3rem 1.5rem; font-size: .74rem;
+  color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: auto; }
 .ev-info-item { display: flex; align-items: center; gap: .4rem; }
+.ev-info-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: .7; flex-shrink: 0; }
 
-.ev-info-dot {
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: var(--gold);
-  opacity: .7;
-  flex-shrink: 0;
-}
+/* ─── CHALLENGE SECTION ─────────────────────────────────── */
+.challenge-hero { background: var(--navy); padding: 3rem 2.5rem; position: relative; overflow: hidden;
+  background-image: linear-gradient(rgba(34,197,94,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,197,94,.04) 1px, transparent 1px);
+  background-size: 40px 40px; }
+.challenge-hero::before { content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(34,197,94,.12) 0%, transparent 60%);
+  pointer-events: none; }
+.challenge-hero-inner { max-width: 1080px; margin: 0 auto; position: relative; }
+.ch-eyebrow { font-family: var(--label); font-size: .58rem; font-weight: 700;
+  letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: .75rem; }
+.ch-title { font-family: var(--serif); font-style: italic; font-size: clamp(2rem,4vw,3rem);
+  color: var(--white); line-height: 1.05; margin-bottom: .75rem; }
+.ch-tagline { font-size: .85rem; color: rgba(255,255,255,.45); max-width: 480px; line-height: 1.6; }
+.ch-prize { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.5rem;
+  background: rgba(34,197,94,.12); border: 1px solid rgba(34,197,94,.25);
+  padding: .6rem 1.1rem; border-radius: 2px; }
+.ch-prize-icon { font-size: 1.1rem; }
+.ch-prize-text { font-family: var(--label); font-size: .58rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.ch-prize-amount { color: var(--gold); }
 
-/* ─────────────────────────────────────────────────────────
-   MODAL
-───────────────────────────────────────────────────────── */
-.overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(8,18,12,.72);
-  z-index: 900;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
+.ch-body { max-width: 1080px; margin: 0 auto; padding: 2.5rem; }
+.ch-section-label { font-family: var(--label); font-size: .56rem; font-weight: 700;
+  letter-spacing: .28em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 1.5rem;
+  padding-bottom: .6rem; border-bottom: 1px solid var(--rule); }
 
-.overlay.show {
-  display: flex;
-  animation: fadeIn .28s var(--ease) forwards;
-}
+.ch-teams { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 3rem; }
+.ch-team { background: var(--white); border: 1px solid var(--rule);
+  border-left: 4px solid var(--team-color, #22C55E); padding: 1.5rem; position: relative; }
+.ch-rank { position: absolute; top: 1rem; right: 1.25rem; font-family: var(--serif);
+  font-size: 2.5rem; font-weight: 700; color: var(--rule); line-height: 1; }
+.ch-rank.top { color: rgba(201,162,74,.25); }
+.ch-team-name { font-family: var(--serif); font-style: italic; font-size: 1.4rem;
+  color: var(--navy); margin-bottom: .4rem; }
+html[data-theme="dark"] .ch-team-name { color: var(--ink); }
+.ch-team-members { font-size: .78rem; color: var(--ink-3); margin-bottom: 1rem; line-height: 1.5; }
+.ch-pts { font-family: var(--serif); font-size: 2rem; font-weight: 700;
+  color: var(--navy); line-height: 1; margin-bottom: .6rem; }
+html[data-theme="dark"] .ch-pts { color: var(--ink); }
+.ch-pts span { font-size: .75rem; font-weight: 400; font-style: italic; color: var(--ink-3); margin-left: .25rem; }
+.ch-bar-track { background: var(--ivory); height: 5px; border-radius: 3px; overflow: hidden; }
+html[data-theme="dark"] .ch-bar-track { background: rgba(255,255,255,.06); }
+.ch-bar { height: 100%; border-radius: 3px; background: var(--team-color, #22C55E);
+  transition: width 1s var(--ease); min-width: 2px; }
 
+.ch-breakdown { overflow-x: auto; }
+.ch-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.ch-table th { font-family: var(--label); font-size: .5rem; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3);
+  text-align: left; padding: .6rem .75rem; border-bottom: 1px solid var(--rule); }
+.ch-table th:not(:first-child) { text-align: center; }
+.ch-table td { padding: .65rem .75rem; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: middle; }
+.ch-table td:not(:first-child) { text-align: center; font-weight: 500; }
+.ch-table tr:last-child td { border-bottom: none; }
+.ch-table tr:hover td { background: rgba(34,197,94,.04); }
+.ch-ev-name { font-weight: 500; color: var(--ink); font-size: .82rem; }
+html[data-theme="dark"] .ch-ev-name { color: var(--ink); }
+.ch-avail { font-family: var(--label); font-size: .5rem; font-weight: 600;
+  letter-spacing: .1em; background: var(--ivory); color: var(--ink-3);
+  padding: .15rem .5rem; border-radius: 10px; display: inline-block; }
+html[data-theme="dark"] .ch-avail { background: rgba(255,255,255,.06); }
+.ch-score-cell { font-family: var(--label); font-size: .72rem; font-weight: 700; }
+.ch-score-dash { color: var(--ink-3); font-weight: 300; }
+
+/* ─── ROSTER SECTION ────────────────────────────────────── */
+.roster-header { padding: 2.5rem 2.5rem 0; max-width: 1080px; margin: 0 auto; }
+.roster-header h2 { font-family: var(--serif); font-style: italic; font-size: 2rem;
+  color: var(--navy); margin-bottom: .4rem; }
+html[data-theme="dark"] .roster-header h2 { color: var(--ink); }
+.roster-header p { font-size: .85rem; color: var(--ink-3); }
+.roster-grid { max-width: 1080px; margin: 0 auto; padding: 1.75rem 2.5rem 3rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.25rem; }
+.member-card { background: var(--white); border: 1px solid var(--rule);
+  padding: 1.5rem; text-align: center; cursor: default; transition: transform .25s var(--ease), box-shadow .25s; }
+.member-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(10,34,24,.08); }
+.member-avatar { width: 60px; height: 60px; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; margin: 0 auto 1rem; font-family: var(--label);
+  font-size: .8rem; font-weight: 700; letter-spacing: .06em; color: var(--white); flex-shrink: 0; }
+.member-name { font-family: var(--serif); font-style: italic; font-size: 1rem;
+  color: var(--navy); margin-bottom: .2rem; line-height: 1.2; }
+html[data-theme="dark"] .member-name { color: var(--ink); }
+.member-title { font-family: var(--label); font-size: .52rem; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ─── MODAL ─────────────────────────────────────────────── */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(8,18,12,.72);
+  z-index: 900; align-items: center; justify-content: center; padding: 1.5rem;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.overlay.show { display: flex; animation: fadeIn .28s var(--ease) forwards; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-.modal {
-  background: var(--white);
-  max-width: 600px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: slideUp .3s var(--ease) forwards;
-  border: 1px solid var(--rule);
-}
-
-@keyframes slideUp {
-  from { transform: translateY(14px) scale(.97); opacity: 0; }
-  to   { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-.modal-hdr {
-  padding: 2rem 2.25rem 1.75rem;
-  position: relative;
-}
-
-.modal-move {
-  font-family: var(--label);
-  font-size: .54rem;
-  font-weight: 700;
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.5);
-  margin-bottom: .55rem;
-}
-
-.modal-tag {
-  font-family: var(--label);
-  font-size: .54rem;
-  font-weight: 600;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.6);
-  margin-bottom: .6rem;
-}
-
-.modal-title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-style: italic;
-  font-size: 2rem;
-  color: var(--white);
-  line-height: 1.15;
-  padding-right: 2.5rem;
-}
-
-.modal-subtitle {
-  font-family: var(--sans);
-  font-size: .82rem;
-  color: rgba(255,255,255,.5);
-  margin-top: .55rem;
-  line-height: 1.4;
-  padding-right: 2.5rem;
-}
-
-.modal-x {
-  position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.12);
-  color: rgba(255,255,255,.5);
-  width: 30px; height: 30px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  font-size: .9rem;
-  transition: all .2s;
-}
-
+.modal { background: var(--white); max-width: 640px; width: 100%; max-height: 90vh;
+  overflow-y: auto; animation: slideUp .3s var(--ease) forwards;
+  border: 1px solid var(--rule); }
+@keyframes slideUp { from { transform: translateY(14px) scale(.97); opacity: 0; }
+                     to   { transform: translateY(0) scale(1); opacity: 1; } }
+.modal-hdr { padding: 2rem 2.25rem 1.75rem; position: relative; }
+.modal-move { font-family: var(--label); font-size: .54rem; font-weight: 700;
+  letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: .55rem; }
+.modal-tag { font-family: var(--label); font-size: .54rem; font-weight: 600;
+  letter-spacing: .26em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: .6rem; }
+.modal-title { font-family: var(--serif); font-weight: 400; font-style: italic;
+  font-size: 1.85rem; color: var(--white); line-height: 1.15; padding-right: 2.5rem; }
+.modal-subtitle { font-size: .82rem; color: rgba(255,255,255,.5); margin-top: .5rem;
+  line-height: 1.4; padding-right: 2.5rem; }
+.modal-x { position: absolute; top: 1.25rem; right: 1.25rem;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.5); width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  font-size: .9rem; transition: all .2s; }
 .modal-x:hover { background: rgba(255,255,255,.16); color: var(--white); }
-
 .modal-body { padding: 1.75rem 2.25rem; }
-
-.modal-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 1.5rem;
-}
-
-.modal-lbl {
-  font-family: var(--label);
-  font-size: .52rem;
-  font-weight: 600;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: .3rem;
-}
-
+.modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 2rem;
+  padding-bottom: 1.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+.modal-lbl { font-family: var(--label); font-size: .52rem; font-weight: 600;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .3rem; }
 .modal-val { font-size: .88rem; color: var(--ink); line-height: 1.4; }
-
-.modal-desc-wrap {
-  margin-bottom: 1.75rem;
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 1.5rem;
-}
-
+.modal-desc-wrap { margin-bottom: 1.75rem; border-bottom: 1px solid var(--rule); padding-bottom: 1.5rem; }
 .modal-desc { font-size: .875rem; line-height: 1.8; color: var(--ink-2); }
 .modal-desc p + p { margin-top: .75rem; }
-.modal-desc h4 {
-  font-family: var(--serif);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--navy);
-  margin: 1.1rem 0 .4rem;
-}
+.modal-desc h4 { font-family: var(--serif); font-size: 1rem; font-weight: 600;
+  color: var(--navy); margin: 1.1rem 0 .4rem; }
 .modal-desc ul { padding-left: 1.1rem; }
 .modal-desc li { margin-bottom: .3rem; }
 .modal-desc strong { color: var(--ink); font-weight: 500; }
-.modal-desc em { font-style: italic; color: var(--ink-2); }
+.modal-takeaway { margin-top: 1rem; padding: .85rem 1rem; background: rgba(34,197,94,.06);
+  border-left: 3px solid var(--gold); font-style: italic; }
+.modal-video-wrap { margin-bottom: 1.75rem; border-bottom: 1px solid var(--rule); padding-bottom: 1.5rem; }
+.modal-video-label { font-family: var(--label); font-size: .52rem; font-weight: 600;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .75rem; }
+.modal-video iframe { width: 100%; height: 280px; border: none; display: block; }
+.gcal-btn { display: flex; align-items: center; justify-content: center; gap: .6rem;
+  width: 100%; background: var(--gold); color: var(--navy); text-decoration: none;
+  padding: .9rem 1.5rem; font-family: var(--label); font-size: .6rem; font-weight: 700;
+  letter-spacing: .24em; text-transform: uppercase; border: none; cursor: pointer;
+  transition: background .2s; }
+.gcal-btn:hover { background: var(--gold-lt); }
 
-.gcal-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .6rem;
-  width: 100%;
-  background: var(--gold);
-  color: var(--navy);
-  text-decoration: none;
-  padding: .9rem 1.5rem;
-  font-family: var(--label);
-  font-size: .6rem;
-  font-weight: 700;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  transition: background .2s var(--ease), transform .1s;
+/* ─── PRINT ─────────────────────────────────────────────── */
+#printView { display: none; }
+@media print {
+  body > *:not(#printView) { display: none !important; }
+  #printView { display: block !important; font-family: 'Inter', sans-serif; padding: 1.5cm; color: #000; }
+  .pv-header { display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid #0A2218; padding-bottom: .75rem; margin-bottom: 1.5rem; }
+  .pv-logo-text { font-size: 1.5rem; font-weight: 700; color: #0A2218; letter-spacing: .05em; }
+  .pv-year { font-size: .75rem; color: #666; text-transform: uppercase; letter-spacing: .2em; }
+  .pv-title { font-size: 1.25rem; font-style: italic; color: #0A2218; margin-bottom: 1.25rem; }
+  .pv-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+  .pv-table th { background: #0A2218; color: #fff; padding: .4rem .6rem;
+    text-align: left; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; }
+  .pv-table td { padding: .45rem .6rem; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  .pv-table tr:nth-child(even) td { background: #f9f9f9; }
+  .pv-cat-core     { border-left: 3px solid #0A2218; }
+  .pv-cat-optional { border-left: 3px solid #B7603B; }
+  .pv-cat-virtual  { border-left: 3px solid #0D9488; }
+  .pv-ev-title { font-weight: 600; }
+  .pv-ev-sub { font-size: .72rem; color: #555; }
+  .pv-footer { margin-top: 1.5rem; font-size: .65rem; color: #999; text-align: center;
+    border-top: 1px solid #e0e0e0; padding-top: .75rem; }
+  @page { margin: 1.5cm; }
 }
 
-.gcal-btn:hover  { background: var(--gold-lt); }
-.gcal-btn:active { transform: scale(.99); }
-.gcal-icon { flex-shrink: 0; }
-
-/* ─────────────────────────────────────────────────────────
-   RESPONSIVE
-───────────────────────────────────────────────────────── */
+/* ─── RESPONSIVE ────────────────────────────────────────── */
 @media (max-width: 820px) {
   .lock-left { display: none; }
   .lock-right { width: 100%; max-width: 420px; margin: auto; }
   #lock { justify-content: center; }
 }
-
-@media (max-width: 700px) {
-  .ev-card { flex-direction: column; }
-  .ev-photo { width: 100%; min-height: 220px; }
-  .ev-content { padding: 1.5rem; }
-  .ev-title { font-size: 1.5rem; }
+@media (max-width: 740px) {
+  .hdr { padding: 0 1rem; }
+  .hdr-nav { display: none; }
+  .hero-right { display: none; }
+  .main { padding: 1.5rem 1rem; }
+  .ch-body { padding: 1.5rem 1rem; }
+  .ch-teams { grid-template-columns: 1fr; }
+  .roster-grid { padding: 1.5rem 1rem 2rem; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .roster-header { padding: 2rem 1rem 0; }
 }
-
-@media (max-width: 640px) {
-  .hdr { padding: 0 1.25rem; }
-  .main { padding: 1.25rem; }
+@media (max-width: 600px) {
+  .ev-card { flex-direction: column; height: auto !important; }
+  .ev-card .ev-photo { width: 100%; min-height: 180px; }
   .modal { max-height: 95vh; }
-  .modal-title { font-size: 1.5rem; }
-  .modal-grid { grid-template-columns: 1fr; gap: .85rem; }
-  .modal-hdr { padding: 1.5rem 1.5rem 1.25rem; }
-  .modal-body { padding: 1.25rem 1.5rem; }
+  .modal-title { font-size: 1.4rem; }
+  .modal-grid { grid-template-columns: 1fr; gap: .75rem; }
+  .modal-hdr, .modal-body { padding: 1.25rem 1.25rem; }
 }
-
-/* Scrollbar */
 .modal::-webkit-scrollbar { width: 4px; }
-.modal::-webkit-scrollbar-track { background: transparent; }
 .modal::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
   </style>
 </head>
@@ -749,25 +467,21 @@ body {
 <!-- ══ LOCK ═══════════════════════════════════════════════ -->
 <div id="lock">
   <div class="lock-left">
-    <img src="assets/YPO_US_Atlantic13White-01.png" alt="YPO US Atlantic 13" style="width:200px;margin-bottom:2.5rem;opacity:.92;position:relative;">
-    <div class="lock-headline">
-      See the<br><strong>Whole Board</strong>
-    </div>
+    <img src="assets/YPO_US_Atlantic13White-01.png" alt="YPO US Atlantic 13"
+      style="width:200px;margin-bottom:2.5rem;opacity:.9;position:relative;">
+    <div class="lock-headline">See the<br><strong>Whole Board</strong></div>
     <div class="lock-rule"></div>
     <p class="lock-tagline">Thirteen events. One unforgettable year.<br>A chapter for leaders who play the long game.</p>
-    <div class="lock-path-wrap">
+    <div style="position:relative">
       <div class="lock-pips" id="lockPips"></div>
-      <div class="lock-pip-label">13 events &nbsp;·&nbsp; FY 2026–2027</div>
+      <div class="lock-pip-label" style="margin-top:.75rem">13 events &nbsp;·&nbsp; FY 2026–2027</div>
     </div>
   </div>
-
   <div class="lock-right">
     <div class="lock-form-eyebrow">Member Access</div>
     <div style="width:100%">
       <label class="lock-field-label" for="pw">Chapter Password</label>
-      <div class="lock-field-wrap">
-        <input class="lock-field" type="password" id="pw" placeholder="••••••••••" autocomplete="off">
-      </div>
+      <input class="lock-field" type="password" id="pw" placeholder="••••••••••" autocomplete="off">
       <div class="lock-error" id="lockErr" role="alert"></div>
       <button class="lock-btn" onclick="tryLogin()">Enter</button>
     </div>
@@ -779,50 +493,104 @@ body {
 <div id="app">
   <header class="hdr">
     <div class="hdr-brand">
-      <img src="assets/YPO_US_Atlantic13Black-01.png" alt="YPO US Atlantic 13" style="height:36px;width:auto;display:block;">
+      <img src="assets/YPO_US_Atlantic13Black-01.png" alt="YPO US Atlantic 13">
     </div>
-    <button class="signout-btn" onclick="signOut()">Sign Out</button>
+    <nav class="hdr-nav" id="hdrNav">
+      <button class="nav-pill active" onclick="setSection('events')">Events</button>
+      <button class="nav-pill"        onclick="setSection('challenge')">Challenge</button>
+      <button class="nav-pill"        onclick="setSection('roster')">Roster</button>
+    </nav>
+    <div class="hdr-actions">
+      <button class="icon-btn" onclick="toggleDark()" id="themeBtn" title="Toggle dark mode">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path id="themeIcon" d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+        </svg>
+      </button>
+      <button class="icon-btn" onclick="printCalendar()" title="Print calendar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+        </svg>
+      </button>
+      <button class="signout-btn" onclick="signOut()">Sign Out</button>
+    </div>
   </header>
 
-  <main class="main">
-    <div id="evList"></div>
-  </main>
+  <!-- EVENTS SECTION -->
+  <section id="sec-events" class="section">
+    <div class="hero" id="hero"></div>
+    <div class="main">
+      <div class="list-toolbar">
+        <div class="list-toolbar-title">FY 2026–2027 Learning Year</div>
+        <button class="ics-btn" onclick="downloadICS()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/>
+          </svg>
+          Add all to Calendar
+        </button>
+      </div>
+      <div id="evList"></div>
+    </div>
+  </section>
+
+  <!-- CHALLENGE SECTION -->
+  <section id="sec-challenge" class="section" hidden>
+    <div class="challenge-hero">
+      <div class="challenge-hero-inner">
+        <div class="ch-eyebrow">Atlantic 13 &nbsp;·&nbsp; FY 2026–2027</div>
+        <div class="ch-title">The Boardroom<br>Challenge</div>
+        <p class="ch-tagline">Compete across the year. Connect through every event. Contribute to something that matters.</p>
+        <div class="ch-prize">
+          <span class="ch-prize-icon">🏆</span>
+          <span class="ch-prize-text">The winning team directs a <span class="ch-prize-amount">$6,000</span> chapter donation to a cause that matters.</span>
+        </div>
+      </div>
+    </div>
+    <div class="ch-body">
+      <div class="ch-section-label">Team Standings</div>
+      <div id="chTeams" class="ch-teams"></div>
+      <div class="ch-section-label">Event Breakdown</div>
+      <div class="ch-breakdown">
+        <table class="ch-table" id="chTable"></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROSTER SECTION -->
+  <section id="sec-roster" class="section" hidden>
+    <div class="roster-header">
+      <h2>Chapter Members</h2>
+      <p>YPO Atlantic 13 &nbsp;·&nbsp; FY 2026–2027</p>
+    </div>
+    <div class="roster-grid" id="rosterGrid"></div>
+  </section>
 </div>
 
 <!-- ══ MODAL ══════════════════════════════════════════════ -->
 <div class="overlay" id="overlay" onclick="bgClose(event)">
   <div class="modal" id="modal">
     <div class="modal-hdr" id="modalHdr">
-      <div class="modal-move"  id="mMove"></div>
-      <div class="modal-tag"   id="mTag"></div>
-      <div class="modal-title" id="mTitle"></div>
+      <div class="modal-move"    id="mMove"></div>
+      <div class="modal-tag"     id="mTag"></div>
+      <div class="modal-title"   id="mTitle"></div>
       <div class="modal-subtitle" id="mSubtitle"></div>
       <button class="modal-x" onclick="closeModal()" aria-label="Close">&#x2715;</button>
     </div>
     <div class="modal-body">
       <div class="modal-grid">
-        <div class="modal-field">
-          <div class="modal-lbl">Date</div>
-          <div class="modal-val" id="mDate"></div>
-        </div>
-        <div class="modal-field">
-          <div class="modal-lbl">Location</div>
-          <div class="modal-val" id="mLoc"></div>
-        </div>
-        <div class="modal-field">
-          <div class="modal-lbl">Day Chair</div>
-          <div class="modal-val" id="mChair"></div>
-        </div>
-        <div class="modal-field">
-          <div class="modal-lbl">Category</div>
-          <div class="modal-val" id="mCat"></div>
-        </div>
+        <div><div class="modal-lbl">Date</div>     <div class="modal-val" id="mDate"></div></div>
+        <div><div class="modal-lbl">Location</div> <div class="modal-val" id="mLoc"></div></div>
+        <div><div class="modal-lbl">Day Chair</div><div class="modal-val" id="mChair"></div></div>
+        <div><div class="modal-lbl">Category</div> <div class="modal-val" id="mCat"></div></div>
+      </div>
+      <div class="modal-video-wrap" id="mVideoWrap" style="display:none">
+        <div class="modal-video-label">Event Preview</div>
+        <div id="mVideo"></div>
       </div>
       <div class="modal-desc-wrap" id="mDescWrap" style="display:none">
         <div class="modal-desc" id="mDesc"></div>
       </div>
       <a class="gcal-btn" id="mGcal" href="#" target="_blank" rel="noopener noreferrer">
-        <svg class="gcal-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
           <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/>
         </svg>
         Add to Google Calendar
@@ -831,11 +599,27 @@ body {
   </div>
 </div>
 
+<!-- ══ PRINT VIEW (hidden, only @media print) ════════════ -->
+<div id="printView">
+  <div class="pv-header">
+    <div>
+      <div class="pv-logo-text">A·13</div>
+      <div class="pv-year">YPO Atlantic 13</div>
+    </div>
+    <div style="text-align:right">
+      <div class="pv-logo-text" style="font-size:1rem">See the Whole Board</div>
+      <div class="pv-year">Learning Year 2026–2027</div>
+    </div>
+  </div>
+  <div class="pv-title">Thirteen events. One unforgettable year.</div>
+  <table class="pv-table" id="pvTable"></table>
+  <div class="pv-footer">YPO Atlantic 13 · Confidential · Member Use Only</div>
+</div>
 
 <script>
-/* ───────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════════════
    DATA
-───────────────────────────────────────────────────────── */
+═══════════════════════════════════════════════════════════ */
 const EVT = [
   {
     id: 1, move: "01",
@@ -843,29 +627,33 @@ const EVT = [
     subtitle: "How to View Excellence",
     label:    "Aug 31 – Sep 1, 2026",
     start:    "2026-08-31", end: "2026-09-01", mOnly: false,
-    loc:      "New York, NY",
-    chair:    "Raghav",
-    cat: "core", catLabel: "Core Event", type: "social",
-    accentBg: "#0A2218",
+    loc:      "New York, NY", chair: "Raghav",
+    cat: "core", catLabel: "Core In-Person Event",
+    accentBg: "#0A2218", challengePts: 100,
     defaultPhoto: "assets/us-open.avif",
-    desc: ""
+    video: null,
+    desc: `<p>We begin the year in New York with a high-energy experience built around excellence, pressure, preparation, and performance. Timed around the US Open, this event uses elite tennis as a lens for examining how leaders compete, recover, focus, and sustain performance when the margin for error is small.</p>
+<p>The learning experience will move beyond watching great athletes compete. Members will explore what separates talent from sustained excellence, how elite performers prepare before the moment, and how leaders can build resilience when the outcome is uncertain. Through peer discussion and expert perspective, we will translate lessons from sport into practical leadership insights for business, family, and personal performance.</p>
+<p>This event sets the tone for the year: strategic, competitive, reflective, and connected.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A sharper personal framework for performing under pressure and leading with discipline, resilience, and focus.</p>`
   },
   {
     id: 11, move: "02",
     title:    "Family Farm Day",
-    subtitle: "Cranberries, Chocolate & Wellness",
+    subtitle: "Berry Good Health: Cranberries, Chocolate & Wellness",
     label:    "September 26, 2026",
     start:    "2026-09-26", end: "2026-09-26", mOnly: false,
     loc:      "Chatsworth, NJ",
     chair:    "William Tenenbaum &amp; Victoria Bowley",
-    cat: "optional", catLabel: "Optional Event", type: "family",
-    accentBg: "#8A1E2D",
+    cat: "optional", catLabel: "Optional Connection Experience",
+    accentBg: "#8A1E2D", challengePts: 50,
     defaultPhoto: "assets/cranberry.avif",
-    desc: `<p><strong>Berry Good Health: Cranberries, Chocolate &amp; Wellness</strong></p>
-<p>New Jersey is a leading cranberry-producing state. Join us at Lee Brothers Cranberry Bog in Chatsworth — New Jersey's largest Ocean Spray supplier — for a wellness-focused farm day during peak harvest season, with Lee family owners Jenn and Steven Lee III providing a personal tour of their operations.</p>
-<p>The 1,800-acre, family-owned farm has been operated by three generations since 1868, growing cranberries on 135 acres with the remaining land preserved as an active watershed system.</p>
-<p>Enjoy a sandwich picnic and blueberry/cranberry treats, observe the peak harvest, and take home berry-inspired gift bags. Learn about the health benefits of cranberries from Dr. Deena Adimoolam and Heather Robbie. For a sweet finale, 2 Chicks with Chocolate will host a hands-on chocolate-making table.</p>
-<p><em>Note: This tour includes walking up to ¾ mile over unpaved gravel roadways. Comfortable footwear is required.</em></p>`
+    video: null,
+    desc: `<p>Bring the family for a rare behind-the-scenes visit to Lee Brothers Cranberry Bog in Chatsworth, New Jersey — the state's largest Ocean Spray supplier and a 1,800-acre family-owned farm operated by three generations since 1868.</p>
+<p>This whole-person learning experience will take place during cranberry harvest season and will combine agriculture, wellness, sustainability, family business, and food. Members and families will tour the bogs with Lee family owners, learn how cranberries are grown, understand the farm's role as an active watershed system, and hear about Lee Brothers' partnership with Rutgers University.</p>
+<p>The day will also include a picnic lunch, cranberry and blueberry treats, wellness insights on the health benefits of cranberries, and a hands-on chocolate-making experience with 2 Chicks with Chocolate.</p>
+<p><em>Note: The tour includes standing and walking up to approximately ¾ mile over unpaved gravel roads, some of which may be wet. Comfortable footwear is required.</em></p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A memorable family experience combining food, wellness, agriculture, sustainability, and chapter connection.</p>`
   },
   {
     id: 2, move: "03",
@@ -873,20 +661,15 @@ const EVT = [
     subtitle: "Leadership Under Pressure",
     label:    "October 13, 2026",
     start:    "2026-10-13", end: "2026-10-13", mOnly: false,
-    loc:      "Washington, DC",
-    chair:    "Mark Stephenson",
-    cat: "core", catLabel: "Core Event", type: "education",
-    accentBg: "#0A2218",
+    loc:      "Washington, DC", chair: "Mark Stephenson",
+    cat: "core", catLabel: "Core In-Person Event",
+    accentBg: "#0A2218", challengePts: 100,
     defaultPhoto: "assets/fbi-event.avif",
-    desc: `<p>Step inside the FBI for an unprecedented leadership immersion focused on decision-making under pressure. Participants will explore how the FBI leads during complex crises — through tours, case briefings, and direct dialogue with senior executives.</p>
-<p>Attendees will visit the Director's Strategic Intelligence Center (DSIC) and The FBI Experience, take part in a real-world counterintelligence case briefing, and join a Senior Executive Panel on leadership and resilience in high-stakes environments.</p>
-<h4>Learning Objectives</h4>
-<ul>
-<li>Understand leadership decision-making in times of crisis</li>
-<li>Learn how the FBI coordinates intelligence and operations under pressure</li>
-<li>Examine real counterintelligence cases relevant to the private sector</li>
-<li>Engage with senior FBI executives on resilience, teamwork, and leadership</li>
-</ul>`
+    video: null,
+    desc: `<p>Step inside the FBI for a rare leadership immersion focused on decision-making when the stakes are real. Members will explore how one of the world's most complex institutions leads through crisis, coordinates intelligence, manages uncertainty, and protects trust in high-pressure environments.</p>
+<p>The experience will include access to FBI facilities and senior leaders, including a visit to the Director's Strategic Intelligence Center and The FBI Experience, a real-world counterintelligence case briefing, and a senior executive conversation on leadership, resilience, and teamwork.</p>
+<p>To make the experience directly relevant to members, the event will also connect FBI-style thinking to private-sector leadership: insider risk, information security, crisis response, decision protocols, and organizational resilience.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A practical leadership lens for identifying unseen risk, making decisions under pressure, and strengthening resilience inside one's own organization.</p>`
   },
   {
     id: 6, move: "04",
@@ -894,25 +677,31 @@ const EVT = [
     subtitle: "Designing the System Before It Is Needed",
     label:    "November 12, 2026",
     start:    "2026-11-12", end: "2026-11-12", mOnly: false,
-    loc:      "Virtual",
-    chair:    "William Tenenbaum",
-    cat: "virtual", catLabel: "Virtual Event", type: "family",
-    accentBg: "#8A1E2D",
+    loc:      "Virtual", chair: "William Tenenbaum",
+    cat: "virtual", catLabel: "Virtual Business Event",
+    accentBg: "#8A1E2D", challengePts: 25,
     defaultPhoto: "https://plus.unsplash.com/premium_photo-1683140740110-194c20882c3e?auto=format&fit=crop&w=900&q=80",
-    desc: ""
+    video: null,
+    desc: `<p>Family governance is one of the most important responsibilities of long-term leadership, yet many families wait until complexity or conflict appears before creating the structures they need.</p>
+<p>This practical session will help members think through the systems that protect trust across generations: family charters, decision rights, trustee and beneficiary dynamics, family councils, next-generation education, philanthropy, communication norms, and shared values. The session will be designed around real scenarios and peer exchange, creating a safe space to discuss the questions many families avoid.</p>
+<p>The goal is not to make every family more formal. The goal is to help members create enough clarity, structure, and communication to preserve trust before it is tested.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A practical family governance checklist and one clear next step to strengthen family communication, stewardship, or decision-making.</p>`
   },
   {
     id: 3, move: "05",
-    title:    "Holiday Party",
+    title:    "The Whole Board Holiday Dinner",
     subtitle: "A Chapter Celebration in New York",
     label:    "December 1, 2026",
     start:    "2026-12-01", end: "2026-12-01", mOnly: false,
-    loc:      "New York, NY",
-    chair:    "Jacqueline Lane",
-    cat: "core", catLabel: "Core Event", type: "social",
-    accentBg: "#0A2218",
+    loc:      "New York, NY", chair: "Jacqueline Lane",
+    cat: "core", catLabel: "Core In-Person Event",
+    accentBg: "#0A2218", challengePts: 75,
     defaultPhoto: "assets/holiday-party.avif",
-    desc: ""
+    video: null,
+    desc: `<p>This elegant New York evening is designed to celebrate the chapter, include spouses and partners, and deepen the relationships that make Atlantic 13 distinctive.</p>
+<p>In the spirit of "See the Whole Board," the holiday dinner recognizes that the most meaningful leadership communities are built not only through formal learning, but through trust, friendship, laughter, and shared time with the people who matter most. The evening will be intentionally designed for connection, with curated seating, thoughtful conversation, and space for members and spouses to engage beyond the usual surface-level exchange.</p>
+<p>This is a moment to pause, celebrate the year, and strengthen the relational foundation for the experiences ahead.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> Deeper chapter connection, stronger spouse/partner engagement, and a renewed sense of belonging within Atlantic 13.</p>`
   },
   {
     id: 7, move: "06",
@@ -920,12 +709,14 @@ const EVT = [
     subtitle: "Building the Company for the Next Level",
     label:    "January 2027",
     start:    "2027-01-01", end: "2027-01-31", mOnly: true,
-    loc:      "Virtual",
-    chair:    "MichaelAaron Flicker",
-    cat: "virtual", catLabel: "Virtual Event", type: "business",
-    accentBg: "#0A4A43",
+    loc:      "Virtual", chair: "MichaelAaron Flicker",
+    cat: "virtual", catLabel: "Virtual Business Event",
+    accentBg: "#0A4A43", challengePts: 25,
     defaultPhoto: "https://images.unsplash.com/photo-1767021911618-3a9bcc9f3122?auto=format&fit=crop&w=900&q=80",
-    desc: ""
+    video: null,
+    desc: `<p>Growth creates opportunity, but it also exposes every weakness in a company's structure. This session will help members identify what is most likely to break next as their businesses scale: leadership, talent, systems, culture, capital, customer experience, or execution discipline.</p>
+<p>Members will explore the common inflection points that require a company to evolve from founder-led momentum to scalable enterprise. The conversation will focus on practical questions: when the founder's role must change, when the team needs to be upgraded, when process becomes essential, and when growth may actually destroy value if the business is not ready.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A scale-readiness view of the business and one high-priority constraint to address in the next 90 days.</p>`
   },
   {
     id: 12, move: "07",
@@ -933,12 +724,15 @@ const EVT = [
     subtitle: "Connection by the Fire and on the Mountain",
     label:    "January 2027",
     start:    "2027-01-01", end: "2027-01-31", mOnly: true,
-    loc:      "Vermont",
-    chair:    "Chez Perfetto",
-    cat: "optional", catLabel: "Optional Event", type: "social",
-    accentBg: "#1F4A3C",
+    loc:      "Vermont", chair: "Chez Perfetto",
+    cat: "optional", catLabel: "Optional Connection Experience",
+    accentBg: "#1F4A3C", challengePts: 50,
     defaultPhoto: "assets/vermont.avif",
-    desc: ""
+    video: null,
+    desc: `<p>This optional Vermont winter weekend is designed for relaxed connection, family time, and shared adventure away from the normal pace of business life.</p>
+<p>Members and families can ski, gather by the fire, share meals, and build friendships in a setting that allows relationships to form naturally. The experience will be lightly programmed, with optional moments for reflection and conversation, but the primary purpose is connection: time together, fresh air, family, and informal trust-building.</p>
+<p>In a year built around seeing the whole board, the Winter Escape creates space for restoration and friendship, not just learning.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> Stronger relationships with fellow members and families through shared adventure, informal conversation, and time away.</p>`
   },
   {
     id: 4, move: "08",
@@ -948,10 +742,14 @@ const EVT = [
     start:    "2027-02-01", end: "2027-02-28", mOnly: true,
     loc:      "Boston, MA",
     chair:    "Max Winthrop &amp; Tara Fung",
-    cat: "core", catLabel: "Core Event", type: "education",
-    accentBg: "#0A2218",
+    cat: "core", catLabel: "Core In-Person Event",
+    accentBg: "#0A2218", challengePts: 100,
     defaultPhoto: "assets/harvard.avif",
-    desc: "<p>Chapter learning experience in Boston, hosted at MIT and Harvard Business School. Exact dates to be confirmed.</p>"
+    video: null,
+    desc: `<p>Boston will be one of the year's most intellectually rigorous experiences, bringing together economic perspective, innovation, capital, and executive decision-making in one of the world's great learning ecosystems.</p>
+<p>The event may include a Boston Federal Reserve experience, classroom-style learning, an innovation lab component, and curated time for forum-style connection. The core question is timely and practical: how should leaders make major decisions when capital markets, technology, labor, productivity, and the broader economy are shifting at the same time?</p>
+<p>Members will be invited to pressure-test real decisions they are facing around growth, investment, risk, and innovation. The goal is not simply to hear from experts, but to sharpen judgment through content, peer exchange, and application.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A clearer framework for making capital, growth, and innovation decisions in uncertain environments.</p>`
   },
   {
     id: 8, move: "09",
@@ -959,12 +757,15 @@ const EVT = [
     subtitle: "The CEO's Highest-Leverage Decision",
     label:    "March 2027",
     start:    "2027-03-01", end: "2027-03-31", mOnly: true,
-    loc:      "Virtual",
-    chair:    "Asif Zaman",
-    cat: "virtual", catLabel: "Virtual Event", type: "business",
-    accentBg: "#0A4A43",
+    loc:      "Virtual", chair: "Asif Zaman",
+    cat: "virtual", catLabel: "Virtual Business Event",
+    accentBg: "#0A4A43", challengePts: 25,
     defaultPhoto: "https://plus.unsplash.com/premium_photo-1661375171387-a40f423f465d?auto=format&fit=crop&w=900&q=80",
-    desc: ""
+    video: null,
+    desc: `<p>Every CEO allocates capital, whether through acquisitions, hiring, technology, facilities, inventory, debt repayment, dividends, or reinvestment in growth. The best leaders understand that capital allocation is not a finance exercise. It is one of the clearest expressions of strategy.</p>
+<p>This session will help members evaluate competing uses of capital through the lens of risk-adjusted return, liquidity, control, time horizon, opportunity cost, and enterprise value creation. Members will be encouraged to bring real decisions they are facing and pressure-test them with peers.</p>
+<p>The discussion will challenge members to distinguish between good ideas and the few investments that truly deserve capital.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A practical capital allocation filter members can use to decide what to fund, what to delay, and what to stop doing.</p>`
   },
   {
     id: 9, move: "10",
@@ -972,12 +773,15 @@ const EVT = [
     subtitle: "Turning Strategy into Execution",
     label:    "April 2027",
     start:    "2027-04-01", end: "2027-04-30", mOnly: true,
-    loc:      "Virtual",
-    chair:    "Andrew Halliday",
-    cat: "virtual", catLabel: "Virtual Event", type: "business",
-    accentBg: "#0A4A43",
+    loc:      "Virtual", chair: "Andrew Halliday",
+    cat: "virtual", catLabel: "Virtual Business Event",
+    accentBg: "#0A4A43", challengePts: 25,
     defaultPhoto: "https://images.unsplash.com/photo-1759884247160-27b8465544b6?auto=format&fit=crop&w=900&q=80",
-    desc: ""
+    video: null,
+    desc: `<p>Most companies do not fail because they lack ideas. They fail because the system for translating strategy into execution is too loose, too personality-driven, or too slow.</p>
+<p>This session will focus on the operating rhythms that help leadership teams execute consistently: annual priorities, quarterly goals, weekly scorecards, clear owners, KPI discipline, meeting cadence, and accountability. Members will compare how their companies currently run and identify where their management system needs to become more explicit.</p>
+<p>The session is intended to be highly practical. Members should leave with a clearer way to connect strategy to measurable action.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A usable execution template for turning one strategic priority into a clear owner, metric, cadence, and accountability structure.</p>`
   },
   {
     id: 13, move: "11",
@@ -985,25 +789,31 @@ const EVT = [
     subtitle: "Alignment, Legacy, and the Life We Are Building",
     label:    "April 9–11, 2027",
     start:    "2027-04-09", end: "2027-04-11", mOnly: false,
-    loc:      "Aspen, CO",
-    chair:    "Glen Kunofsky",
-    cat: "optional", catLabel: "Optional Event", type: "family",
-    accentBg: "#B7603B",
+    loc:      "Aspen, CO", chair: "Glen Kunofsky",
+    cat: "optional", catLabel: "Optional Connection Experience",
+    accentBg: "#B7603B", challengePts: 50,
     defaultPhoto: "assets/aspen.avif",
-    desc: ""
+    video: null,
+    desc: `<p>The Couples Retreat is a dedicated weekend for spouses and partners to reconnect, reflect, and explore the larger questions that sit beyond the operating business.</p>
+<p>Set in Aspen, the experience will create space for conversations about shared goals, ambition, family priorities, money, time, health, legacy, impact, and the life each couple is building together. The weekend should balance meaningful discussion with restorative time, shared meals, and the natural connection that comes from stepping away together.</p>
+<p>This is not simply a social weekend. It is a whole-life leadership experience that brings partners into the broader Atlantic 13 journey and helps couples examine whether their current life design matches what matters most.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A shared language for alignment and a few concrete commitments around family, partnership, legacy, and the next chapter of life.</p>`
   },
   {
     id: 5, move: "12",
     title:    "Spain Presidents Retreat",
-    subtitle: "The Final Event",
+    subtitle: "The Final Move: Atlantic 13 in Spain",
     label:    "May 12–16, 2027",
     start:    "2027-05-12", end: "2027-05-16", mOnly: false,
-    loc:      "Valencia, Spain",
-    chair:    "Richard",
-    cat: "core", catLabel: "Core Event", type: "social",
-    accentBg: "#B7603B",
+    loc:      "Valencia, Spain", chair: "Richard",
+    cat: "core", catLabel: "Core In-Person Event",
+    accentBg: "#B7603B", challengePts: 150,
     defaultPhoto: "assets/valencia.avif",
-    desc: "<p>Multi-day international chapter experience in Valencia, Spain. The final event of the year — May 16 is the departure day.</p>"
+    video: null,
+    desc: `<p>The year culminates in Valencia, Spain, with a capstone retreat designed for cultural immersion, reflection, connection, and celebration. This is the final move on the strategic board — a chance to step out of the daily operating rhythm and look back at what we have learned, built, and experienced together.</p>
+<p>Valencia will become the classroom. Members will experience the city through its markets, food, architecture, history, and conversations with local leaders and younger Spanish voices. The retreat may include a market and city tour, paella-making, a dinner at the City of Arts and Sciences, a Michelin-starred dining experience, and dialogue around work, ambition, trust, leadership, and legacy.</p>
+<p>The final retreat is designed to open perspective, deepen relationships, and close the Boardroom Challenge in a way that feels memorable, meaningful, and distinctly Atlantic 13.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> A broadened perspective on leadership, legacy, culture, and the next moves members want to make in business and life.</p>`
   },
   {
     id: 10, move: "13",
@@ -1011,56 +821,68 @@ const EVT = [
     subtitle: "What Leaders Are Actually Using",
     label:    "June 2027",
     start:    "2027-06-01", end: "2027-06-30", mOnly: true,
-    loc:      "Virtual",
-    chair:    "Tara Fung",
-    cat: "virtual", catLabel: "Virtual Event", type: "education",
-    accentBg: "#0A4A43",
+    loc:      "Virtual", chair: "Tara Fung",
+    cat: "virtual", catLabel: "Virtual Business Event",
+    accentBg: "#0A4A43", challengePts: 25,
     defaultPhoto: "https://images.unsplash.com/photo-1749006590639-e749e6b7d84c?auto=format&fit=crop&w=900&q=80",
-    desc: ""
+    video: null,
+    desc: `<p>AI is moving too quickly for theory alone. This peer-led session will focus on what members are actually using, testing, building, or avoiding inside their companies and lives.</p>
+<p>The format will be practical and candid: short member demos, real workflows, lessons learned, tools that are saving time, use cases that are not ready yet, and risks that leaders need to manage. Rather than another broad AI overview, this will be a working session grounded in real examples from the chapter.</p>
+<p>Members will leave with practical ideas they can test quickly and a better understanding of how peers are approaching AI adoption.</p>
+<p class="modal-takeaway"><strong>Member takeaway:</strong> Three practical AI use cases or workflows to test within 30 days.</p>`
   }
 ];
 
-/* ───────────────────────────────────────────────────────────
-   STATE
-─────────────────────────────────────────────────────────── */
-const PW = "atlantic13";
+/* Teams — update names, members & earned scores as the year progresses */
+const TEAMS = [
+  { id: 1, name: "Team Alpha",  color: "#22C55E", members: ["—","—","—","—"], earned: {} },
+  { id: 2, name: "Team Beta",   color: "#0D9488", members: ["—","—","—","—"], earned: {} },
+  { id: 3, name: "Team Gamma",  color: "#B7603B", members: ["—","—","—"],    earned: {} },
+  { id: 4, name: "Team Delta",  color: "#8A1E2D", members: ["—","—","—"],    earned: {} }
+];
 
+/* Members — add photos (assets/members/name.jpg) and bios when ready */
+const MEMBERS = [
+  { name: "Raghav",             initials: "R",  color: "#0A2218", title: "YPO Atlantic 13" },
+  { name: "William Tenenbaum",  initials: "WT", color: "#0D9488", title: "YPO Atlantic 13" },
+  { name: "Victoria Bowley",    initials: "VB", color: "#1F4A3C", title: "YPO Atlantic 13" },
+  { name: "Mark Stephenson",    initials: "MS", color: "#0A2218", title: "YPO Atlantic 13" },
+  { name: "Jacqueline Lane",    initials: "JL", color: "#8A1E2D", title: "YPO Atlantic 13" },
+  { name: "MichaelAaron Flicker", initials: "MF", color: "#0A4A43", title: "YPO Atlantic 13" },
+  { name: "Chez Perfetto",      initials: "CP", color: "#1F4A3C", title: "YPO Atlantic 13" },
+  { name: "Max Winthrop",       initials: "MW", color: "#0A2218", title: "YPO Atlantic 13" },
+  { name: "Tara Fung",          initials: "TF", color: "#0D9488", title: "YPO Atlantic 13" },
+  { name: "Asif Zaman",         initials: "AZ", color: "#0A4A43", title: "YPO Atlantic 13" },
+  { name: "Andrew Halliday",    initials: "AH", color: "#0A2218", title: "YPO Atlantic 13" },
+  { name: "Glen Kunofsky",      initials: "GK", color: "#B7603B", title: "YPO Atlantic 13" },
+  { name: "Richard",            initials: "R",  color: "#8A1E2D", title: "YPO Atlantic 13" }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   CONSTANTS
+═══════════════════════════════════════════════════════════ */
+const PW = "atlantic13";
 const MO_L = ["January","February","March","April","May","June",
               "July","August","September","October","November","December"];
-const MO_S = ["Jan","Feb","Mar","Apr","May","Jun",
-              "Jul","Aug","Sep","Oct","Nov","Dec"];
 
-/* ───────────────────────────────────────────────────────────
-   LOCK PIPS
-─────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   LOCK
+═══════════════════════════════════════════════════════════ */
 (function buildPips() {
   const wrap = document.getElementById("lockPips");
   if (!wrap) return;
   for (let i = 0; i < 13; i++) {
-    const d = document.createElement("div");
-    d.className = "pip";
-    wrap.appendChild(d);
+    const d = document.createElement("div"); d.className = "pip"; wrap.appendChild(d);
   }
 })();
 
-
-function handleImgError(img, bg) {
-  img.style.display = "none";
-  img.parentElement.style.background =
-    "linear-gradient(160deg, " + bg + " 0%, " + bg + "99 100%)";
-}
-
-/* ───────────────────────────────────────────────────────────
-   AUTH
-─────────────────────────────────────────────────────────── */
 function tryLogin() {
-  const val = document.getElementById("pw").value;
-  if (val === PW) {
+  if (document.getElementById("pw").value === PW) {
     document.getElementById("lock").style.display = "none";
     const a = document.getElementById("app");
-    a.style.display    = "flex";
-    a.style.flexDirection = "column";
-    renderList();
+    a.style.display = "flex"; a.style.flexDirection = "column";
+    renderHero(); renderList(); renderChallenge(); renderRoster();
+    startCountdown();
   } else {
     document.getElementById("lockErr").textContent = "Incorrect password. Please try again.";
     document.getElementById("pw").value = "";
@@ -1074,145 +896,301 @@ document.getElementById("pw").addEventListener("keydown", e => {
 });
 
 function signOut() {
-  document.getElementById("app").style.display  = "none";
+  document.getElementById("app").style.display = "none";
   document.getElementById("lock").style.display = "flex";
   document.getElementById("pw").value = "";
-  document.getElementById("lockErr").textContent = "";
 }
 
-/* ───────────────────────────────────────────────────────────
-   CATEGORY HELPERS
-─────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════ */
+function setSection(name) {
+  ["events","challenge","roster"].forEach(s => {
+    const el = document.getElementById("sec-" + s);
+    if (el) el.hidden = (s !== name);
+  });
+  document.querySelectorAll(".nav-pill").forEach((btn, i) => {
+    const names = ["events","challenge","roster"];
+    btn.classList.toggle("active", names[i] === name);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DARK MODE
+═══════════════════════════════════════════════════════════ */
+(function initTheme() {
+  const t = localStorage.getItem("a13_theme") || "";
+  document.documentElement.setAttribute("data-theme", t);
+  updateThemeIcon(t === "dark");
+})();
+
+function toggleDark() {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const next = isDark ? "" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("a13_theme", next);
+  updateThemeIcon(!isDark);
+}
+
+function updateThemeIcon(isDark) {
+  const icon = document.getElementById("themeIcon");
+  if (!icon) return;
+  icon.setAttribute("d", isDark
+    ? "M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-12.37l-1.06 1.06a.996.996 0 0 0 0 1.41c.39.39 1.03.39 1.41 0l1.06-1.06a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0zM7.05 18.36l-1.06 1.06a.996.996 0 0 0 0 1.41c.39.39 1.03.39 1.41 0l1.06-1.06a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0z"
+    : "M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════════════ */
+function getNextEvent() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  return EVT.slice().sort((a,b) => a.start.localeCompare(b.start))
+    .find(ev => pDate(ev.start) >= today);
+}
+
+function renderHero() {
+  const next = getNextEvent();
+  const el = document.getElementById("hero");
+  if (!next || !el) return;
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const days = Math.round((pDate(next.start) - today) / 86400000);
+  const dayLabel = days === 0 ? "Today" : days === 1 ? "1 day away" : days + " days away";
+
+  const gcalS = next.start.replace(/-/g,"");
+  const gcalE = nextDay(next.end).replace(/-/g,"");
+  const gcalUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+    + "&text=" + enc(next.title.replace(/&amp;/g,"&"))
+    + "&dates=" + gcalS + "/" + gcalE
+    + "&location=" + enc(next.loc);
+
+  el.innerHTML = `<div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Up Next &nbsp;·&nbsp; Event ${next.move}</div>
+      <div class="hero-title">${next.title.replace(/&amp;/g,"&")}</div>
+      <div class="hero-subtitle">${next.subtitle}</div>
+      <div class="hero-meta">
+        <span><span class="hero-meta-dot"></span>${next.label}</span>
+        <span><span class="hero-meta-dot"></span>${next.loc}</span>
+        <span><span class="hero-meta-dot"></span>Chair: ${next.chair.replace(/&amp;/g,"&")}</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-count">
+        <div class="hero-days" id="heroDays">${days === 0 ? "0" : days}</div>
+        <div class="hero-days-label">${days === 0 ? "Today" : "Days Away"}</div>
+      </div>
+      <a class="hero-gcal" href="${gcalUrl}" target="_blank" rel="noopener noreferrer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/>
+        </svg>
+        Add to Calendar
+      </a>
+    </div>
+  </div>`;
+}
+
+function startCountdown() {
+  setInterval(() => {
+    const el = document.getElementById("heroDays");
+    if (!el) return;
+    const next = getNextEvent();
+    if (!next) return;
+    const today = new Date(); today.setHours(0,0,0,0);
+    el.textContent = Math.max(0, Math.round((pDate(next.start) - today) / 86400000));
+  }, 60000);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EVENTS
+═══════════════════════════════════════════════════════════ */
 function catBg(cat) {
   if (cat === "virtual")  return "#0D9488";
   if (cat === "optional") return "#B7603B";
   return "#0A2218";
 }
 
-/* ───────────────────────────────────────────────────────────
-   RENDER
-─────────────────────────────────────────────────────────── */
-function renderList() {
-  const evts = EVT.slice().sort((a, b) => a.start.localeCompare(b.start));
+function isPast(ev) {
+  return pDate(ev.end) < new Date();
+}
 
-  // Group by month
+function renderList() {
+  const evts = EVT.slice().sort((a,b) => a.start.localeCompare(b.start));
   const groups = {};
   evts.forEach(ev => {
-    const d   = pDate(ev.start);
-    const key = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+    const d = pDate(ev.start);
+    const key = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0");
     const lbl = MO_L[d.getMonth()] + " " + d.getFullYear();
     if (!groups[key]) groups[key] = { lbl, evts: [] };
     groups[key].evts.push(ev);
   });
 
   let html = '<div class="ev-list">';
-
   Object.keys(groups).sort().forEach(key => {
     const g = groups[key];
-    html += `<div class="ev-month">
-      <div class="ev-month-name">${g.lbl}</div>
-      <div class="ev-month-line"></div>
-    </div>`;
-
+    html += `<div class="ev-month"><div class="ev-month-name">${g.lbl}</div><div class="ev-month-line"></div></div>`;
     g.evts.forEach(ev => {
+      const past = isPast(ev);
       const numBg = catBg(ev.cat);
-
       html += `
-      <div class="ev-card ev-card--${ev.cat}" onclick="openModal(${ev.id})">
-
+      <div class="ev-card ev-card--${ev.cat}${past ? " past" : ""}" onclick="openModal(${ev.id})">
         <div class="ev-photo" style="background:${ev.accentBg}">
-          <img
-            src="${ev.defaultPhoto}"
-            alt="${ev.title.replace(/&amp;/g,'&')}"
-            loading="lazy"
-            onerror="handleImgError(this,'${ev.accentBg}')"
-          >
-          <div class="ev-photo-fallback">
-            <span class="ev-photo-num">${ev.move}</span>
-          </div>
+          <img src="${ev.defaultPhoto}" alt="${ev.title.replace(/&amp;/g,"&")}" loading="lazy"
+               onerror="this.style.display='none'">
+          <div class="ev-photo-fallback"><span class="ev-photo-num">${ev.move}</span></div>
+          ${past ? '<div class="past-badge">Completed</div>' : ""}
           <div class="ev-photo-cat">${ev.catLabel}</div>
         </div>
-
         <div class="ev-content">
           <div class="ev-meta-row">
             <span class="ev-num" style="background:${numBg}">Event ${ev.move}</span>
             <span class="ev-cat-lbl">${ev.catLabel}</span>
           </div>
-          <div class="ev-title">${ev.title.replace(/&amp;/g,'&')}</div>
-          ${ev.subtitle ? `<div class="ev-subtitle">${ev.subtitle}</div>` : ''}
+          <div class="ev-title">${ev.title.replace(/&amp;/g,"&")}</div>
+          ${ev.subtitle ? `<div class="ev-subtitle">${ev.subtitle}</div>` : ""}
           <div class="ev-info">
-            <span class="ev-info-item">
-              <span class="ev-info-dot"></span>
-              ${ev.label}
-            </span>
-            <span class="ev-info-item">
-              <span class="ev-info-dot"></span>
-              ${ev.loc}
-            </span>
-            <span class="ev-info-item">
-              <span class="ev-info-dot"></span>
-              Chair: ${ev.chair.replace(/&amp;/g,'&')}
-            </span>
+            <span class="ev-info-item"><span class="ev-info-dot"></span>${ev.label}</span>
+            <span class="ev-info-item"><span class="ev-info-dot"></span>${ev.loc}</span>
+            <span class="ev-info-item"><span class="ev-info-dot"></span>Chair: ${ev.chair.replace(/&amp;/g,"&")}</span>
           </div>
         </div>
-
       </div>`;
     });
   });
-
   html += "</div>";
   document.getElementById("evList").innerHTML = html;
 }
 
-/* ───────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════════════
+   CHALLENGE
+═══════════════════════════════════════════════════════════ */
+function teamScore(team) {
+  return Object.values(team.earned).reduce((s,v) => s+v, 0);
+}
+
+function renderChallenge() {
+  const totalAvail = EVT.reduce((s,ev) => s + (ev.challengePts||0), 0);
+  const sorted = TEAMS.slice().sort((a,b) => teamScore(b) - teamScore(a));
+
+  // Team cards
+  let teamsHtml = "";
+  sorted.forEach((team, i) => {
+    const pts = teamScore(team);
+    const pct = totalAvail > 0 ? (pts / totalAvail * 100).toFixed(1) : 0;
+    const rankLabels = ["1st","2nd","3rd","4th"];
+    teamsHtml += `
+    <div class="ch-team" style="--team-color:${team.color}">
+      <div class="ch-rank${i < 2 ? " top" : ""}">${rankLabels[i]}</div>
+      <div class="ch-team-name">${team.name}</div>
+      <div class="ch-team-members">${team.members.join("  ·  ")}</div>
+      <div class="ch-pts">${pts}<span>pts</span></div>
+      <div class="ch-bar-track"><div class="ch-bar" style="width:${pct}%"></div></div>
+    </div>`;
+  });
+  document.getElementById("chTeams").innerHTML = teamsHtml;
+
+  // Breakdown table
+  const challengeEvts = EVT.filter(ev => ev.challengePts > 0)
+    .sort((a,b) => a.start.localeCompare(b.start));
+
+  let thead = `<thead><tr><th>Event</th><th>Available</th>${sorted.map(t=>`<th style="color:${t.color}">${t.name}</th>`).join("")}</tr></thead>`;
+  let tbody = "<tbody>";
+  challengeEvts.forEach(ev => {
+    const past = isPast(ev);
+    const cells = sorted.map(team => {
+      const s = team.earned[ev.id];
+      return `<td class="ch-score-cell" style="color:${team.color}">${s !== undefined ? s : '<span class="ch-score-dash">—</span>'}</td>`;
+    }).join("");
+    tbody += `<tr>
+      <td>
+        <div class="ch-ev-name">${ev.title.replace(/&amp;/g,"&")}</div>
+        <div style="font-size:.72rem;color:var(--ink-3)">Event ${ev.move}${past ? " · Completed" : ""}</div>
+      </td>
+      <td><span class="ch-avail">${ev.challengePts} pts</span></td>
+      ${cells}
+    </tr>`;
+  });
+
+  // Totals row
+  const totalCells = sorted.map(team => {
+    const s = teamScore(team);
+    return `<td class="ch-score-cell" style="color:${team.color};font-size:.85rem">${s}</td>`;
+  }).join("");
+  tbody += `<tr style="font-weight:600;border-top:2px solid var(--rule)">
+    <td style="color:var(--ink)">Total</td>
+    <td><span class="ch-avail">${totalAvail} pts</span></td>
+    ${totalCells}
+  </tr></tbody>`;
+
+  document.getElementById("chTable").innerHTML = thead + tbody;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ROSTER
+═══════════════════════════════════════════════════════════ */
+function renderRoster() {
+  const html = MEMBERS.map(m => `
+  <div class="member-card">
+    <div class="member-avatar" style="background:${m.color}">${m.initials}</div>
+    <div class="member-name">${m.name}</div>
+    <div class="member-title">${m.title}</div>
+  </div>`).join("");
+  document.getElementById("rosterGrid").innerHTML = html;
+}
+
+/* ═══════════════════════════════════════════════════════════
    MODAL
-─────────────────────────────────────────────────────────── */
+═══════════════════════════════════════════════════════════ */
 function openModal(id) {
   const ev = EVT.find(e => e.id === id);
   if (!ev) return;
 
-  document.getElementById("mMove").textContent     = "Event " + ev.move;
-  document.getElementById("mTag").textContent      = ev.catLabel + "  ·  " + cap(ev.type);
-  document.getElementById("mTitle").innerHTML      = ev.title;
+  document.getElementById("mMove").textContent    = "Event " + ev.move;
+  document.getElementById("mTag").textContent     = ev.catLabel;
+  document.getElementById("mTitle").innerHTML     = ev.title;
   document.getElementById("mSubtitle").textContent = ev.subtitle || "";
-  document.getElementById("mDate").textContent     = ev.label;
-  document.getElementById("mLoc").textContent      = ev.loc;
-  document.getElementById("mChair").innerHTML      = ev.chair;
-  document.getElementById("mCat").textContent      = ev.catLabel;
-
+  document.getElementById("mDate").textContent    = ev.label;
+  document.getElementById("mLoc").textContent     = ev.loc;
+  document.getElementById("mChair").innerHTML     = ev.chair;
+  document.getElementById("mCat").textContent     = ev.catLabel;
   document.getElementById("modalHdr").style.background = ev.accentBg || "#0A2218";
 
-  const dw = document.getElementById("mDescWrap");
-  const dd = document.getElementById("mDesc");
-  if (ev.desc) {
-    dd.innerHTML = ev.desc;
-    dw.style.display = "block";
+  // Video teaser
+  const vw = document.getElementById("mVideoWrap");
+  const vd = document.getElementById("mVideo");
+  if (ev.video) {
+    const vid = ev.video.match(/(?:youtu\.be\/|v=)([^&?/]+)/)?.[1] || "";
+    vd.innerHTML = vid ? `<iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe>` : "";
+    vw.style.display = vid ? "block" : "none";
   } else {
-    dd.innerHTML = "";
-    dw.style.display = "none";
+    vw.style.display = "none";
   }
 
-  const s  = ev.start.replace(/-/g, "");
-  const en = nextDay(ev.end).replace(/-/g, "");
-  const plainDesc = ev.desc
-    ? ev.desc.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").replace(/&amp;/g,"&").trim()
-    : "YPO Atlantic 13 — " + ev.catLabel + ". Chair: " + ev.chair.replace(/&amp;/g,"&");
+  // Description
+  const dw = document.getElementById("mDescWrap");
+  const dd = document.getElementById("mDesc");
+  if (ev.desc) { dd.innerHTML = ev.desc; dw.style.display = "block"; }
+  else { dd.innerHTML = ""; dw.style.display = "none"; }
 
+  // Google Calendar link
+  const s  = ev.start.replace(/-/g,"");
+  const en = nextDay(ev.end).replace(/-/g,"");
+  const plain = ev.desc
+    ? ev.desc.replace(/<[^>]+>/g," ").replace(/\s+/g," ").replace(/&amp;/g,"&").trim().slice(0,300)
+    : "YPO Atlantic 13 · " + ev.catLabel + ". Chair: " + ev.chair.replace(/&amp;/g,"&");
   document.getElementById("mGcal").href =
-    "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-    "&text="     + enc(ev.title.replace(/&amp;/g,"&")) +
-    "&dates="    + s + "/" + en +
-    "&location=" + enc(ev.loc) +
-    "&details="  + enc(plainDesc);
+    "https://calendar.google.com/calendar/render?action=TEMPLATE"
+    + "&text=" + enc(ev.title.replace(/&amp;/g,"&"))
+    + "&dates=" + s + "/" + en
+    + "&location=" + enc(ev.loc)
+    + "&details=" + enc(plain);
 
-  const ov = document.getElementById("overlay");
-  ov.classList.add("show");
+  document.getElementById("overlay").classList.add("show");
   document.body.style.overflow = "hidden";
-
   const m = document.getElementById("modal");
-  m.style.animation = "none";
-  void m.offsetHeight;
-  m.style.animation = "";
+  m.style.animation = "none"; void m.offsetHeight; m.style.animation = "";
 }
 
 function closeModal() {
@@ -1220,25 +1198,71 @@ function closeModal() {
   document.body.style.overflow = "";
 }
 
-function bgClose(e) {
-  if (e.target === document.getElementById("overlay")) closeModal();
-}
-
+function bgClose(e) { if (e.target === document.getElementById("overlay")) closeModal(); }
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-/* ───────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════════════
+   ICS DOWNLOAD
+═══════════════════════════════════════════════════════════ */
+function downloadICS() {
+  const lines = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//A13//YPO Atlantic 13//EN","CALSCALE:GREGORIAN"];
+  EVT.forEach(ev => {
+    const s = ev.start.replace(/-/g,"");
+    const e = nextDay(ev.end).replace(/-/g,"");
+    const desc = "YPO Atlantic 13 · " + ev.catLabel + ". Chair: " + ev.chair.replace(/&amp;/g,"&");
+    lines.push(
+      "BEGIN:VEVENT",
+      "DTSTART;VALUE=DATE:" + s,
+      "DTEND;VALUE=DATE:" + e,
+      "SUMMARY:" + ev.title.replace(/&amp;/g,"&") + " — " + ev.subtitle,
+      "LOCATION:" + ev.loc,
+      "DESCRIPTION:" + desc,
+      "END:VEVENT"
+    );
+  });
+  lines.push("END:VCALENDAR");
+  const blob = new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "A13-Learning-Year-2026-2027.ics";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRINT
+═══════════════════════════════════════════════════════════ */
+function printCalendar() {
+  const evts = EVT.slice().sort((a,b) => a.start.localeCompare(b.start));
+  const rows = evts.map(ev => `
+  <tr>
+    <td class="pv-cat-${ev.cat}"><div class="pv-ev-title">${ev.title.replace(/&amp;/g,"&")}</div><div class="pv-ev-sub">${ev.subtitle}</div></td>
+    <td>${ev.label}</td>
+    <td>${ev.loc}</td>
+    <td>${ev.chair.replace(/&amp;/g,"&")}</td>
+    <td>${ev.catLabel.replace(" Event","").replace(" Connection Experience","").replace(" Business Event","")}</td>
+  </tr>`).join("");
+  document.getElementById("pvTable").innerHTML =
+    `<thead><tr><th>Event</th><th>Date</th><th>Location</th><th>Chair</th><th>Type</th></tr></thead><tbody>${rows}</tbody>`;
+  window.print();
+}
+
+/* ═══════════════════════════════════════════════════════════
    UTILS
-─────────────────────────────────────────────────────────── */
-function pDate(s) {
-  const [y, m, d] = s.split("-").map(Number);
-  return new Date(y, m - 1, d);
-}
+═══════════════════════════════════════════════════════════ */
+function pDate(s) { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); }
 function nextDay(s) {
-  const d = pDate(s); d.setDate(d.getDate() + 1);
-  return [d.getFullYear(), String(d.getMonth()+1).padStart(2,"0"), String(d.getDate()).padStart(2,"0")].join("-");
+  const d=pDate(s); d.setDate(d.getDate()+1);
+  return [d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");
 }
-function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 function enc(s) { return encodeURIComponent(s); }
+
+/* ═══════════════════════════════════════════════════════════
+   PWA
+═══════════════════════════════════════════════════════════ */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+}
 </script>
 </body>
 </html>
