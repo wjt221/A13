@@ -3,448 +3,1053 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YPO Atlantic 13 — Member Calendar</title>
+  <title>A13 — See the Whole Board</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --navy:       #1B2851;
-      --navy-dk:    #111c3d;
-      --navy-lt:    #253568;
-      --gold:       #C9A84C;
-      --gold-lt:    #e2c06c;
-      --gold-pale:  #f5edd8;
-      --cream:      #faf8f4;
-      --white:      #ffffff;
-      --text:       #1a1a2e;
-      --muted:      #777;
-      --border:     rgba(201,168,76,.18);
-      --shadow:     0 4px 24px rgba(17,28,61,.09);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+/* ─────────────────────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────────────────────── */
+:root {
+  /* Core palette */
+  --navy:        #0A2218;
+  --navy-mid:    #0E2D1F;
+  --harbor:      #0D9488;
+  --ivory:       #F1F7F3;
+  --charcoal:    #1A2A1E;
 
-    /* ── LOCK SCREEN ─────────────────────────────────── */
-    #lockScreen {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      min-height: 100vh;
-      background: linear-gradient(150deg, var(--navy-dk) 0%, var(--navy) 55%, #1e3260 100%);
-      padding: 2rem;
-    }
-    .lock-ornament {
-      width: 48px; height: 48px; border: 1px solid rgba(201,168,76,.4);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1.5rem;
-    }
-    .lock-ornament svg { opacity: .7; }
-    .lock-eyebrow {
-      font-size: .7rem; font-weight: 500; letter-spacing: .28em; text-transform: uppercase;
-      color: var(--gold); text-align: center; margin-bottom: .6rem;
-    }
-    .lock-title {
-      font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 3.2rem;
-      color: var(--white); text-align: center; line-height: 1.05; letter-spacing: .01em;
-    }
-    .lock-subtitle {
-      font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem;
-      color: rgba(255,255,255,.5); text-align: center; margin-top: .4rem;
-    }
-    .lock-rule {
-      width: 48px; height: 1px; background: var(--gold); opacity: .45; margin: 2rem auto;
-    }
-    .lock-card {
-      width: 100%; max-width: 360px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(201,168,76,.22);
-      border-radius: 4px; padding: 2.25rem;
-      backdrop-filter: blur(12px);
-    }
-    .lock-label {
-      display: block; font-size: .66rem; font-weight: 500; letter-spacing: .2em;
-      text-transform: uppercase; color: rgba(255,255,255,.45); margin-bottom: .7rem;
-    }
-    .lock-input {
-      width: 100%; background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.14); border-radius: 2px;
-      padding: .8rem 1rem; font-family: 'Outfit', sans-serif; font-size: .95rem;
-      color: var(--white); outline: none; letter-spacing: .12em;
-      transition: border-color .2s;
-    }
-    .lock-input:focus { border-color: var(--gold); }
-    .lock-input::placeholder { color: rgba(255,255,255,.22); letter-spacing: .06em; }
-    .lock-error { color: #ff7b7b; font-size: .74rem; min-height: 1.3em; margin-top: .45rem; letter-spacing: .01em; }
-    .btn-enter {
-      width: 100%; margin-top: 1.4rem; background: var(--gold); color: var(--navy-dk);
-      border: none; border-radius: 2px; padding: .85rem 1rem; font-family: 'Outfit', sans-serif;
-      font-size: .72rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
-      cursor: pointer; transition: background .2s, transform .1s;
-    }
-    .btn-enter:hover { background: var(--gold-lt); }
-    .btn-enter:active { transform: scale(.98); }
-    .lock-footer {
-      margin-top: 3rem; text-align: center; font-size: .65rem; letter-spacing: .1em;
-      text-transform: uppercase; color: rgba(255,255,255,.2);
-    }
+  /* Accent palette */
+  --gold:        #22C55E;
+  --gold-lt:     #4ADE80;
+  --gold-dim:    rgba(34,197,94,.15);
+  --cranberry:   #8A1E2D;
+  --terracotta:  #B7603B;
+  --pine:        #1F4A3C;
 
-    /* ── APP SHELL ───────────────────────────────────── */
-    #app { display: none; flex-direction: column; min-height: 100vh; }
+  /* Neutrals */
+  --white:       #FFFFFF;
+  --ink:         #1A2A1E;
+  --ink-2:       #3D5246;
+  --ink-3:       #7A9A87;
+  --rule:        rgba(10,34,24,.1);
 
-    /* Header */
-    .hdr {
-      background: var(--navy); color: var(--white); height: 66px;
-      padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid rgba(201,168,76,.2);
-      position: sticky; top: 0; z-index: 200;
-    }
-    .hdr-brand { display: flex; flex-direction: column; }
-    .hdr-org {
-      font-size: .6rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: .1rem;
-    }
-    .hdr-chapter {
-      font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.3rem;
-      color: var(--white); letter-spacing: .03em;
-    }
-    .hdr-right { display: flex; align-items: center; gap: .875rem; }
-    .view-toggle {
-      display: flex; background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.12); border-radius: 3px; overflow: hidden;
-    }
-    .view-btn {
-      background: none; border: none; padding: .42rem .9rem; cursor: pointer;
-      font-family: 'Outfit', sans-serif; font-size: .68rem; font-weight: 500;
-      letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.48);
-      display: flex; align-items: center; gap: .35rem; transition: all .2s;
-    }
-    .view-btn.active { background: var(--gold); color: var(--navy-dk); }
-    .view-btn:not(.active):hover { color: rgba(255,255,255,.8); }
-    .btn-out {
-      background: none; border: 1px solid rgba(201,168,76,.35); border-radius: 2px;
-      padding: .38rem .85rem; font-family: 'Outfit', sans-serif; font-size: .66rem;
-      font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
-      color: rgba(255,255,255,.55); cursor: pointer; transition: all .2s;
-    }
-    .btn-out:hover { border-color: var(--gold); color: var(--gold); }
+  /* Category colors */
+  --cat-core:    #0A2218;
+  --cat-virtual: #0D9488;
+  --cat-opt:     #1F4A3C;
 
-    /* Sub-header */
-    .sub-hdr {
-      background: var(--white); border-bottom: 1px solid rgba(0,0,0,.06);
-      padding: 0 2.5rem; display: flex; align-items: center;
-      justify-content: space-between; gap: 1rem; min-height: 50px;
-      flex-wrap: wrap;
-    }
-    .filters { display: flex; gap: .2rem; flex-wrap: wrap; }
-    .filter-btn {
-      background: none; border: 1px solid transparent; border-radius: 2px;
-      padding: .3rem .8rem; font-family: 'Outfit', sans-serif; font-size: .68rem;
-      font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--muted); cursor: pointer; transition: all .2s;
-    }
-    .filter-btn:hover { color: var(--navy); border-color: rgba(27,40,81,.2); }
-    .filter-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
-    .month-nav { display: flex; align-items: center; gap: .6rem; }
-    .month-nav-label {
-      font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600;
-      color: var(--navy); min-width: 170px; text-align: center;
-    }
-    .month-nav-btn {
-      background: none; border: 1px solid rgba(27,40,81,.2); border-radius: 2px;
-      width: 27px; height: 27px; cursor: pointer; color: var(--navy); font-size: 1rem;
-      display: flex; align-items: center; justify-content: center; transition: all .2s;
-    }
-    .month-nav-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  /* Typography */
+  --serif:       'Playfair Display', Georgia, serif;
+  --sans:        'Inter', system-ui, sans-serif;
+  --label:       'Montserrat', system-ui, sans-serif;
+  --ease:        cubic-bezier(.25,.46,.45,.94);
+}
 
-    /* Main */
-    .main { flex: 1; padding: 1.75rem 2.5rem; max-width: 1280px; margin: 0 auto; width: 100%; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--ivory);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
 
-    /* ── CALENDAR ────────────────────────────────────── */
-    .cal-grid {
-      background: var(--white); border: 1px solid rgba(0,0,0,.06);
-      border-radius: 4px; overflow: hidden; box-shadow: var(--shadow);
-    }
-    .cal-wkdays { display: grid; grid-template-columns: repeat(7, 1fr); background: var(--navy); }
-    .cal-wkday {
-      padding: .55rem; text-align: center; font-size: .62rem; font-weight: 500;
-      letter-spacing: .17em; text-transform: uppercase; color: rgba(255,255,255,.55);
-    }
-    .cal-cells { display: grid; grid-template-columns: repeat(7, 1fr); }
-    .cal-cell {
-      min-height: 96px; border-right: 1px solid rgba(0,0,0,.045);
-      border-bottom: 1px solid rgba(0,0,0,.045); padding: .45rem .4rem; position: relative;
-    }
-    .cal-cell:nth-child(7n) { border-right: none; }
-    .cal-cell.other-mo { background: #f7f7f5; }
-    .cal-cell.is-today { background: #fffdf4; }
-    .cal-num {
-      font-size: .75rem; font-weight: 500; color: var(--muted); margin-bottom: .2rem;
-      display: inline-block;
-    }
-    .cal-cell.is-today .cal-num {
-      background: var(--gold); color: var(--white); border-radius: 50%;
-      width: 21px; height: 21px; display: inline-flex; align-items: center;
-      justify-content: center; font-size: .68rem;
-    }
-    .cal-chip {
-      display: block; border-radius: 2px; padding: .13rem .3rem;
-      font-size: .6rem; font-weight: 500; margin-bottom: .12rem; cursor: pointer;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      transition: opacity .15s, filter .15s; color: var(--white);
-    }
-    .cal-chip:hover { filter: brightness(1.15); }
-    .cal-chip.social    { background: #2a4a8a; }
-    .cal-chip.education { background: #1B2851; }
-    .cal-chip.business  { background: #46286e; }
-    .cal-chip.family    { background: #1e5c42; }
+/* ─────────────────────────────────────────────────────────
+   LOCK SCREEN
+───────────────────────────────────────────────────────── */
+#lock {
+  display: flex;
+  min-height: 100vh;
+  background: var(--navy);
+}
 
-    /* ── LIST VIEW ───────────────────────────────────── */
-    .list-wrap { display: flex; flex-direction: column; }
-    .list-mo-hdr {
-      font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400;
-      color: var(--navy); padding: 1.5rem 0 .6rem; border-bottom: 1px solid var(--border);
-      letter-spacing: .02em; margin-top: .25rem;
-    }
-    .list-mo-hdr:first-child { padding-top: 0; }
-    .list-card {
-      background: var(--white); border: 1px solid rgba(0,0,0,.055); border-radius: 3px;
-      padding: 1rem 1.25rem 1rem 1.5rem; display: flex; gap: 1.25rem;
-      align-items: flex-start; cursor: pointer; margin-bottom: .5rem; margin-top: .5rem;
-      transition: box-shadow .2s, border-color .2s; position: relative; overflow: hidden;
-    }
-    .list-card::before {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-    }
-    .list-card.social::before    { background: #2a4a8a; }
-    .list-card.education::before { background: var(--navy); }
-    .list-card.business::before  { background: #46286e; }
-    .list-card.family::before    { background: #1e5c42; }
-    .list-card:hover { border-color: rgba(201,168,76,.4); box-shadow: 0 3px 16px rgba(27,40,81,.08); }
-    .list-date-col { min-width: 56px; text-align: center; }
-    .list-date-day {
-      font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600;
-      color: var(--navy); line-height: 1;
-    }
-    .list-date-mo {
-      font-size: .62rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase;
-      color: var(--muted); margin-top: .1rem;
-    }
-    .list-date-range {
-      font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 600;
-      color: var(--navy); line-height: 1.35; text-align: left;
-    }
-    .list-info { flex: 1; }
-    .list-title {
-      font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600;
-      color: var(--navy); margin-bottom: .3rem; line-height: 1.3;
-    }
-    .list-meta { display: flex; flex-wrap: wrap; gap: .6rem .85rem; font-size: .76rem; color: var(--muted); }
-    .list-meta-item { display: flex; align-items: center; gap: .3rem; }
-    .type-badge {
-      font-size: .6rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
-      padding: .15rem .5rem; border-radius: 2px;
-    }
-    .type-badge.social    { background: rgba(42,74,138,.1);  color: #2a4a8a; }
-    .type-badge.education { background: rgba(27,40,81,.1);   color: var(--navy); }
-    .type-badge.business  { background: rgba(70,40,110,.1);  color: #46286e; }
-    .type-badge.family    { background: rgba(30,92,66,.1);   color: #1e5c42; }
-    .cat-pill {
-      font-size: .6rem; color: var(--muted); border: 1px solid rgba(0,0,0,.12);
-      padding: .12rem .4rem; border-radius: 2px; letter-spacing: .05em;
-    }
-    .empty {
-      text-align: center; padding: 4rem 2rem;
-    }
-    .empty h3 {
-      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
-      color: var(--navy); margin-bottom: .5rem;
-    }
-    .empty p { font-size: .85rem; color: var(--muted); }
+.lock-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem;
+  border-right: 1px solid rgba(201,162,74,.12);
+  position: relative;
+  overflow: hidden;
+  background-image:
+    linear-gradient(rgba(34,197,94,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,197,94,.05) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
 
-    /* ── MODAL ───────────────────────────────────────── */
-    .overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(17,28,61,.55); z-index: 1000;
-      align-items: center; justify-content: center;
-      padding: 1rem; backdrop-filter: blur(5px);
-    }
-    .overlay.open { display: flex; }
-    .modal {
-      background: var(--white); border-radius: 4px;
-      max-width: 580px; width: 100%; max-height: 88vh; overflow-y: auto;
-      position: relative; box-shadow: 0 20px 60px rgba(17,28,61,.3);
-    }
-    .modal-hdr {
-      background: var(--navy); padding: 1.6rem 1.75rem 1.4rem;
-      position: relative;
-    }
-    .modal-eyebrow {
-      font-size: .62rem; font-weight: 500; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: .5rem;
-    }
-    .modal-title {
-      font-family: 'Cormorant Garamond', serif; font-weight: 300;
-      font-size: 1.75rem; color: var(--white); line-height: 1.2;
-      padding-right: 2rem;
-    }
-    .modal-close {
-      position: absolute; top: 1.1rem; right: 1.1rem;
-      background: rgba(255,255,255,.1); border: none; color: rgba(255,255,255,.65);
-      width: 28px; height: 28px; border-radius: 2px; cursor: pointer; font-size: 1rem;
-      display: flex; align-items: center; justify-content: center; transition: all .2s;
-    }
-    .modal-close:hover { background: rgba(255,255,255,.2); color: var(--white); }
-    .modal-body { padding: 1.5rem 1.75rem; }
-    .modal-meta-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem;
-      margin-bottom: 1.25rem;
-    }
-    .modal-meta-item { display: flex; flex-direction: column; gap: .18rem; }
-    .modal-meta-lbl {
-      font-size: .6rem; font-weight: 500; letter-spacing: .17em;
-      text-transform: uppercase; color: var(--muted);
-    }
-    .modal-meta-val { font-size: .88rem; color: var(--text); font-weight: 400; line-height: 1.4; }
-    .modal-desc {
-      font-size: .875rem; line-height: 1.75; color: #555;
-      border-top: 1px solid rgba(0,0,0,.07); padding-top: 1.25rem; margin-bottom: 1.5rem;
-    }
-    .modal-desc p + p { margin-top: .75rem; }
-    .modal-desc h4 {
-      font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--navy);
-      margin-top: 1.1rem; margin-bottom: .3rem; font-weight: 600;
-    }
-    .modal-desc ul { padding-left: 1.2rem; }
-    .modal-desc li { margin-bottom: .25rem; }
-    .btn-gcal {
-      display: flex; align-items: center; justify-content: center; gap: .5rem;
-      width: 100%; background: var(--gold); color: var(--navy-dk); border: none;
-      border-radius: 2px; padding: .85rem; font-family: 'Outfit', sans-serif;
-      font-size: .7rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
-      text-decoration: none; cursor: pointer; transition: background .2s;
-    }
-    .btn-gcal:hover { background: var(--gold-lt); }
-    .modal-nodesc { padding-bottom: 0; }
+/* Radial glow */
+.lock-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 35% 55%, rgba(13,148,136,.35) 0%, transparent 65%);
+  pointer-events: none;
+}
 
-    /* ── RESPONSIVE ─────────────────────────────────── */
-    @media (max-width: 680px) {
-      .hdr { padding: 0 1rem; }
-      .sub-hdr { padding: 0 1rem; }
-      .main { padding: 1rem; }
-      .hdr-chapter { font-size: 1.1rem; }
-      .cal-cell { min-height: 62px; }
-      .cal-chip { font-size: .52rem; }
-      .modal-meta-grid { grid-template-columns: 1fr; }
-      .month-nav-label { min-width: 130px; font-size: .9rem; }
-    }
+.lock-eyebrow {
+  font-family: var(--label);
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.75rem;
+  position: relative;
+}
+
+.lock-headline {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(3.5rem, 6vw, 5.75rem);
+  line-height: .92;
+  color: var(--white);
+  margin-bottom: 2.75rem;
+  letter-spacing: -.015em;
+  position: relative;
+}
+
+.lock-headline strong {
+  font-style: normal;
+  font-weight: 700;
+  display: block;
+  color: var(--white);
+}
+
+.lock-rule {
+  width: 44px;
+  height: 1px;
+  background: var(--gold);
+  opacity: .45;
+  margin-bottom: 1.75rem;
+  position: relative;
+}
+
+.lock-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 3.25rem;
+  line-height: 1.55;
+  max-width: 340px;
+  position: relative;
+}
+
+/* 13-move pip path */
+.lock-path-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.lock-pips {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  position: relative;
+}
+
+.lock-pips::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(34,197,94,.35) 0%, rgba(34,197,94,.1) 100%);
+}
+
+.pip {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(34,197,94,.38);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: background .2s;
+}
+
+.pip:last-child {
+  background: var(--gold);
+  width: 10px; height: 10px;
+  box-shadow: 0 0 10px rgba(201,162,74,.55);
+}
+
+.lock-pip-label {
+  font-family: var(--label);
+  font-size: .5rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.2);
+}
+
+/* Lock right — form panel */
+.lock-right {
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 3.5rem;
+  background: rgba(255,255,255,.022);
+}
+
+.lock-form-eyebrow {
+  font-family: var(--label);
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.lock-field-wrap {
+  width: 100%;
+  position: relative;
+  margin-bottom: .5rem;
+}
+
+.lock-field-label {
+  display: block;
+  font-family: var(--label);
+  font-size: .55rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.28);
+  margin-bottom: .7rem;
+}
+
+.lock-field {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(201,162,74,.3);
+  padding: .6rem 0;
+  font-family: var(--sans);
+  font-size: .95rem;
+  color: var(--white);
+  outline: none;
+  letter-spacing: .1em;
+  transition: border-color .25s var(--ease);
+}
+
+.lock-field:focus { border-bottom-color: var(--gold); }
+.lock-field::placeholder { color: rgba(255,255,255,.16); letter-spacing: .06em; }
+
+.lock-error {
+  min-height: 1.4em;
+  font-size: .7rem;
+  color: #E07070;
+  margin-top: .45rem;
+  letter-spacing: .01em;
+}
+
+.lock-btn {
+  width: 100%;
+  margin-top: 2rem;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  padding: .9rem 1.5rem;
+  font-family: var(--label);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s var(--ease), transform .1s;
+}
+
+.lock-btn:hover  { background: var(--gold-lt); }
+.lock-btn:active { transform: scale(.98); }
+
+.lock-footnote {
+  margin-top: 3rem;
+  font-family: var(--label);
+  font-size: .52rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.16);
+  text-align: center;
+}
+
+/* ─────────────────────────────────────────────────────────
+   APP
+───────────────────────────────────────────────────────── */
+#app { display: none; flex-direction: column; min-height: 100vh; }
+
+/* Subtle board grid on the page body */
+#app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(10,34,24,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,34,24,.028) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Header */
+.hdr {
+  height: 62px;
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.hdr-brand {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+}
+
+.hdr-monogram {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--navy);
+  letter-spacing: -.01em;
+  line-height: 1;
+}
+
+.hdr-monogram em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+
+.hdr-tagline {
+  font-family: var(--label);
+  font-size: .48rem;
+  font-weight: 600;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  line-height: 1;
+}
+
+.hdr-right { display: flex; align-items: center; gap: 1.25rem; }
+
+.view-tog {
+  display: flex;
+  gap: .1rem;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  padding: .36rem .85rem;
+  font-family: var(--label);
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.view-btn.on {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.view-btn:not(.on):hover { color: var(--ink); }
+
+.signout-btn {
+  background: none;
+  border: none;
+  font-family: var(--label);
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  cursor: pointer;
+  padding: .36rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+
+.signout-btn:hover { color: var(--ink); border-bottom-color: var(--rule); }
+
+/* Sub-header */
+.sub {
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 48px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 100;
+}
+
+.filters { display: flex; gap: 0; }
+
+.filt-btn {
+  background: none;
+  border: none;
+  font-family: var(--label);
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  cursor: pointer;
+  padding: .5rem .85rem;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+  white-space: nowrap;
+}
+
+.filt-btn.on { color: var(--ink); border-bottom-color: var(--gold); }
+.filt-btn:not(.on):hover { color: var(--ink-2); }
+
+.mo-nav { display: flex; align-items: center; gap: .7rem; }
+
+.mo-lbl {
+  font-family: var(--serif);
+  font-size: .95rem;
+  font-weight: 500;
+  color: var(--navy);
+  min-width: 172px;
+  text-align: center;
+  letter-spacing: .01em;
+}
+
+.mo-btn {
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--ink-2);
+  font-size: 1rem;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+
+.mo-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─────────────────────────────────────────────────────────
+   CALENDAR
+───────────────────────────────────────────────────────── */
+.cal-wrap {
+  background: var(--white);
+  border: 1px solid var(--rule);
+}
+
+.cal-head { display: grid; grid-template-columns: repeat(7, 1fr); }
+
+.cal-wd {
+  padding: .55rem .4rem;
+  font-family: var(--label);
+  font-size: .54rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: center;
+  border-bottom: 1px solid var(--rule);
+}
+
+.cal-body { display: grid; grid-template-columns: repeat(7, 1fr); }
+
+.cal-cell {
+  min-height: 108px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: .5rem .45rem .4rem;
+  position: relative;
+}
+
+.cal-cell:nth-child(7n) { border-right: none; }
+.cal-cell.dim { background: rgba(11,31,51,.018); }
+.cal-cell.today { background: rgba(201,162,74,.04); }
+
+.cal-dn {
+  font-family: var(--sans);
+  font-size: .7rem;
+  font-weight: 400;
+  color: var(--ink-3);
+  display: inline-block;
+  width: 22px; height: 22px;
+  line-height: 22px;
+  text-align: center;
+  margin-bottom: .2rem;
+}
+
+.cal-cell.dim .cal-dn { opacity: .38; }
+
+.cal-cell.today .cal-dn {
+  background: var(--gold);
+  color: var(--white);
+  border-radius: 50%;
+  font-weight: 600;
+}
+
+.cal-ev {
+  display: block;
+  font-family: var(--sans);
+  font-size: .66rem;
+  font-weight: 500;
+  color: var(--white);
+  padding: .15rem .3rem .15rem .35rem;
+  margin-bottom: .18rem;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-left: 2px solid transparent;
+  border-radius: 1px;
+  transition: opacity .15s, filter .15s;
+  line-height: 1.5;
+}
+
+.cal-ev:hover { opacity: .85; filter: brightness(1.08); }
+
+/* Category color variants */
+.cal-ev.ev-core     { background: var(--cat-core);    border-left-color: rgba(201,162,74,.5); }
+.cal-ev.ev-virtual  { background: var(--cat-virtual); border-left-color: rgba(255,255,255,.25); }
+.cal-ev.ev-optional { background: var(--cat-opt);     border-left-color: rgba(255,255,255,.25); }
+
+/* Per-event accent override for border */
+.cal-ev.accent-gold        { border-left-color: var(--gold); }
+.cal-ev.accent-cranberry   { background: var(--cranberry); }
+.cal-ev.accent-terracotta  { background: var(--terracotta); }
+.cal-ev.accent-harbor      { background: var(--harbor); }
+.cal-ev.accent-pine        { background: var(--pine); }
+
+.cal-ev .cal-ev-move {
+  opacity: .55;
+  font-size: .58rem;
+  margin-right: .2rem;
+}
+
+/* ─────────────────────────────────────────────────────────
+   LIST VIEW
+───────────────────────────────────────────────────────── */
+.list-wrap { display: flex; flex-direction: column; }
+
+.list-mo {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 2rem 0 1rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: .25rem;
+}
+
+.list-mo:first-child { padding-top: 0; }
+
+.list-mo-name {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--navy);
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+
+.list-mo-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+  opacity: .25;
+  margin-bottom: 3px;
+}
+
+.list-ev {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background .2s;
+  border-radius: 1px;
+}
+
+.list-ev:hover { background: rgba(201,162,74,.04); }
+.list-ev:last-child { border-bottom: none; }
+
+.list-date {
+  width: 72px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 1.25rem;
+  border-right: 1px solid var(--rule);
+  margin-right: 1.5rem;
+}
+
+.list-dd {
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--navy);
+}
+
+.list-dm {
+  font-family: var(--label);
+  font-size: .52rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: .2rem;
+}
+
+.list-range {
+  font-family: var(--serif);
+  font-size: .88rem;
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.35;
+  text-align: center;
+}
+
+.list-body { flex: 1; min-width: 0; }
+
+.list-move-row {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .4rem;
+}
+
+.list-move {
+  font-family: var(--label);
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--white);
+  padding: .14rem .45rem;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.list-move.ev-core     { background: var(--cat-core); }
+.list-move.ev-virtual  { background: var(--cat-virtual); }
+.list-move.ev-optional { background: var(--cat-opt); }
+.list-move.accent-cranberry  { background: var(--cranberry); }
+.list-move.accent-terracotta { background: var(--terracotta); }
+
+.list-cat {
+  font-family: var(--label);
+  font-size: .52rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.list-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: .28rem;
+}
+
+.list-subtitle {
+  font-family: var(--sans);
+  font-size: .78rem;
+  font-weight: 400;
+  color: var(--ink-2);
+  margin-bottom: .5rem;
+  line-height: 1.4;
+}
+
+.list-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem 1.25rem;
+  font-size: .72rem;
+  color: var(--ink-2);
+}
+
+.list-meta-item { display: flex; align-items: center; gap: .35rem; }
+
+.list-meta-dot {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: .6;
+  flex-shrink: 0;
+}
+
+.empty {
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+.empty-t {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--navy);
+  margin-bottom: .5rem;
+}
+
+.empty-s { font-size: .8rem; color: var(--ink-3); }
+
+/* ─────────────────────────────────────────────────────────
+   MODAL
+───────────────────────────────────────────────────────── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(8,18,32,.7);
+  z-index: 900;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.overlay.show {
+  display: flex;
+  animation: fadeIn .28s var(--ease) forwards;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: var(--white);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp .3s var(--ease) forwards;
+  border: 1px solid var(--rule);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(14px) scale(.97); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-hdr {
+  padding: 2rem 2.25rem 1.75rem;
+  position: relative;
+  transition: background .25s;
+}
+
+.modal-move {
+  font-family: var(--label);
+  font-size: .54rem;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  margin-bottom: .55rem;
+}
+
+.modal-tag {
+  font-family: var(--label);
+  font-size: .54rem;
+  font-weight: 600;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: .6rem;
+}
+
+.modal-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 2rem;
+  color: var(--white);
+  line-height: 1.15;
+  padding-right: 2.5rem;
+}
+
+.modal-subtitle {
+  font-family: var(--sans);
+  font-size: .82rem;
+  font-weight: 400;
+  color: rgba(255,255,255,.5);
+  margin-top: .55rem;
+  line-height: 1.4;
+  padding-right: 2.5rem;
+}
+
+.modal-x {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.5);
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: .9rem;
+  transition: all .2s;
+}
+
+.modal-x:hover { background: rgba(255,255,255,.16); color: var(--white); }
+
+.modal-body { padding: 1.75rem 2.25rem; }
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+
+.modal-lbl {
+  font-family: var(--label);
+  font-size: .52rem;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: .3rem;
+}
+
+.modal-val {
+  font-size: .88rem;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.modal-val em { font-style: normal; color: var(--gold); font-weight: 500; }
+
+.modal-desc-wrap {
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1.5rem;
+}
+
+.modal-desc {
+  font-size: .875rem;
+  line-height: 1.8;
+  color: var(--ink-2);
+}
+
+.modal-desc p + p { margin-top: .75rem; }
+
+.modal-desc h4 {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 1.1rem 0 .4rem;
+}
+
+.modal-desc ul { padding-left: 1.1rem; }
+.modal-desc li { margin-bottom: .3rem; }
+.modal-desc strong { color: var(--ink); font-weight: 500; }
+.modal-desc em { font-style: italic; color: var(--ink-2); }
+
+.gcal-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  width: 100%;
+  background: var(--gold);
+  color: var(--navy);
+  text-decoration: none;
+  padding: .9rem 1.5rem;
+  font-family: var(--label);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background .2s var(--ease), transform .1s;
+}
+
+.gcal-btn:hover  { background: var(--gold-lt); }
+.gcal-btn:active { transform: scale(.99); }
+.gcal-icon { flex-shrink: 0; }
+
+/* ─────────────────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────────────────── */
+@media (max-width: 820px) {
+  .lock-left { display: none; }
+  .lock-right { width: 100%; max-width: 420px; margin: auto; }
+  #lock { justify-content: center; }
+}
+
+@media (max-width: 640px) {
+  .hdr { padding: 0 1.25rem; }
+  .sub  { padding: 0 1.25rem; }
+  .main { padding: 1.25rem; }
+  .cal-cell { min-height: 70px; }
+  .cal-ev { font-size: .6rem; }
+  .list-date { width: 58px; }
+  .list-dd { font-size: 1.8rem; }
+  .modal { max-height: 95vh; }
+  .modal-title { font-size: 1.5rem; }
+  .modal-grid { grid-template-columns: 1fr; gap: .85rem; }
+  .modal-hdr { padding: 1.5rem 1.5rem 1.25rem; }
+  .modal-body { padding: 1.25rem 1.5rem; }
+  .lock-left { padding: 3rem 2rem; }
+  .lock-headline { font-size: 3.25rem; }
+}
+
+/* Scrollbar */
+.modal::-webkit-scrollbar { width: 4px; }
+.modal::-webkit-scrollbar-track { background: transparent; }
+.modal::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════ LOCK SCREEN ══════════════════ -->
-<div id="lockScreen">
-  <div class="lock-ornament">
-    <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
-      <rect x="3" y="9" width="12" height="10" rx="1.5" stroke="#C9A84C" stroke-width="1.5"/>
-      <path d="M5 9V6a4 4 0 0 1 8 0v3" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="9" cy="14" r="1.5" fill="#C9A84C"/>
-    </svg>
+<!-- ══ LOCK ═══════════════════════════════════════════════ -->
+<div id="lock">
+  <div class="lock-left">
+    <div class="lock-eyebrow">YPO &nbsp;·&nbsp; Atlantic 13</div>
+    <div class="lock-headline">
+      See the<br><strong>Whole Board</strong>
+    </div>
+    <div class="lock-rule"></div>
+    <p class="lock-tagline">Thirteen moves. One unforgettable year.<br>A chapter for leaders who play the long game.</p>
+    <div class="lock-path-wrap">
+      <div class="lock-pips" id="lockPips">
+        <!-- 13 pips rendered by JS -->
+      </div>
+      <div class="lock-pip-label">13 moves &nbsp;·&nbsp; FY 2026–2027</div>
+    </div>
   </div>
-  <div class="lock-eyebrow">Young Presidents' Organization</div>
-  <h1 class="lock-title">Atlantic 13</h1>
-  <p class="lock-subtitle">Member Event Calendar · FY 2026–2027</p>
-  <div class="lock-rule"></div>
-  <div class="lock-card">
-    <label class="lock-label" for="pwInput">Chapter Password</label>
-    <input class="lock-input" type="password" id="pwInput" placeholder="••••••••••" autocomplete="off">
-    <div class="lock-error" id="lockErr" aria-live="polite"></div>
-    <button class="btn-enter" onclick="tryLogin()">Enter</button>
+
+  <div class="lock-right">
+    <div class="lock-form-eyebrow">Member Access</div>
+    <div style="width:100%">
+      <label class="lock-field-label" for="pw">Chapter Password</label>
+      <div class="lock-field-wrap">
+        <input class="lock-field" type="password" id="pw" placeholder="••••••••••" autocomplete="off">
+      </div>
+      <div class="lock-error" id="lockErr" role="alert"></div>
+      <button class="lock-btn" onclick="tryLogin()">Enter</button>
+    </div>
+    <p class="lock-footnote">View only &nbsp;·&nbsp; Members only</p>
   </div>
-  <div class="lock-footer">Members only &nbsp;·&nbsp; View only</div>
 </div>
 
-<!-- ══════════════════ APP ══════════════════ -->
+<!-- ══ APP ════════════════════════════════════════════════ -->
 <div id="app">
   <header class="hdr">
     <div class="hdr-brand">
-      <span class="hdr-org">Young Presidents' Organization</span>
-      <span class="hdr-chapter">Atlantic 13 Chapter</span>
+      <span class="hdr-monogram">A<em>·</em>13</span>
+      <span class="hdr-tagline">See the Whole Board</span>
     </div>
     <div class="hdr-right">
-      <div class="view-toggle">
-        <button class="view-btn active" id="btnCal" onclick="setView('cal')">
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor">
-            <rect x="0" y="0" width="4.5" height="4.5" rx=".5"/>
-            <rect x="6.5" y="0" width="4.5" height="4.5" rx=".5"/>
-            <rect x="0" y="6.5" width="4.5" height="4.5" rx=".5"/>
-            <rect x="6.5" y="6.5" width="4.5" height="4.5" rx=".5"/>
-          </svg>
-          Calendar
-        </button>
-        <button class="view-btn" id="btnList" onclick="setView('list')">
-          <svg width="11" height="9" viewBox="0 0 11 9" fill="currentColor">
-            <rect x="0" y="0" width="11" height="1.8" rx=".4"/>
-            <rect x="0" y="3.6" width="11" height="1.8" rx=".4"/>
-            <rect x="0" y="7.2" width="11" height="1.8" rx=".4"/>
-          </svg>
-          List
-        </button>
+      <div class="view-tog">
+        <button class="view-btn on" id="btnCal"  onclick="setView('cal')">Calendar</button>
+        <button class="view-btn"     id="btnList" onclick="setView('list')">List</button>
       </div>
-      <button class="btn-out" onclick="signOut()">Sign Out</button>
+      <button class="signout-btn" onclick="signOut()">Sign Out</button>
     </div>
   </header>
 
-  <div class="sub-hdr">
+  <div class="sub">
     <div class="filters" id="filterRow">
-      <button class="filter-btn active" data-f="all"       onclick="setFilter('all')">All Events</button>
-      <button class="filter-btn"        data-f="social"    onclick="setFilter('social')">Social</button>
-      <button class="filter-btn"        data-f="education" onclick="setFilter('education')">Education</button>
-      <button class="filter-btn"        data-f="business"  onclick="setFilter('business')">Business</button>
-      <button class="filter-btn"        data-f="family"    onclick="setFilter('family')">Family</button>
+      <button class="filt-btn on" data-f="all"      onclick="setFilter('all')">All</button>
+      <button class="filt-btn"   data-f="core"      onclick="setFilter('core')">Core</button>
+      <button class="filt-btn"   data-f="virtual"   onclick="setFilter('virtual')">Virtual</button>
+      <button class="filt-btn"   data-f="optional"  onclick="setFilter('optional')">Optional</button>
     </div>
-    <div class="month-nav" id="monthNav">
-      <button class="month-nav-btn" onclick="stepMonth(-1)">&#8249;</button>
-      <span class="month-nav-label" id="monthLabel"></span>
-      <button class="month-nav-btn" onclick="stepMonth(1)">&#8250;</button>
+    <div class="mo-nav" id="moNav">
+      <button class="mo-btn" onclick="stepMo(-1)">&#8249;</button>
+      <span class="mo-lbl" id="moLbl"></span>
+      <button class="mo-btn" onclick="stepMo(1)">&#8250;</button>
     </div>
   </div>
 
   <main class="main">
     <div id="calView"></div>
-    <div id="lstView" style="display:none"></div>
+    <div id="listView" style="display:none"></div>
   </main>
 </div>
 
-<!-- ══════════════════ MODAL ══════════════════ -->
-<div class="overlay" id="overlay" onclick="overlayClick(event)">
+<!-- ══ MODAL ══════════════════════════════════════════════ -->
+<div class="overlay" id="overlay" onclick="bgClose(event)">
   <div class="modal" id="modal">
-    <div class="modal-hdr">
-      <div class="modal-eyebrow" id="mEyebrow"></div>
-      <div class="modal-title"   id="mTitle"></div>
-      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <div class="modal-hdr" id="modalHdr">
+      <div class="modal-move"  id="mMove"></div>
+      <div class="modal-tag"   id="mTag"></div>
+      <div class="modal-title" id="mTitle"></div>
+      <div class="modal-subtitle" id="mSubtitle"></div>
+      <button class="modal-x" onclick="closeModal()" aria-label="Close">&#x2715;</button>
     </div>
     <div class="modal-body">
-      <div class="modal-meta-grid">
-        <div class="modal-meta-item">
-          <span class="modal-meta-lbl">Date</span>
-          <span class="modal-meta-val" id="mDate"></span>
+      <div class="modal-grid">
+        <div class="modal-field">
+          <div class="modal-lbl">Date</div>
+          <div class="modal-val" id="mDate"></div>
         </div>
-        <div class="modal-meta-item">
-          <span class="modal-meta-lbl">Location</span>
-          <span class="modal-meta-val" id="mLoc"></span>
+        <div class="modal-field">
+          <div class="modal-lbl">Location</div>
+          <div class="modal-val" id="mLoc"></div>
         </div>
-        <div class="modal-meta-item">
-          <span class="modal-meta-lbl">Day Chair</span>
-          <span class="modal-meta-val" id="mChair"></span>
+        <div class="modal-field">
+          <div class="modal-lbl">Day Chair</div>
+          <div class="modal-val" id="mChair"></div>
         </div>
-        <div class="modal-meta-item">
-          <span class="modal-meta-lbl">Event Type</span>
-          <span class="modal-meta-val" id="mType"></span>
+        <div class="modal-field">
+          <div class="modal-lbl">Category</div>
+          <div class="modal-val" id="mCat"></div>
         </div>
       </div>
-      <div class="modal-desc" id="mDesc"></div>
-      <a class="btn-gcal" id="mGcal" href="#" target="_blank" rel="noopener noreferrer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+      <div class="modal-desc-wrap" id="mDescWrap" style="display:none">
+        <div class="modal-desc" id="mDesc"></div>
+      </div>
+      <a class="gcal-btn" id="mGcal" href="#" target="_blank" rel="noopener noreferrer">
+        <svg class="gcal-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
           <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/>
         </svg>
         Add to Google Calendar
@@ -454,339 +1059,421 @@
 </div>
 
 <script>
-/* ───────────────────────────────────────────────────
-   EVENT DATA — sourced from Google Drive
-   File: YPO A13 Learning Calendar Data (FY27)
-   Folder: 1-i_-By_G62x-A0W2oTuTtCQzg0ioBV9B
-─────────────────────────────────────────────────── */
-const EVENTS = [
+/* ───────────────────────────────────────────────────────────
+   DATA — YPO A13 Learning Calendar FY2026–27
+   move:    chronological move number (string "01"–"13")
+   accent:  CSS class for chip/modal color override
+   accentBg: hex for modal header background
+───────────────────────────────────────────────────────── */
+const EVT = [
   {
     id: 1,
-    title: "US Open",
-    label: "Aug 31 – Sep 1, 2026",
-    start: "2026-08-31",
-    end:   "2026-09-01",
-    monthOnly: false,
-    location: "New York, NY",
-    chair: "Raghav",
-    category: "Core Event",
-    type: "social",
-    desc: ""
-  },
-  {
-    id: 2,
-    title: "Inside the FBI: Leadership Under Pressure",
-    label: "October 13, 2026",
-    start: "2026-10-13",
-    end:   "2026-10-13",
-    monthOnly: false,
-    location: "Washington, DC",
-    chair: "Mark Stephenson",
-    category: "Core Event",
-    type: "education",
-    desc: `<p>Step inside the FBI for an unprecedented leadership immersion focused on decision-making under pressure. Participants will explore how the FBI leads during complex crises, through tours, case briefings, and direct dialogue with senior executives.</p>
-<p>Attendees will visit the Director's Strategic Intelligence Center (DSIC) and The FBI Experience, take part in a real-world counterintelligence case briefing, and join a Senior Executive Panel on leadership and resilience in high-stakes environments.</p>
-<h4>Learning Objectives</h4>
-<ul>
-<li>Understand leadership decision-making in times of crisis.</li>
-<li>Learn how the FBI coordinates intelligence and operations under pressure.</li>
-<li>Examine real counterintelligence cases relevant to the private sector.</li>
-<li>Engage with senior FBI executives on resilience, teamwork, and leadership.</li>
-</ul>`
-  },
-  {
-    id: 3,
-    title: "Holiday Party",
-    label: "December 1, 2026",
-    start: "2026-12-01",
-    end:   "2026-12-01",
-    monthOnly: false,
-    location: "New York, NY",
-    chair: "Jacqueline Lane",
-    category: "Core Event",
-    type: "social",
-    desc: ""
-  },
-  {
-    id: 4,
-    title: "Boston — MIT / HBS",
-    label: "February 2027",
-    start: "2027-02-01",
-    end:   "2027-02-28",
-    monthOnly: true,
-    location: "Boston, MA",
-    chair: "Max Winthrop & Tara Fung",
-    category: "Core Event",
-    type: "education",
-    desc: "<p>Chapter learning experience hosted at MIT and Harvard Business School in Boston. Exact dates to be confirmed.</p>"
-  },
-  {
-    id: 5,
-    title: "Spain",
-    label: "May 12–16, 2027",
-    start: "2027-05-12",
-    end:   "2027-05-16",
-    monthOnly: false,
-    location: "Valencia, Spain",
-    chair: "Richard",
-    category: "Core Event",
-    type: "social",
-    desc: "<p>Multi-day international chapter experience in Valencia, Spain. Note: May 16 is the departure day.</p>"
-  },
-  {
-    id: 6,
-    title: "Family Governance",
-    label: "November 12, 2026",
-    start: "2026-11-12",
-    end:   "2026-11-12",
-    monthOnly: false,
-    location: "Virtual",
-    chair: "William Tenenbaum",
-    category: "Virtual Event",
-    type: "family",
-    desc: ""
-  },
-  {
-    id: 7,
-    title: "Scale",
-    label: "January 2027",
-    start: "2027-01-01",
-    end:   "2027-01-31",
-    monthOnly: true,
-    location: "Virtual",
-    chair: "MichaelAaron Flicker",
-    category: "Virtual Event",
-    type: "business",
-    desc: ""
-  },
-  {
-    id: 8,
-    title: "Capital Allocation",
-    label: "March 2027",
-    start: "2027-03-01",
-    end:   "2027-03-31",
-    monthOnly: true,
-    location: "Virtual",
-    chair: "Asif Zaman",
-    category: "Virtual Event",
-    type: "business",
-    desc: ""
-  },
-  {
-    id: 9,
-    title: "Management System",
-    label: "April 2027",
-    start: "2027-04-01",
-    end:   "2027-04-30",
-    monthOnly: true,
-    location: "Virtual",
-    chair: "Andrew Halliday",
-    category: "Virtual Event",
-    type: "business",
-    desc: ""
-  },
-  {
-    id: 10,
-    title: "AI Show & Tell",
-    label: "June 2027",
-    start: "2027-06-01",
-    end:   "2027-06-30",
-    monthOnly: true,
-    location: "Virtual",
-    chair: "Tara Fung",
-    category: "Virtual Event",
-    type: "education",
-    desc: ""
+    move:     "01",
+    title:    "US Open",
+    subtitle: "How to View Excellence",
+    label:    "Aug 31 – Sep 1, 2026",
+    start:    "2026-08-31",
+    end:      "2026-09-01",
+    mOnly:    false,
+    loc:      "New York, NY",
+    chair:    "Raghav",
+    cat:      "core",
+    catLabel: "Core Event",
+    type:     "social",
+    accent:   "accent-gold",
+    accentBg: "#0A2218",
+    desc:     ""
   },
   {
     id: 11,
-    title: "Family Farm Day",
-    label: "September 26, 2026",
-    start: "2026-09-26",
-    end:   "2026-09-26",
-    monthOnly: false,
-    location: "Chatsworth, NJ",
-    chair: "William Tenenbaum & Victoria Bowley",
-    category: "Optional Event",
-    type: "family",
-    desc: `<p><strong>Berry Good Health: Cranberries, Chocolate &amp; Wellness</strong></p>
-<p>New Jersey is a leading cranberry-producing state. Join us at Lee Brothers Cranberry Bog in Chatsworth — New Jersey's largest Ocean Spray supplier — for a wellness-focused farm day during peak harvest season.</p>
-<p>The 1,800-acre, family-owned farm has been operated by three generations since 1868, growing cranberries on 135 acres with the remaining land preserved as an active watershed. Lee family owners Jenn and Steven Lee III will provide a personal tour of their operations.</p>
-<p>Enjoy a sandwich picnic and blueberry/cranberry treats, observe the peak harvest, and take home berry-inspired gift bags. Learn about the health benefits of cranberries from Dr. Deena Adimoolam (primary care &amp; endocrinology) and Heather Robbie (weight management expert). For a sweet finale, 2 Chicks with Chocolate will host a hands-on chocolate-making table.</p>
-<p><em>Note: This tour includes walking up to ¾ mile over unpaved gravel roadways, some of which may be wet. Comfortable, appropriate footwear is required.</em></p>`
+    move:     "02",
+    title:    "Family Farm Day",
+    subtitle: "Cranberries, Chocolate & Wellness",
+    label:    "September 26, 2026",
+    start:    "2026-09-26",
+    end:      "2026-09-26",
+    mOnly:    false,
+    loc:      "Chatsworth, NJ",
+    chair:    "William Tenenbaum &amp; Victoria Bowley",
+    cat:      "optional",
+    catLabel: "Optional Event",
+    type:     "family",
+    accent:   "accent-cranberry",
+    accentBg: "#8A1E2D",
+    desc:     `<p><strong>Berry Good Health: Cranberries, Chocolate &amp; Wellness</strong></p>
+<p>New Jersey is a leading cranberry-producing state. Join us at Lee Brothers Cranberry Bog in Chatsworth — New Jersey's largest Ocean Spray supplier — for a wellness-focused farm day during peak harvest season, with Lee family owners Jenn and Steven Lee III providing a personal tour of their operations.</p>
+<p>The 1,800-acre, family-owned farm has been operated by three generations since 1868, growing cranberries on 135 acres with the remaining land preserved as an active watershed system. Lee Brothers also spearheaded a partnership with Rutgers University through Integrity Propagation, cultivating cranberry plants featuring varieties including Crimson Queen, Mullica Queen, Haines, Demoranville, and Scarlet Knight.</p>
+<p>Enjoy a sandwich picnic and blueberry/cranberry treats, observe the peak harvest, and take home berry-inspired gift bags. Learn about the health benefits of cranberries from Dr. Deena Adimoolam (primary care &amp; endocrinology) and Heather Robbie (weight management). For a sweet finale, 2 Chicks with Chocolate will host a hands-on chocolate-making table.</p>
+<p><em>Note: This tour includes walking up to ¾ mile over unpaved gravel roadways. Comfortable footwear is required. Guests will not enter the water.</em></p>`
+  },
+  {
+    id: 2,
+    move:     "03",
+    title:    "Inside the FBI",
+    subtitle: "Leadership Under Pressure",
+    label:    "October 13, 2026",
+    start:    "2026-10-13",
+    end:      "2026-10-13",
+    mOnly:    false,
+    loc:      "Washington, DC",
+    chair:    "Mark Stephenson",
+    cat:      "core",
+    catLabel: "Core Event",
+    type:     "education",
+    accent:   "",
+    accentBg: "#0A2218",
+    desc:     `<p>Step inside the FBI for an unprecedented leadership immersion focused on decision-making under pressure. Participants will explore how the FBI leads during complex crises — through tours, case briefings, and direct dialogue with senior executives.</p>
+<p>Attendees will visit the Director's Strategic Intelligence Center (DSIC) and The FBI Experience, take part in a real-world counterintelligence case briefing, and join a Senior Executive Panel on leadership and resilience in high-stakes environments.</p>
+<h4>Learning Objectives</h4>
+<ul>
+<li>Understand leadership decision-making in times of crisis</li>
+<li>Learn how the FBI coordinates intelligence and operations under pressure</li>
+<li>Examine real counterintelligence cases relevant to the private sector</li>
+<li>Engage with senior FBI executives on resilience, teamwork, and leadership</li>
+</ul>`
+  },
+  {
+    id: 6,
+    move:     "04",
+    title:    "Family Governance",
+    subtitle: "Designing the System Before It Is Needed",
+    label:    "November 12, 2026",
+    start:    "2026-11-12",
+    end:      "2026-11-12",
+    mOnly:    false,
+    loc:      "Virtual",
+    chair:    "William Tenenbaum",
+    cat:      "virtual",
+    catLabel: "Virtual Event",
+    type:     "family",
+    accent:   "accent-cranberry",
+    accentBg: "#8A1E2D",
+    desc:     ""
+  },
+  {
+    id: 3,
+    move:     "05",
+    title:    "Holiday Party",
+    subtitle: "A Chapter Celebration in New York",
+    label:    "December 1, 2026",
+    start:    "2026-12-01",
+    end:      "2026-12-01",
+    mOnly:    false,
+    loc:      "New York, NY",
+    chair:    "Jacqueline Lane",
+    cat:      "core",
+    catLabel: "Core Event",
+    type:     "social",
+    accent:   "accent-gold",
+    accentBg: "#0A2218",
+    desc:     ""
+  },
+  {
+    id: 7,
+    move:     "06",
+    title:    "Scale",
+    subtitle: "Building the Company for the Next Level",
+    label:    "January 2027",
+    start:    "2027-01-01",
+    end:      "2027-01-31",
+    mOnly:    true,
+    loc:      "Virtual",
+    chair:    "MichaelAaron Flicker",
+    cat:      "virtual",
+    catLabel: "Virtual Event",
+    type:     "business",
+    accent:   "",
+    accentBg: "#0A4A43",
+    desc:     ""
   },
   {
     id: 12,
-    title: "Winter Escape",
-    label: "January 2027",
-    start: "2027-01-01",
-    end:   "2027-01-31",
-    monthOnly: true,
-    location: "Vermont",
-    chair: "Chez Perfetto",
-    category: "Optional Event",
-    type: "social",
-    desc: ""
+    move:     "07",
+    title:    "Winter Escape",
+    subtitle: "Connection by the Fire and on the Mountain",
+    label:    "January 2027",
+    start:    "2027-01-01",
+    end:      "2027-01-31",
+    mOnly:    true,
+    loc:      "Vermont",
+    chair:    "Chez Perfetto",
+    cat:      "optional",
+    catLabel: "Optional Event",
+    type:     "social",
+    accent:   "accent-pine",
+    accentBg: "#2F5D50",
+    desc:     ""
+  },
+  {
+    id: 4,
+    move:     "08",
+    title:    "Boston — MIT &amp; HBS",
+    subtitle: "Capital, Innovation, and the Future of Decision-Making",
+    label:    "February 2027",
+    start:    "2027-02-01",
+    end:      "2027-02-28",
+    mOnly:    true,
+    loc:      "Boston, MA",
+    chair:    "Max Winthrop &amp; Tara Fung",
+    cat:      "core",
+    catLabel: "Core Event",
+    type:     "education",
+    accent:   "",
+    accentBg: "#0A2218",
+    desc:     "<p>Chapter learning experience in Boston, hosted at MIT and Harvard Business School. Exact dates to be confirmed.</p>"
+  },
+  {
+    id: 8,
+    move:     "09",
+    title:    "Capital Allocation",
+    subtitle: "The CEO's Highest-Leverage Decision",
+    label:    "March 2027",
+    start:    "2027-03-01",
+    end:      "2027-03-31",
+    mOnly:    true,
+    loc:      "Virtual",
+    chair:    "Asif Zaman",
+    cat:      "virtual",
+    catLabel: "Virtual Event",
+    type:     "business",
+    accent:   "",
+    accentBg: "#0A4A43",
+    desc:     ""
+  },
+  {
+    id: 9,
+    move:     "10",
+    title:    "Management System",
+    subtitle: "Turning Strategy into Execution",
+    label:    "April 2027",
+    start:    "2027-04-01",
+    end:      "2027-04-30",
+    mOnly:    true,
+    loc:      "Virtual",
+    chair:    "Andrew Halliday",
+    cat:      "virtual",
+    catLabel: "Virtual Event",
+    type:     "business",
+    accent:   "",
+    accentBg: "#0A4A43",
+    desc:     ""
   },
   {
     id: 13,
-    title: "Couples Retreat",
-    label: "April 9–11, 2027",
-    start: "2027-04-09",
-    end:   "2027-04-11",
-    monthOnly: false,
-    location: "Aspen, CO",
-    chair: "Glen Kunofsky",
-    category: "Optional Event",
-    type: "family",
-    desc: ""
+    move:     "11",
+    title:    "Couples Retreat",
+    subtitle: "Alignment, Legacy, and the Life We Are Building",
+    label:    "April 9–11, 2027",
+    start:    "2027-04-09",
+    end:      "2027-04-11",
+    mOnly:    false,
+    loc:      "Aspen, CO",
+    chair:    "Glen Kunofsky",
+    cat:      "optional",
+    catLabel: "Optional Event",
+    type:     "family",
+    accent:   "accent-terracotta",
+    accentBg: "#B7603B",
+    desc:     ""
+  },
+  {
+    id: 5,
+    move:     "12",
+    title:    "Spain Presidents Retreat",
+    subtitle: "The Final Move",
+    label:    "May 12–16, 2027",
+    start:    "2027-05-12",
+    end:      "2027-05-16",
+    mOnly:    false,
+    loc:      "Valencia, Spain",
+    chair:    "Richard",
+    cat:      "core",
+    catLabel: "Core Event",
+    type:     "social",
+    accent:   "accent-terracotta",
+    accentBg: "#B7603B",
+    desc:     "<p>Multi-day international chapter experience in Valencia, Spain. The final move of the year — May 16 is the departure day.</p>"
+  },
+  {
+    id: 10,
+    move:     "13",
+    title:    "AI Show &amp; Tell",
+    subtitle: "What Leaders Are Actually Using",
+    label:    "June 2027",
+    start:    "2027-06-01",
+    end:      "2027-06-30",
+    mOnly:    true,
+    loc:      "Virtual",
+    chair:    "Tara Fung",
+    cat:      "virtual",
+    catLabel: "Virtual Event",
+    type:     "education",
+    accent:   "",
+    accentBg: "#0A4A43",
+    desc:     ""
   }
 ];
 
-/* ───────────────────────────────────────────────────
+/* ───────────────────────────────────────────────────────────
    STATE
-─────────────────────────────────────────────────── */
+─────────────────────────────────────────────────────────── */
 const PW = "atlantic13";
 let view   = "cal";
 let filter = "all";
 let calY   = 2026;
-let calM   = 7; // August (0-indexed) — first event month
+let calM   = 7;  // Aug 2026
 
-const MONTHS_LONG  = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-const MONTHS_SHORT = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const WKDAYS       = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MO_L = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MO_S = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const WD   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-/* ───────────────────────────────────────────────────
+/* ───────────────────────────────────────────────────────────
+   LOCK PIPS
+─────────────────────────────────────────────────────────── */
+(function buildPips() {
+  const wrap = document.getElementById("lockPips");
+  if (!wrap) return;
+  for (let i = 0; i < 13; i++) {
+    const d = document.createElement("div");
+    d.className = "pip";
+    wrap.appendChild(d);
+  }
+})();
+
+/* ───────────────────────────────────────────────────────────
    AUTH
-─────────────────────────────────────────────────── */
+─────────────────────────────────────────────────────────── */
 function tryLogin() {
-  const v = document.getElementById("pwInput").value;
-  if (v === PW) {
-    document.getElementById("lockScreen").style.display = "none";
-    document.getElementById("app").style.display = "flex";
-    document.getElementById("app").style.flexDirection = "column";
+  const val = document.getElementById("pw").value;
+  if (val === PW) {
+    document.getElementById("lock").style.display = "none";
+    const a = document.getElementById("app");
+    a.style.display = "flex";
+    a.style.flexDirection = "column";
     render();
   } else {
-    document.getElementById("lockErr").textContent = "Incorrect password — please try again.";
-    document.getElementById("pwInput").value = "";
-    document.getElementById("pwInput").focus();
+    document.getElementById("lockErr").textContent = "Incorrect password. Please try again.";
+    document.getElementById("pw").value = "";
+    document.getElementById("pw").focus();
   }
 }
 
-document.getElementById("pwInput").addEventListener("keydown", e => {
+document.getElementById("pw").addEventListener("keydown", e => {
   document.getElementById("lockErr").textContent = "";
   if (e.key === "Enter") tryLogin();
 });
 
 function signOut() {
   document.getElementById("app").style.display = "none";
-  document.getElementById("lockScreen").style.display = "flex";
-  document.getElementById("pwInput").value = "";
+  document.getElementById("lock").style.display = "flex";
+  document.getElementById("pw").value = "";
   document.getElementById("lockErr").textContent = "";
 }
 
-/* ───────────────────────────────────────────────────
+/* ───────────────────────────────────────────────────────────
    FILTER
-─────────────────────────────────────────────────── */
-function filteredEvents() {
-  return filter === "all" ? EVENTS : EVENTS.filter(e => e.type === filter);
+─────────────────────────────────────────────────────────── */
+function filtered() {
+  if (filter === "all") return EVT;
+  return EVT.filter(e => e.cat === filter);
 }
 
 function setFilter(f) {
   filter = f;
-  document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b.dataset.f === f));
+  document.querySelectorAll(".filt-btn").forEach(b => b.classList.toggle("on", b.dataset.f === f));
   render();
 }
 
-/* ───────────────────────────────────────────────────
-   VIEW SWITCH
-─────────────────────────────────────────────────── */
+/* ───────────────────────────────────────────────────────────
+   VIEW
+─────────────────────────────────────────────────────────── */
 function setView(v) {
   view = v;
-  document.getElementById("btnCal").classList.toggle("active",  v === "cal");
-  document.getElementById("btnList").classList.toggle("active", v === "list");
-  document.getElementById("calView").style.display  = v === "cal"  ? "block" : "none";
-  document.getElementById("lstView").style.display  = v === "list" ? "block" : "none";
-  document.getElementById("monthNav").style.display = v === "cal"  ? "flex"  : "none";
+  document.getElementById("btnCal").classList.toggle("on",  v === "cal");
+  document.getElementById("btnList").classList.toggle("on", v === "list");
+  document.getElementById("calView").style.display   = v === "cal"  ? "block" : "none";
+  document.getElementById("listView").style.display  = v === "list" ? "block" : "none";
+  document.getElementById("moNav").style.display     = v === "cal"  ? "flex"  : "none";
   render();
 }
 
-/* ───────────────────────────────────────────────────
-   CALENDAR RENDER
-─────────────────────────────────────────────────── */
-function stepMonth(d) {
+/* ───────────────────────────────────────────────────────────
+   CALENDAR
+─────────────────────────────────────────────────────────── */
+function stepMo(d) {
   calM += d;
   if (calM < 0)  { calM = 11; calY--; }
   if (calM > 11) { calM = 0;  calY++; }
   renderCal();
 }
 
+function catClass(cat) {
+  if (cat === "core")     return "ev-core";
+  if (cat === "virtual")  return "ev-virtual";
+  if (cat === "optional") return "ev-optional";
+  return "ev-core";
+}
+
 function renderCal() {
-  const evts  = filteredEvents();
+  const evts  = filtered();
   const today = new Date(); today.setHours(0,0,0,0);
+  document.getElementById("moLbl").textContent = `${MO_L[calM]} ${calY}`;
 
-  document.getElementById("monthLabel").textContent = `${MONTHS_LONG[calM]} ${calY}`;
-
-  const firstDOW  = new Date(calY, calM, 1).getDay();
+  const startDow  = new Date(calY, calM, 1).getDay();
   const daysInMo  = new Date(calY, calM + 1, 0).getDate();
-  const prevDays  = new Date(calY, calM, 0).getDate();
-  const totalCells = Math.ceil((firstDOW + daysInMo) / 7) * 7;
+  const prevTotal = new Date(calY, calM, 0).getDate();
+  const cellCount = Math.ceil((startDow + daysInMo) / 7) * 7;
 
-  let html = `<div class="cal-grid">
-    <div class="cal-wkdays">${WKDAYS.map(d => `<div class="cal-wkday">${d}</div>`).join("")}</div>
-    <div class="cal-cells">`;
+  let html = `<div class="cal-wrap">
+    <div class="cal-head">${WD.map(d => `<div class="cal-wd">${d}</div>`).join("")}</div>
+    <div class="cal-body">`;
 
-  for (let i = 0; i < totalCells; i++) {
-    let day, mo = calM, yr = calY, otherMo = false;
-    if (i < firstDOW) {
-      day = prevDays - firstDOW + i + 1; mo = calM - 1; if (mo < 0) { mo = 11; yr--; } otherMo = true;
-    } else if (i >= firstDOW + daysInMo) {
-      day = i - firstDOW - daysInMo + 1; mo = calM + 1; if (mo > 11) { mo = 0; yr++; } otherMo = true;
+  for (let i = 0; i < cellCount; i++) {
+    let d, m = calM, y = calY, dim = false;
+    if (i < startDow) {
+      d = prevTotal - startDow + i + 1; m = calM - 1; if (m < 0) { m = 11; y--; } dim = true;
+    } else if (i >= startDow + daysInMo) {
+      d = i - startDow - daysInMo + 1; m = calM + 1; if (m > 11) { m = 0; y++; } dim = true;
     } else {
-      day = i - firstDOW + 1;
+      d = i - startDow + 1;
     }
-
-    const cellDate = new Date(yr, mo, day); cellDate.setHours(0,0,0,0);
-    const isToday  = cellDate.getTime() === today.getTime();
+    const cell = new Date(y, m, d); cell.setHours(0,0,0,0);
+    const isTd = cell.getTime() === today.getTime();
 
     const chips = evts.filter(ev => {
-      const s = parseDate(ev.start);
-      const e = parseDate(ev.end);
-      if (ev.monthOnly) return cellDate.getTime() === s.getTime();
-      return cellDate >= s && cellDate <= e;
+      const s = pDate(ev.start), e = pDate(ev.end);
+      return ev.mOnly ? cell.getTime() === s.getTime() : (cell >= s && cell <= e);
     });
 
-    html += `<div class="cal-cell${otherMo ? " other-mo" : ""}${isToday ? " is-today" : ""}">
-      <span class="cal-num">${day}</span>
-      ${chips.map(ev => `<span class="cal-chip ${ev.type}" onclick="openModal(${ev.id})">${ev.title}</span>`).join("")}
+    html += `<div class="cal-cell${dim ? " dim" : ""}${isTd ? " today" : ""}">
+      <span class="cal-dn">${d}</span>
+      ${chips.map(ev => {
+        const cls = `cal-ev ${catClass(ev.cat)}${ev.accent ? " " + ev.accent : ""}`;
+        return `<span class="${cls}" onclick="openModal(${ev.id})"><span class="cal-ev-move">${ev.move}</span>${ev.title.replace(/&amp;/g,'&')}</span>`;
+      }).join("")}
     </div>`;
   }
-
   html += `</div></div>`;
   document.getElementById("calView").innerHTML = html;
 }
 
-/* ───────────────────────────────────────────────────
-   LIST RENDER
-─────────────────────────────────────────────────── */
+/* ───────────────────────────────────────────────────────────
+   LIST
+─────────────────────────────────────────────────────────── */
 function renderList() {
-  const evts = filteredEvents().slice().sort((a, b) => a.start.localeCompare(b.start));
+  const evts = filtered().slice().sort((a, b) => a.start.localeCompare(b.start));
 
   if (!evts.length) {
-    document.getElementById("lstView").innerHTML = `
-      <div class="empty">
-        <h3>No events found</h3>
-        <p>Try selecting a different filter category.</p>
-      </div>`;
+    document.getElementById("listView").innerHTML =
+      `<div class="empty"><div class="empty-t">No events</div><div class="empty-s">Try a different filter.</div></div>`;
     return;
   }
 
-  // Group by month
   const groups = {};
   evts.forEach(ev => {
-    const d   = parseDate(ev.start);
+    const d   = pDate(ev.start);
     const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
-    const lbl = `${MONTHS_LONG[d.getMonth()]} ${d.getFullYear()}`;
+    const lbl = `${MO_L[d.getMonth()]} ${d.getFullYear()}`;
     if (!groups[key]) groups[key] = { lbl, evts: [] };
     groups[key].evts.push(ev);
   });
@@ -794,104 +1481,122 @@ function renderList() {
   let html = '<div class="list-wrap">';
   Object.keys(groups).sort().forEach(key => {
     const g = groups[key];
-    html += `<div class="list-mo-hdr">${g.lbl}</div>`;
+    html += `<div class="list-mo">
+      <div class="list-mo-name">${g.lbl}</div>
+      <div class="list-mo-line"></div>
+    </div>`;
     g.evts.forEach(ev => {
-      const d = parseDate(ev.start);
-      const isRange = ev.start !== ev.end;
-      const dateHtml = (isRange || ev.monthOnly)
-        ? `<div class="list-date-range">${ev.label}</div>`
-        : `<div class="list-date-day">${d.getDate()}</div><div class="list-date-mo">${MONTHS_SHORT[d.getMonth()]}</div>`;
+      const d    = pDate(ev.start);
+      const isR  = ev.start !== ev.end;
+      const dateFrag = (isR || ev.mOnly)
+        ? `<div class="list-range">${ev.label}</div>`
+        : `<div class="list-dd">${d.getDate()}</div><div class="list-dm">${MO_S[d.getMonth()]}</div>`;
 
-      html += `<div class="list-card ${ev.type}" onclick="openModal(${ev.id})">
-        <div class="list-date-col">${dateHtml}</div>
-        <div class="list-info">
-          <div class="list-title">${ev.title}</div>
+      const moveCls = `list-move ${catClass(ev.cat)}${ev.accent === "accent-cranberry" ? " accent-cranberry" : ev.accent === "accent-terracotta" ? " accent-terracotta" : ""}`;
+
+      html += `<div class="list-ev" onclick="openModal(${ev.id})">
+        <div class="list-date">${dateFrag}</div>
+        <div class="list-body">
+          <div class="list-move-row">
+            <span class="${moveCls}">Move ${ev.move}</span>
+            <span class="list-cat">${ev.catLabel}</span>
+          </div>
+          <div class="list-title">${ev.title.replace(/&amp;/g,'&')}</div>
+          ${ev.subtitle ? `<div class="list-subtitle">${ev.subtitle}</div>` : ''}
           <div class="list-meta">
             <span class="list-meta-item">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
-                <path d="M5 0C3.07 0 1.5 1.57 1.5 3.5c0 2.63 3.5 6.5 3.5 6.5s3.5-3.87 3.5-6.5C8.5 1.57 6.93 0 5 0zm0 4.75a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z" fill="currentColor" opacity=".5"/>
-              </svg>
-              ${ev.location}
+              <span class="list-meta-dot"></span>
+              ${ev.loc}
             </span>
-            <span class="list-meta-item">Chair: ${ev.chair}</span>
-            <span class="type-badge ${ev.type}">${cap(ev.type)}</span>
-            <span class="cat-pill">${ev.category}</span>
+            <span class="list-meta-item">
+              <span class="list-meta-dot"></span>
+              Chair: ${ev.chair.replace(/&amp;/g,'&')}
+            </span>
           </div>
         </div>
       </div>`;
     });
   });
   html += "</div>";
-  document.getElementById("lstView").innerHTML = html;
+  document.getElementById("listView").innerHTML = html;
 }
 
-/* ───────────────────────────────────────────────────
+/* ───────────────────────────────────────────────────────────
    MODAL
-─────────────────────────────────────────────────── */
+─────────────────────────────────────────────────────────── */
 function openModal(id) {
-  const ev = EVENTS.find(e => e.id === id);
+  const ev = EVT.find(e => e.id === id);
   if (!ev) return;
 
-  document.getElementById("mEyebrow").textContent = `${ev.category}  ·  ${cap(ev.type)}`;
-  document.getElementById("mTitle").textContent   = ev.title;
+  document.getElementById("mMove").textContent    = `Move ${ev.move}`;
+  document.getElementById("mTag").textContent     = `${ev.catLabel}  ·  ${cap(ev.type)}`;
+  document.getElementById("mTitle").innerHTML     = ev.title;
+  document.getElementById("mSubtitle").textContent = ev.subtitle || "";
   document.getElementById("mDate").textContent    = ev.label;
-  document.getElementById("mLoc").textContent     = ev.location;
-  document.getElementById("mChair").textContent   = ev.chair;
-  document.getElementById("mType").textContent    = cap(ev.type);
+  document.getElementById("mLoc").textContent     = ev.loc;
+  document.getElementById("mChair").innerHTML     = ev.chair;
+  document.getElementById("mCat").textContent     = ev.catLabel;
 
-  const descEl = document.getElementById("mDesc");
+  // Accent background on modal header
+  document.getElementById("modalHdr").style.background = ev.accentBg || "#0B1F33";
+
+  const dw = document.getElementById("mDescWrap");
+  const dd = document.getElementById("mDesc");
   if (ev.desc) {
-    descEl.innerHTML = ev.desc;
-    descEl.style.display = "block";
-    descEl.classList.remove("modal-nodesc");
+    dd.innerHTML = ev.desc;
+    dw.style.display = "block";
   } else {
-    descEl.innerHTML = "";
-    descEl.style.display = "none";
-    descEl.classList.add("modal-nodesc");
+    dd.innerHTML = "";
+    dw.style.display = "none";
   }
 
-  // Google Calendar URL (all-day event)
-  const startFmt  = ev.start.replace(/-/g, "");
-  const endExcl   = nextDay(ev.end).replace(/-/g, "");
-  const gcalText  = encodeURIComponent(ev.title);
-  const gcalLoc   = encodeURIComponent(ev.location);
-  const gcalDesc  = encodeURIComponent(
-    ev.desc ? ev.desc.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim()
-            : `YPO Atlantic 13 — ${ev.category}. Chair: ${ev.chair}`
-  );
+  // Google Calendar link
+  const s  = ev.start.replace(/-/g, "");
+  const en = nextDay(ev.end).replace(/-/g, "");
+  const plainDesc = ev.desc
+    ? ev.desc.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").replace(/&amp;/g,"&").trim()
+    : `YPO Atlantic 13 — ${ev.catLabel}. Chair: ${ev.chair.replace(/&amp;/g,"&")}`;
   document.getElementById("mGcal").href =
-    `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${gcalText}&dates=${startFmt}/${endExcl}&location=${gcalLoc}&details=${gcalDesc}`;
+    `https://calendar.google.com/calendar/render?action=TEMPLATE` +
+    `&text=${enc(ev.title.replace(/&amp;/g,"&"))}` +
+    `&dates=${s}/${en}` +
+    `&location=${enc(ev.loc)}` +
+    `&details=${enc(plainDesc)}`;
 
-  document.getElementById("overlay").classList.add("open");
+  const ov = document.getElementById("overlay");
+  ov.classList.add("show");
   document.body.style.overflow = "hidden";
+
+  const m = document.getElementById("modal");
+  m.style.animation = "none";
+  void m.offsetHeight;
+  m.style.animation = "";
 }
 
 function closeModal() {
-  document.getElementById("overlay").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
   document.body.style.overflow = "";
 }
 
-function overlayClick(e) {
+function bgClose(e) {
   if (e.target === document.getElementById("overlay")) closeModal();
 }
 
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-/* ───────────────────────────────────────────────────
-   HELPERS
-─────────────────────────────────────────────────── */
-function parseDate(s) {
+/* ───────────────────────────────────────────────────────────
+   UTILS
+─────────────────────────────────────────────────────────── */
+function pDate(s) {
   const [y, m, d] = s.split("-").map(Number);
   return new Date(y, m - 1, d);
 }
-
 function nextDay(s) {
-  const d = parseDate(s);
-  d.setDate(d.getDate() + 1);
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  const d = pDate(s); d.setDate(d.getDate() + 1);
+  return [d.getFullYear(), String(d.getMonth()+1).padStart(2,"0"), String(d.getDate()).padStart(2,"0")].join("-");
 }
-
 function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function enc(s) { return encodeURIComponent(s); }
 
 function render() {
   if (view === "cal")  renderCal();
