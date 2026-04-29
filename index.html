@@ -12,7 +12,7 @@
   <title>A13 — See the Whole Board</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
 /* ─── TOKENS ───────────────────────────────────────────── */
 :root {
@@ -31,8 +31,8 @@
   --ink-3:     #7A9A87;
   --rule:      rgba(10,34,24,.1);
   --serif:     'Playfair Display', Georgia, serif;
-  --sans:      'Inter', system-ui, sans-serif;
-  --label:     'Montserrat', system-ui, sans-serif;
+  --sans:      'DM Sans', system-ui, sans-serif;
+  --label:     'Outfit', system-ui, sans-serif;
   --ease:      cubic-bezier(.25,.46,.45,.94);
   --r-card:    2px;
 }
@@ -342,8 +342,16 @@ html[data-theme="dark"] .ch-avail { background: rgba(255,255,255,.06); }
   color: var(--navy); margin-bottom: .4rem; }
 html[data-theme="dark"] .roster-header h2 { color: var(--ink); }
 .roster-header p { font-size: .85rem; color: var(--ink-3); }
-.roster-grid { max-width: 1080px; margin: 0 auto; padding: 1.75rem 2.5rem 3rem;
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.25rem; }
+.roster-grid { max-width: 1200px; margin: 0 auto; padding: 1.75rem 2.5rem 3rem;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+.roster-section-label { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem;
+  font-family: var(--label); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-3); border-bottom: 1px solid var(--rule); padding-bottom: .5rem; margin-bottom: -.25rem; }
+.roster-section-label.board-label { color: var(--navy); border-color: var(--navy); }
+html[data-theme="dark"] .roster-section-label.board-label { color: var(--teal); border-color: var(--teal); }
+.member-role { font-size: .68rem; font-family: var(--label); letter-spacing: .06em; text-transform: uppercase;
+  color: var(--teal); margin-top: .35rem; }
+html[data-theme="dark"] .member-role { color: var(--teal); }
 .member-card { background: var(--white); border: 1px solid var(--rule);
   padding: 1.5rem; text-align: center; cursor: default; transition: transform .25s var(--ease), box-shadow .25s; }
 .member-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(10,34,24,.08); }
@@ -457,8 +465,12 @@ html[data-theme="dark"] .member-name { color: var(--ink); }
   .main { padding: 1.5rem 1rem; }
   .ch-body { padding: 1.5rem 1rem; }
   .ch-teams { grid-template-columns: 1fr; }
-  .roster-grid { padding: 1.5rem 1rem 2rem; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .roster-grid { padding: 1.5rem 1rem 2rem; grid-template-columns: repeat(3, 1fr); }
+  .roster-section-label { padding: 0 1rem .5rem; }
   .roster-header { padding: 2rem 1rem 0; }
+}
+@media (max-width: 480px) {
+  .roster-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 600px) {
   .ev-card { flex-direction: column; height: auto !important; }
@@ -571,6 +583,9 @@ html[data-theme="dark"] .member-name { color: var(--ink); }
       <h2>Chapter Members</h2>
       <p>YPO Atlantic 13 &nbsp;·&nbsp; FY 2026–2027</p>
     </div>
+    <div class="roster-section-label board-label">2026–2027 Board</div>
+    <div class="roster-grid" id="rosterBoard"></div>
+    <div class="roster-section-label" style="margin-top:.5rem">Members</div>
     <div class="roster-grid" id="rosterGrid"></div>
   </section>
 </div>
@@ -634,7 +649,7 @@ const EVT = [
   {
     id: 1, move: "01",
     title:    "US Open",
-    subtitle: "How to View Excellence",
+    subtitle: "Before the First Serve",
     label:    "Aug 31 – Sep 1, 2026",
     start:    "2026-08-31", end: "2026-09-01", mOnly: false,
     loc:      "New York, NY", chair: "Raghav",
@@ -649,8 +664,8 @@ const EVT = [
   },
   {
     id: 11, move: "02",
-    title:    "Family Farm Day",
-    subtitle: "Berry Good Health: Cranberries, Chocolate & Wellness",
+    title:    "Cranberries, Chocolate, and Wellness",
+    subtitle: "",
     label:    "September 26, 2026",
     start:    "2026-09-26", end: "2026-09-26", mOnly: false,
     loc:      "Chatsworth, NJ",
@@ -683,7 +698,7 @@ const EVT = [
   },
   {
     id: 6, move: "04",
-    title:    "Family Governance",
+    title:    "Trust &amp; Estate",
     subtitle: "Designing the System Before It Is Needed",
     label:    "November 12, 2026",
     start:    "2026-11-12", end: "2026-11-12", mOnly: false,
@@ -699,8 +714,8 @@ const EVT = [
   },
   {
     id: 3, move: "05",
-    title:    "The Whole Board Holiday Dinner",
-    subtitle: "A Chapter Celebration in New York",
+    title:    "Atlantic 13 Holiday Party Meets Broadway",
+    subtitle: "",
     label:    "December 1, 2026",
     start:    "2026-12-01", end: "2026-12-01", mOnly: false,
     loc:      "New York, NY", chair: "Jacqueline Lane",
@@ -715,8 +730,8 @@ const EVT = [
   },
   {
     id: 7, move: "06",
-    title:    "Scale",
-    subtitle: "Building the Company for the Next Level",
+    title:    "Scaling Without Breaking in the Age of AI",
+    subtitle: "",
     label:    "January 2027",
     start:    "2027-01-01", end: "2027-01-31", mOnly: true,
     loc:      "Virtual", chair: "MichaelAaron Flicker",
@@ -730,8 +745,8 @@ const EVT = [
   },
   {
     id: 12, move: "07",
-    title:    "Winter Escape",
-    subtitle: "Connection by the Fire and on the Mountain",
+    title:    "Connection by the Fire and on the Mountain",
+    subtitle: "",
     label:    "January 2027",
     start:    "2027-01-01", end: "2027-01-31", mOnly: true,
     loc:      "Vermont", chair: "Chez Perfetto",
@@ -746,8 +761,8 @@ const EVT = [
   },
   {
     id: 4, move: "08",
-    title:    "Boston — MIT &amp; HBS",
-    subtitle: "Capital, Innovation, and the Future of Decision-Making",
+    title:    "Pushing the Limits at Harvard Business School",
+    subtitle: "",
     label:    "February 2027",
     start:    "2027-02-01", end: "2027-02-28", mOnly: true,
     loc:      "Boston, MA",
@@ -763,8 +778,8 @@ const EVT = [
   },
   {
     id: 8, move: "09",
-    title:    "Capital Allocation",
-    subtitle: "The CEO's Highest-Leverage Decision",
+    title:    "The CEO's Highest-Leverage Decisions",
+    subtitle: "",
     label:    "March 2027",
     start:    "2027-03-01", end: "2027-03-31", mOnly: true,
     loc:      "Virtual", chair: "Asif Zaman",
@@ -779,8 +794,8 @@ const EVT = [
   },
   {
     id: 9, move: "10",
-    title:    "Management System",
-    subtitle: "Turning Strategy into Execution",
+    title:    "Turning Strategy into Execution through Management Systems",
+    subtitle: "",
     label:    "April 2027",
     start:    "2027-04-01", end: "2027-04-30", mOnly: true,
     loc:      "Virtual", chair: "Andrew Halliday",
@@ -795,8 +810,8 @@ const EVT = [
   },
   {
     id: 13, move: "11",
-    title:    "Couples Retreat",
-    subtitle: "Alignment, Legacy, and the Life We Are Building",
+    title:    "Alignment, Legacy, and the Life We Are Building",
+    subtitle: "",
     label:    "April 9–11, 2027",
     start:    "2027-04-09", end: "2027-04-11", mOnly: false,
     loc:      "Aspen, CO", chair: "Glen Kunofsky",
@@ -811,8 +826,8 @@ const EVT = [
   },
   {
     id: 5, move: "12",
-    title:    "Spain Presidents Retreat",
-    subtitle: "The Final Move: Atlantic 13 in Spain",
+    title:    "The Final Move",
+    subtitle: "Atlantic 13 in Spain",
     label:    "May 12–16, 2027",
     start:    "2027-05-12", end: "2027-05-16", mOnly: false,
     loc:      "Valencia, Spain", chair: "Richard",
@@ -843,12 +858,12 @@ const EVT = [
   }
 ];
 
-/* Teams — update names, members & earned scores as the year progresses */
+/* Teams — members are auto-assigned via seededShuffle(MEMBERS, 13) at init */
 const TEAMS = [
-  { id: 1, name: "Team Alpha",  color: "#22C55E", members: ["—","—","—","—"], earned: {} },
-  { id: 2, name: "Team Beta",   color: "#0D9488", members: ["—","—","—","—"], earned: {} },
-  { id: 3, name: "Team Gamma",  color: "#B7603B", members: ["—","—","—"],    earned: {} },
-  { id: 4, name: "Team Delta",  color: "#8A1E2D", members: ["—","—","—"],    earned: {} }
+  { id: 1, name: "Team Alpha",  color: "#22C55E", members: [], earned: {} },
+  { id: 2, name: "Team Beta",   color: "#0D9488", members: [], earned: {} },
+  { id: 3, name: "Team Gamma",  color: "#B7603B", members: [], earned: {} },
+  { id: 4, name: "Team Delta",  color: "#8A1E2D", members: [], earned: {} }
 ];
 
 /* Members — add photos (assets/members/name.jpg) and bios when ready */
@@ -866,12 +881,12 @@ const MEMBERS = [
   { name: "Amy Chin",               initials: "AC",  color: "#B7603B", location: "New York, NY",       email: "amy.chin@corpay.com",                 ypoUrl: YPO+"/users/3331839" },
   { name: "David Curtin",           initials: "DC",  color: "#8A1E2D", location: "Baltimore, MD",      email: "",                                    ypoUrl: YPO+"/users/3840036" },
   { name: "Sandra DeSilva",         initials: "SD",  color: "#0A4A43", location: "Baltimore, MD",      email: "sdesilva@mythen.com",                 ypoUrl: YPO+"/users/3379282" },
-  { name: "Andrew Fisher",          initials: "AF",  color: "#0A2218", location: "New York, NY",       email: "andrew.fisher@gmail.com",             ypoUrl: YPO+"/users/3331674" },
-  { name: "MichaelAaron Flicker",   initials: "MF",  color: "#0D9488", location: "New York, NY",       email: "mflicker@xenopsi.com",                ypoUrl: YPO+"/users/3320776" },
-  { name: "Tara Fung",              initials: "TF",  color: "#1F4A3C", location: "Baltimore, MD",      email: "tara@usecocreate.io",                 ypoUrl: YPO+"/users/5105285" },
+  { name: "Andrew Fisher",          initials: "AF",  color: "#0A2218", location: "New York, NY",       email: "andrew.fisher@gmail.com",             ypoUrl: YPO+"/users/3331674", boardRole: "Membership Officer" },
+  { name: "MichaelAaron Flicker",   initials: "MF",  color: "#0D9488", location: "New York, NY",       email: "mflicker@xenopsi.com",                ypoUrl: YPO+"/users/3320776", boardRole: "Chapter Chair" },
+  { name: "Tara Fung",              initials: "TF",  color: "#1F4A3C", location: "Baltimore, MD",      email: "tara@usecocreate.io",                 ypoUrl: YPO+"/users/5105285", boardRole: "Asst. Learning Officer" },
   { name: "Remy Garson",            initials: "RG",  color: "#B7603B", location: "New York, NY",       email: "remy@ibrandsglobal.com",              ypoUrl: YPO+"/users/3320975" },
-  { name: "Chris Haimbach",         initials: "CH",  color: "#8A1E2D", location: "Madison, NJ",        email: "chaimbac@gmail.com",                  ypoUrl: YPO+"/users/3330096" },
-  { name: "Andrew Halliday",        initials: "AH",  color: "#0A4A43", location: "Slingerlands, NY",   email: "andrew.w.halliday@nm.com",            ypoUrl: YPO+"/users/5438245" },
+  { name: "Chris Haimbach",         initials: "CH",  color: "#8A1E2D", location: "Madison, NJ",        email: "chaimbac@gmail.com",                  ypoUrl: YPO+"/users/3330096", boardRole: "Past Chapter Chair" },
+  { name: "Andrew Halliday",        initials: "AH",  color: "#0A4A43", location: "Slingerlands, NY",   email: "andrew.w.halliday@nm.com",            ypoUrl: YPO+"/users/5438245", boardRole: "Finance Officer" },
   { name: "Paul Karger",            initials: "PK",  color: "#0A2218", location: "Boston, MA",         email: "pk@twinfocus.com",                    ypoUrl: YPO+"/users/3371245" },
   { name: "David Kaufman",          initials: "DK",  color: "#0D9488", location: "New York, NY",       email: "dkaufman@acquisconsulting.com",        ypoUrl: YPO+"/users/3334522" },
   { name: "Chris Keith",            initials: "CK",  color: "#1F4A3C", location: "New York, NY",       email: "cmkeith221@gmail.com",                ypoUrl: YPO+"/users/3370462" },
@@ -885,7 +900,7 @@ const MEMBERS = [
   { name: "William McDonald",       initials: "WM",  color: "#8A1E2D", location: "New York, NY",       email: "willsm@rugpadusa.com",                ypoUrl: YPO+"/users/3324069" },
   { name: "John McLoughlin",        initials: "JM",  color: "#0A4A43", location: "",                   email: "jmcloughlin@onesa.com",               ypoUrl: "" },
   { name: "Michael Mellott",        initials: "MM",  color: "#0A2218", location: "Columbia, MD",       email: "mike@xpertechs.com",                  ypoUrl: YPO+"/users/7056457" },
-  { name: "Brooke Neblett",         initials: "BN",  color: "#0D9488", location: "Great Falls, VA",    email: "bneblett@fyinfo.com",                 ypoUrl: YPO+"/users/5278125" },
+  { name: "Brooke Neblett",         initials: "BN",  color: "#0D9488", location: "Great Falls, VA",    email: "bneblett@fyinfo.com",                 ypoUrl: YPO+"/users/5278125", boardRole: "Engagement & Communications Officer" },
   { name: "Noah Ostroff",           initials: "NO",  color: "#1F4A3C", location: "Philadelphia, PA",   email: "noah@phillyliving.com",               ypoUrl: YPO+"/users/6828505" },
   { name: "John Parkes",            initials: "JP",  color: "#B7603B", location: "Alexandria, VA",     email: "jdparkes@parrylabs.com",              ypoUrl: YPO+"/users/3377937" },
   { name: "Anup Patel",             initials: "AP",  color: "#8A1E2D", location: "New York, NY",       email: "apatel@archstreetcapital.com",         ypoUrl: YPO+"/users/3377065" },
@@ -894,7 +909,7 @@ const MEMBERS = [
   { name: "Chez Perfetto",          initials: "CP",  color: "#0D9488", location: "Brooklyn, NY",       email: "cperfettojr@perfettocontracting.com", ypoUrl: YPO+"/users/3317924" },
   { name: "Ingrid Prasatya",        initials: "IP",  color: "#1F4A3C", location: "",                   email: "ingrid@entebe.com.sg",                ypoUrl: "" },
   { name: "Omar Rahman",            initials: "OR",  color: "#B7603B", location: "Baltimore, MD",      email: "",                                    ypoUrl: YPO+"/users/8215996" },
-  { name: "Richard Resnick",        initials: "RR",  color: "#8A1E2D", location: "Awendaw, SC",        email: "richardres@gmail.com",                ypoUrl: YPO+"/users/18061322" },
+  { name: "Richard Resnick",        initials: "RR",  color: "#8A1E2D", location: "Awendaw, SC",        email: "richardres@gmail.com",                ypoUrl: YPO+"/users/18061322", boardRole: "Forum Officer" },
   { name: "Brett Rogoff",           initials: "BR",  color: "#0A4A43", location: "Southampton, NY",    email: "brett@strategicgroup.tv",             ypoUrl: YPO+"/users/3357991" },
   { name: "Raghav Sapra",           initials: "RS",  color: "#0A2218", location: "Baltimore, MD",      email: "raghav@maypolegroup.com",             ypoUrl: YPO+"/users/3331815" },
   { name: "Michael Schmidt",        initials: "MSc", color: "#0D9488", location: "",                   email: "mschmidt@whitecapwaste.com",           ypoUrl: "" },
@@ -904,7 +919,7 @@ const MEMBERS = [
   { name: "Mark Stephenson",        initials: "MS",  color: "#0A4A43", location: "Alexandria, VA",     email: "mark@redoakstrategic.com",            ypoUrl: YPO+"/users/6828792" },
   { name: "Mohammad Tabiekh",       initials: "MT",  color: "#0A2218", location: "Baltimore, MD",      email: "",                                    ypoUrl: YPO+"/users/6825557" },
   { name: "Michael Tarshi",         initials: "MTa", color: "#0D9488", location: "",                   email: "mtarshi@hotmail.com",                 ypoUrl: "" },
-  { name: "William Tenenbaum",      initials: "WT",  color: "#1F4A3C", location: "Far Hills, NJ",      email: "william@lodestoneglobal.com",         ypoUrl: YPO+"/users/5307847" },
+  { name: "William Tenenbaum",      initials: "WT",  color: "#1F4A3C", location: "Far Hills, NJ",      email: "william@lodestoneglobal.com",         ypoUrl: YPO+"/users/5307847", boardRole: "Learning Officer" },
   { name: "Raj Thakkar",            initials: "RT",  color: "#B7603B", location: "New York, NY",       email: "rthakkar@csbm.com",                   ypoUrl: YPO+"/users/3321389" },
   { name: "Arjun Thummalachetty",   initials: "AT",  color: "#8A1E2D", location: "New York, NY",       email: "",                                    ypoUrl: YPO+"/users/8118029" },
   { name: "Divakar Vijayasarathy",  initials: "DV",  color: "#0A4A43", location: "",                   email: "divakar@onedvs.com",                  ypoUrl: "" },
@@ -936,7 +951,7 @@ function tryLogin() {
     document.getElementById("lock").style.display = "none";
     const a = document.getElementById("app");
     a.style.display = "flex"; a.style.flexDirection = "column";
-    renderHero(); renderList(); renderChallenge(); renderRoster();
+    assignTeams(); renderHero(); renderList(); renderChallenge(); renderRoster();
     startCountdown();
   } else {
     document.getElementById("lockErr").textContent = "Incorrect password. Please try again.";
@@ -1119,6 +1134,30 @@ function renderList() {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   TEAM ASSIGNMENT  (seeded Fisher-Yates, seed = 13)
+═══════════════════════════════════════════════════════════ */
+function seededShuffle(arr, seed) {
+  const a = arr.slice();
+  let s = seed >>> 0;
+  for (let i = a.length - 1; i > 0; i--) {
+    s = Math.imul(s, 1664525) + 1013904223 >>> 0;
+    const j = s % (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function assignTeams() {
+  const shuffled = seededShuffle(MEMBERS, 13);
+  const sizes = [15, 14, 14, 14];
+  let idx = 0;
+  TEAMS.forEach((team, t) => {
+    team.members = shuffled.slice(idx, idx + sizes[t]).map(m => m.name);
+    idx += sizes[t];
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
    CHALLENGE
 ═══════════════════════════════════════════════════════════ */
 function teamScore(team) {
@@ -1185,23 +1224,28 @@ function renderChallenge() {
 /* ═══════════════════════════════════════════════════════════
    ROSTER
 ═══════════════════════════════════════════════════════════ */
+function memberCardHtml(m) {
+  const userId = m.ypoUrl ? m.ypoUrl.split('/').pop() : null;
+  const photoSrc = userId ? `assets/member-photos/${userId}.webp` : null;
+  const avatar = photoSrc
+    ? `<div class="member-avatar"><img src="${photoSrc}" alt="${m.name}" onerror="this.parentElement.style.background='${m.color}';this.parentElement.innerHTML='${m.initials}'"></div>`
+    : `<div class="member-avatar" style="background:${m.color}">${m.initials}</div>`;
+  return `
+<div class="member-card">
+  ${avatar}
+  <div class="member-name">${m.name}</div>
+  ${m.boardRole ? `<div class="member-role">${m.boardRole}</div>` : ''}
+  ${m.location ? `<div class="member-location">${m.location}</div>` : '<div class="member-location">&nbsp;</div>'}
+  ${m.email ? `<div class="member-email"><a href="mailto:${m.email}">${m.email}</a></div>` : ''}
+  ${m.ypoUrl ? `<a class="member-ypo" href="${m.ypoUrl}" target="_blank" rel="noopener">YPO Connect ↗</a>` : ''}
+</div>`;
+}
+
 function renderRoster() {
-  const html = MEMBERS.map(m => {
-    const userId = m.ypoUrl ? m.ypoUrl.split('/').pop() : null;
-    const photoSrc = userId ? `assets/member-photos/${userId}.webp` : null;
-    const avatar = photoSrc
-      ? `<div class="member-avatar"><img src="${photoSrc}" alt="${m.name}" onerror="this.parentElement.style.background='${m.color}';this.parentElement.innerHTML='${m.initials}'"></div>`
-      : `<div class="member-avatar" style="background:${m.color}">${m.initials}</div>`;
-    return `
-  <div class="member-card">
-    ${avatar}
-    <div class="member-name">${m.name}</div>
-    ${m.location ? `<div class="member-location">${m.location}</div>` : '<div class="member-location">&nbsp;</div>'}
-    ${m.email ? `<div class="member-email"><a href="mailto:${m.email}">${m.email}</a></div>` : ''}
-    ${m.ypoUrl ? `<a class="member-ypo" href="${m.ypoUrl}" target="_blank" rel="noopener">YPO Connect ↗</a>` : ''}
-  </div>`;
-  }).join("");
-  document.getElementById("rosterGrid").innerHTML = html;
+  const board = MEMBERS.filter(m => m.boardRole);
+  const others = MEMBERS.filter(m => !m.boardRole);
+  document.getElementById("rosterBoard").innerHTML = board.map(memberCardHtml).join("");
+  document.getElementById("rosterGrid").innerHTML  = others.map(memberCardHtml).join("");
 }
 
 /* ═══════════════════════════════════════════════════════════
