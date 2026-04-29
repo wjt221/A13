@@ -447,34 +447,8 @@ body {
   background: linear-gradient(transparent, rgba(0,0,0,.4));
 }
 
-/* Upload button */
-.ev-upload-btn {
-  position: absolute;
-  top: .75rem;
-  right: .75rem;
-  display: flex;
-  align-items: center;
-  gap: .35rem;
-  background: rgba(0,0,0,.55);
-  border: 1px solid rgba(255,255,255,.2);
-  color: rgba(255,255,255,.9);
-  padding: .35rem .65rem;
-  font-family: var(--label);
-  font-size: .5rem;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity .2s, background .2s;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 2;
-  border-radius: 1px;
-}
-
-.ev-card:hover .ev-upload-btn { opacity: 1; }
-.ev-upload-btn:hover { background: rgba(0,0,0,.75); color: var(--white); }
+/* Category left border */
+.ev-card { border-left-width: 4px; border-left-style: solid; }
 
 /* Content side */
 .ev-content {
@@ -785,7 +759,7 @@ body {
 <div id="app">
   <header class="hdr">
     <div class="hdr-brand">
-      <img src="assets/YPO_US_Atlantic13Blue_Gold-01.jpg" alt="YPO US Atlantic 13" style="height:38px;width:auto;display:block;">
+      <img src="assets/YPO_US_Atlantic13Black-01.png" alt="YPO US Atlantic 13" style="height:36px;width:auto;display:block;">
     </div>
     <button class="signout-btn" onclick="signOut()">Sign Out</button>
   </header>
@@ -837,8 +811,6 @@ body {
   </div>
 </div>
 
-<!-- Hidden file input for photo uploads -->
-<input type="file" id="photoUpload" accept="image/*" style="display:none">
 
 <script>
 /* ───────────────────────────────────────────────────────────
@@ -1051,37 +1023,6 @@ const MO_S = ["Jan","Feb","Mar","Apr","May","Jun",
   }
 })();
 
-/* ───────────────────────────────────────────────────────────
-   PHOTO STORAGE
-─────────────────────────────────────────────────────────── */
-function getPhoto(id) {
-  return localStorage.getItem("a13_photo_" + id) || EVT.find(e => e.id === id).defaultPhoto;
-}
-
-function triggerUpload(evId, e) {
-  e.stopPropagation();
-  const inp = document.getElementById("photoUpload");
-  inp.dataset.evId = evId;
-  inp.click();
-}
-
-document.getElementById("photoUpload").addEventListener("change", function () {
-  const id   = parseInt(this.dataset.evId);
-  const file = this.files[0];
-  if (!file) return;
-  if (file.size > 8 * 1024 * 1024) {
-    alert("Photo must be under 8 MB.");
-    this.value = "";
-    return;
-  }
-  const reader = new FileReader();
-  reader.onload = e => {
-    localStorage.setItem("a13_photo_" + id, e.target.result);
-    renderList();
-  };
-  reader.readAsDataURL(file);
-  this.value = "";
-});
 
 function handleImgError(img, bg) {
   img.style.display = "none";
@@ -1123,9 +1064,9 @@ function signOut() {
    CATEGORY HELPERS
 ─────────────────────────────────────────────────────────── */
 function catBg(cat) {
-  if (cat === "virtual")  return "var(--cat-virtual)";
-  if (cat === "optional") return "var(--cat-opt)";
-  return "var(--cat-core)";
+  if (cat === "virtual")  return "#0D9488";
+  if (cat === "optional") return "#B7603B";
+  return "#0A2218";
 }
 
 /* ───────────────────────────────────────────────────────────
@@ -1154,15 +1095,15 @@ function renderList() {
     </div>`;
 
     g.evts.forEach(ev => {
-      const photoSrc = getPhoto(ev.id);
-      const numBg    = catBg(ev.cat);
+      const numBg     = catBg(ev.cat);
+      const borderClr = ev.cat === 'virtual' ? 'var(--cat-virtual)' : ev.cat === 'optional' ? '#B7603B' : 'var(--cat-core)';
 
       html += `
-      <div class="ev-card" onclick="openModal(${ev.id})">
+      <div class="ev-card" style="border-left-color:${borderClr}" onclick="openModal(${ev.id})">
 
         <div class="ev-photo" style="background:${ev.accentBg}">
           <img
-            src="${photoSrc}"
+            src="${ev.defaultPhoto}"
             alt="${ev.title.replace(/&amp;/g,'&')}"
             loading="lazy"
             onerror="handleImgError(this,'${ev.accentBg}')"
@@ -1171,12 +1112,6 @@ function renderList() {
             <span class="ev-photo-num">${ev.move}</span>
           </div>
           <div class="ev-photo-cat">${ev.catLabel}</div>
-          <button class="ev-upload-btn" onclick="triggerUpload(${ev.id},event)" title="Change photo">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
-              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-            </svg>
-            Change Photo
-          </button>
         </div>
 
         <div class="ev-content">
