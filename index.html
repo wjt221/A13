@@ -217,9 +217,9 @@ html[data-theme="dark"] .ev-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,.4);
 .ev-card.past:hover { opacity: .85; }
 
 /* Sizes by category */
-.ev-card--core    { border-left-color: #0A2218; height: 300px; }
-.ev-card--optional{ border-left-color: #B7603B; height: 200px; }
-.ev-card--virtual { border-left-color: #0D9488; height: 160px; }
+.ev-card--core    { border-left-color: #0A2218; min-height: 340px; }
+.ev-card--optional{ border-left-color: #B7603B; min-height: 240px; }
+.ev-card--virtual { border-left-color: #0D9488; min-height: 200px; }
 .ev-card--core    .ev-photo { width: 44%; }
 .ev-card--optional .ev-photo { width: 34%; }
 .ev-card--virtual  .ev-photo { width: 28%; }
@@ -254,7 +254,15 @@ html[data-theme="dark"] .ev-card--virtual  .ev-content { background: rgba(13,148
   letter-spacing: .16em; text-transform: uppercase; padding: .2rem .5rem;
   backdrop-filter: blur(4px); border-radius: 1px; }
 
-.ev-content { flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.ev-content { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; min-width: 0; }
+.ev-teaser { font-size: .78rem; color: var(--ink-2); line-height: 1.55; margin-top: .65rem;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ev-learn-more { margin-top: auto; padding-top: .85rem; display: inline-flex; align-items: center;
+  gap: .3rem; font-family: var(--label); font-size: .52rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--navy); text-decoration: none; border: none;
+  background: none; cursor: pointer; padding-left: 0; transition: gap .2s; }
+.ev-learn-more:hover { gap: .5rem; }
+html[data-theme="dark"] .ev-learn-more { color: var(--teal); }
 .ev-meta-row { display: flex; align-items: center; gap: .65rem; margin-bottom: .75rem; }
 .ev-num { font-family: var(--label); font-size: .5rem; font-weight: 700;
   letter-spacing: .2em; text-transform: uppercase; color: var(--white);
@@ -1164,6 +1172,14 @@ function isPast(ev) {
   return pDate(ev.end) < new Date();
 }
 
+function teaserText(ev) {
+  if (!ev.desc) return "";
+  const text = ev.desc.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  if (text.length <= 160) return text;
+  const cut = text.slice(0, 160);
+  return cut.slice(0, cut.lastIndexOf(" ")) + "…";
+}
+
 function renderList() {
   const evts = EVT.slice().sort((a,b) => a.start.localeCompare(b.start));
   const groups = {};
@@ -1203,6 +1219,8 @@ function renderList() {
             <span class="ev-info-item"><span class="ev-info-dot"></span>${ev.loc}</span>
             <span class="ev-info-item"><span class="ev-info-dot"></span>Chair: ${ev.chair.replace(/&amp;/g,"&")}</span>
           </div>
+          ${ev.desc ? `<div class="ev-teaser">${teaserText(ev)}</div>` : ""}
+          <button class="ev-learn-more" onclick="event.stopPropagation();openModal(${ev.id})">Learn More →</button>
         </div>
       </div>`;
     });
