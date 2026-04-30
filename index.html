@@ -298,6 +298,16 @@ html[data-theme="dark"] .ev-title { color: var(--ink); }
   letter-spacing: .28em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 1.5rem;
   padding-bottom: .6rem; border-bottom: 1px solid var(--rule); }
 
+.ch-scoring { display: flex; flex-wrap: wrap; gap: .65rem; margin-bottom: 2.5rem; }
+.ch-scoring-item { display: flex; align-items: center; gap: .6rem; background: var(--white);
+  border: 1px solid var(--rule); padding: .6rem 1rem; flex: 1 1 auto; min-width: 180px; }
+.ch-scoring-pts { font-family: var(--label); font-size: 1rem; font-weight: 700;
+  color: var(--navy); min-width: 2.5rem; text-align: right; flex-shrink: 0; }
+html[data-theme="dark"] .ch-scoring-pts { color: var(--teal); }
+.ch-scoring-pts span { font-size: .55rem; font-weight: 600; letter-spacing: .06em; color: var(--ink-3); }
+.ch-scoring-label { font-family: var(--label); font-size: .6rem; font-weight: 500;
+  color: var(--ink); line-height: 1.35; }
+.ch-scoring-note { font-size: .55rem; color: var(--ink-3); margin-top: .1rem; }
 .ch-teams { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 3rem; }
 .ch-team { background: var(--white); border: 1px solid var(--rule);
   border-left: 4px solid var(--team-color, #22C55E); padding: 1.5rem; position: relative; }
@@ -587,6 +597,44 @@ html[data-theme="dark"] .member-name { color: var(--ink); }
       </div>
     </div>
     <div class="ch-body">
+      <div class="ch-section-label">How Points Are Earned</div>
+      <div class="ch-scoring">
+        <div class="ch-scoring-item">
+          <div class="ch-scoring-pts">10 <span>PTS</span></div>
+          <div>
+            <div class="ch-scoring-label">Core Event Attendance</div>
+            <div class="ch-scoring-note">In-person chapter events</div>
+          </div>
+        </div>
+        <div class="ch-scoring-item">
+          <div class="ch-scoring-pts">5 <span>PTS</span></div>
+          <div>
+            <div class="ch-scoring-label">Virtual Event Attendance</div>
+            <div class="ch-scoring-note">Online chapter sessions</div>
+          </div>
+        </div>
+        <div class="ch-scoring-item">
+          <div class="ch-scoring-pts">3 <span>PTS</span></div>
+          <div>
+            <div class="ch-scoring-label">Optional Event Attendance</div>
+            <div class="ch-scoring-note">Elective / bonus events</div>
+          </div>
+        </div>
+        <div class="ch-scoring-item">
+          <div class="ch-scoring-pts">+5 <span>PTS</span></div>
+          <div>
+            <div class="ch-scoring-label">Photo to WhatsApp Group</div>
+            <div class="ch-scoring-note">One bonus per event · audited by Scott</div>
+          </div>
+        </div>
+        <div class="ch-scoring-item">
+          <div class="ch-scoring-pts">★ <span>PTS</span></div>
+          <div>
+            <div class="ch-scoring-label">Special Points</div>
+            <div class="ch-scoring-note">Awarded throughout the year</div>
+          </div>
+        </div>
+      </div>
       <div class="ch-section-label">Team Standings</div>
       <div id="chTeams" class="ch-teams"></div>
       <div class="ch-section-label">Event Breakdown</div>
