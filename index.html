@@ -326,6 +326,10 @@ html[data-theme="dark"] .ch-scoring-pts { color: var(--teal); }
   color: var(--navy); margin-bottom: .4rem; }
 html[data-theme="dark"] .ch-team-name { color: var(--ink); }
 .ch-team-members { font-size: .78rem; color: var(--ink-3); margin-bottom: 1rem; line-height: 1.5; }
+.ch-captain { font-family: var(--label); font-size: .56rem; font-weight: 600;
+  color: var(--team-color, #22C55E); letter-spacing: .04em; margin-bottom: .5rem; margin-top: -.1rem; }
+.ch-captain-label { font-size: .48rem; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--ink-3); font-weight: 500; margin-right: .35rem; }
 .ch-pts { font-family: var(--serif); font-size: 2rem; font-weight: 700;
   color: var(--navy); line-height: 1; margin-bottom: .6rem; }
 html[data-theme="dark"] .ch-pts { color: var(--ink); }
@@ -1243,6 +1247,24 @@ function seededShuffle(arr, seed) {
   return a;
 }
 
+function teamOf(name) {
+  return TEAMS.findIndex(t => t.members.includes(name));
+}
+
+function swapMembers(nameA, nameB) {
+  const ti = teamOf(nameA), tj = teamOf(nameB);
+  if (ti === tj || ti === -1 || tj === -1) return;
+  TEAMS[ti].members[TEAMS[ti].members.indexOf(nameA)] = nameB;
+  TEAMS[tj].members[TEAMS[tj].members.indexOf(nameB)] = nameA;
+}
+
+function moveMember(name, toIdx) {
+  const fromIdx = teamOf(name);
+  if (fromIdx === toIdx || fromIdx === -1) return;
+  TEAMS[fromIdx].members = TEAMS[fromIdx].members.filter(m => m !== name);
+  TEAMS[toIdx].members.push(name);
+}
+
 function assignTeams() {
   const shuffled = seededShuffle(MEMBERS, 13);
   const sizes = [15, 14, 14, 14];
@@ -1251,6 +1273,24 @@ function assignTeams() {
     team.members = shuffled.slice(idx, idx + sizes[t]).map(m => m.name);
     idx += sizes[t];
   });
+
+  // Swap Mark Allen ↔ Mark Stephenson
+  swapMembers("Mark Allen", "Mark Stephenson");
+
+  // Jacquelyn Lane and Ingrid Prasatya together on Gamma (index 2)
+  moveMember("Jacquelyn Lane", 2);
+  moveMember("Ingrid Prasatya", 2);
+
+  // Ensure captains are on their teams
+  moveMember("Scott Bryant", 0);
+  moveMember("Ryan Smith", 1);
+  moveMember("Sandra DeSilva", 3);
+
+  // Captains
+  TEAMS[0].captain = "Scott Bryant";
+  TEAMS[1].captain = "Ryan Smith";
+  TEAMS[2].captain = "Jacquelyn Lane";
+  TEAMS[3].captain = "Sandra DeSilva";
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1274,7 +1314,8 @@ function renderChallenge() {
     <div class="ch-team" style="--team-color:${team.color}">
       <div class="ch-rank${i < 2 ? " top" : ""}">${rankLabels[i]}</div>
       <div class="ch-team-name">${team.name}</div>
-      <div class="ch-team-members">${team.members.join("  ·  ")}</div>
+      ${team.captain ? `<div class="ch-captain"><span class="ch-captain-label">Captain</span>${team.captain}</div>` : ""}
+      <div class="ch-team-members">${[...team.members].sort((a,b) => a === team.captain ? -1 : b === team.captain ? 1 : 0).join("  ·  ")}</div>
       <div class="ch-pts">${pts}<span>pts</span></div>
       <div class="ch-bar-track"><div class="ch-bar" style="width:${pct}%"></div></div>
     </div>`;
