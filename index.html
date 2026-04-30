@@ -269,6 +269,15 @@ html[data-theme="dark"] .ev-learn-more { color: var(--teal); }
   padding: .15rem .5rem; border-radius: 1px; flex-shrink: 0; }
 .ev-cat-lbl { font-family: var(--label); font-size: .5rem; font-weight: 500;
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+.ev-audience { font-family: var(--label); font-size: .46rem; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase; padding: .15rem .45rem;
+  border-radius: 1px; white-space: nowrap; flex-shrink: 0; }
+.ev-audience--members { background: rgba(10,34,24,.09); color: var(--navy); }
+.ev-audience--spouse  { background: rgba(138,30,45,.1);  color: #8A1E2D; }
+.ev-audience--family  { background: rgba(31,106,62,.1);  color: #1F6B3A; }
+html[data-theme="dark"] .ev-audience--members { background: rgba(255,255,255,.08); color: var(--teal); }
+html[data-theme="dark"] .ev-audience--spouse  { background: rgba(138,30,45,.25);  color: #E07090; }
+html[data-theme="dark"] .ev-audience--family  { background: rgba(34,197,94,.15);  color: #22C55E; }
 .ev-title { font-family: var(--serif); font-style: italic; font-weight: 400;
   color: var(--navy); line-height: 1.1; margin-bottom: .35rem; }
 html[data-theme="dark"] .ev-title { color: var(--ink); }
@@ -691,6 +700,7 @@ html[data-theme="dark"] .member-name { color: var(--ink); }
         <div><div class="modal-lbl">Location</div> <div class="modal-val" id="mLoc"></div></div>
         <div><div class="modal-lbl">Day Chair</div><div class="modal-val" id="mChair"></div></div>
         <div><div class="modal-lbl">Category</div> <div class="modal-val" id="mCat"></div></div>
+        <div><div class="modal-lbl">Audience</div>  <div class="modal-val" id="mAudience"></div></div>
       </div>
       <div class="modal-video-wrap" id="mVideoWrap" style="display:none">
         <div class="modal-video-label">Event Preview</div>
@@ -733,8 +743,8 @@ html[data-theme="dark"] .member-name { color: var(--ink); }
 const EVT = [
   {
     id: 1, move: "01",
-    title:    "US Open",
-    subtitle: "Before the First Serve",
+    title:    "Before the First Serve",
+    subtitle: "The Journey Begins at the US Open",
     label:    "Aug 31 – Sep 1, 2026",
     start:    "2026-08-31", end: "2026-09-01", mOnly: false,
     loc:      "New York, NY", chair: "Raghav Sapra",
@@ -942,6 +952,23 @@ const EVT = [
 <p class="modal-takeaway"><strong>Member takeaway:</strong> Three practical AI use cases or workflows to test within 30 days.</p>`
   }
 ];
+
+/* Audience type per event id */
+const AUDIENCE = {
+  1:  { label: "Spouse Event",  cls: "spouse"  },
+  11: { label: "Family Event",  cls: "family"  },
+  2:  { label: "Members Only",  cls: "members" },
+  6:  { label: "Members Only",  cls: "members" },
+  3:  { label: "Spouse Event",  cls: "spouse"  },
+  7:  { label: "Members Only",  cls: "members" },
+  12: { label: "Spouse Event",  cls: "spouse"  },
+  4:  { label: "Members Only",  cls: "members" },
+  8:  { label: "Members Only",  cls: "members" },
+  9:  { label: "Members Only",  cls: "members" },
+  13: { label: "Spouse Event",  cls: "spouse"  },
+  5:  { label: "Members Only",  cls: "members", note: "Families welcome to travel before/after" },
+  10: { label: "Members Only",  cls: "members" },
+};
 
 /* Teams — members are auto-assigned via seededShuffle(MEMBERS, 13) at init */
 const TEAMS = [
@@ -1210,6 +1237,7 @@ function renderList() {
           <div class="ev-meta-row">
             <span class="ev-num" style="background:${numBg}">Event ${ev.move}</span>
             <span class="ev-cat-lbl">${ev.catLabel}</span>
+            ${AUDIENCE[ev.id] ? `<span class="ev-audience ev-audience--${AUDIENCE[ev.id].cls}">${AUDIENCE[ev.id].label}</span>` : ""}
           </div>
           <div class="ev-title">${ev.title.replace(/&amp;/g,"&")}</div>
           ${ev.subtitle ? `<div class="ev-subtitle">${ev.subtitle}</div>` : ""}
@@ -1408,6 +1436,9 @@ function openModal(id) {
   document.getElementById("mLoc").textContent     = ev.loc;
   document.getElementById("mChair").innerHTML     = ev.chair;
   document.getElementById("mCat").textContent     = ev.catLabel;
+  const aud = AUDIENCE[ev.id];
+  const audEl = document.getElementById("mAudience");
+  audEl.innerHTML = aud ? aud.label + (aud.note ? `<div style="font-size:.75em;color:var(--ink-3);margin-top:.2rem">${aud.note}</div>` : "") : "—";
   document.getElementById("modalHdr").style.background = ev.accentBg || "#0A2218";
 
   // Video teaser
