@@ -56,11 +56,11 @@
   .card .move{ position:absolute; top:0; left:0; color:#fff;
         font-family:var(--label); font-size:6.5pt; font-weight:700; letter-spacing:.14em;
         padding:.035in .08in; border-bottom-right-radius:2px; }
+  .card .head{ margin:.1in 0 .06in; min-height:.6in; }
   .card .title{ font-family:var(--serif); font-style:italic; font-weight:500;
-        font-size:10.5pt; line-height:1.12; color:var(--navy); margin:.1in 0 .03in;
-        min-height:.34in; }
+        font-size:10.5pt; line-height:1.12; color:var(--navy); margin:0; }
   .card .sub{ font-family:var(--sans); font-style:italic; font-size:6.8pt;
-        line-height:1.18; color:var(--ink-3); margin-bottom:.06in; }
+        line-height:1.18; color:var(--ink-3); margin:.02in 0 0; }
   .card .date{ font-family:var(--label); font-size:8pt; font-weight:600;
         letter-spacing:.02em; color:var(--ink); }
   .card .loc{ font-family:var(--label); font-size:6.2pt; font-weight:500;
@@ -72,9 +72,9 @@
   .virt   .txt{color:var(--harbor);} .virt   .line{background:var(--harbor);} .virt   .move{background:var(--harbor);}
 
   /* ── FOOTER ─────────────────────────────────────── */
-  .foot{ position:fixed; bottom:.22in; left:0; right:0; text-align:center;
-        font-family:var(--label); font-size:6.4pt; letter-spacing:.22em;
-        text-transform:uppercase; color:var(--ink-3); }
+  .foot{ position:fixed; bottom:.24in; left:0; right:0; text-align:center;
+        font-family:var(--serif); font-style:italic; font-size:8pt;
+        letter-spacing:0; color:var(--ink-2); }
 </style>
 </head>
 <body>
@@ -83,8 +83,8 @@
     <div class="hdr-left">
       <img src="assets/YPO_US_Atlantic13White-01.png" alt="YPO Atlantic 13">
       <div class="hdr-titles">
-        <div class="kicker">See the Whole Board</div>
-        <h1>The Learning Year</h1>
+        <div class="kicker">The Learning Year</div>
+        <h1>See the Whole Board</h1>
       </div>
     </div>
     <div class="hdr-right">
@@ -92,7 +92,7 @@
       <div class="sub">Chapter Calendar</div>
     </div>
   </div>
-  <div class="theme-strip">A Year of Twelve Moves Across the Strategic Board</div>
+  <div class="theme-strip">More Information and Calendar Invites to Follow</div>
 
   <div class="wrap">
 
@@ -100,11 +100,11 @@
     <div class="section core">
       <div class="section-label"><span class="txt">Core In-Person Events</span><span class="line"></span><span class="count">5 Signature Gatherings</span></div>
       <div class="grid">
-        <div class="card"><div class="photo-wrap"><span class="move">01</span><img src="assets/thumbs/us-open.jpg"></div><div class="title">Before the First Serve</div><div class="sub">The Journey Begins at the US Open</div><div class="date">Aug 27, 2026</div><div class="loc">New York, NY</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">03</span><img src="assets/thumbs/fbi.jpg"></div><div class="title">Inside the FBI</div><div class="sub">Leadership Under Pressure</div><div class="date">Oct 13, 2026</div><div class="loc">Washington, DC</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">05</span><img src="assets/thumbs/holiday.jpg"></div><div class="title">Holiday Party Meets Broadway</div><div class="sub">&nbsp;</div><div class="date">Dec 1, 2026</div><div class="loc">New York, NY</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">08</span><img src="assets/thumbs/harvard.jpg"></div><div class="title">Pushing the Limits at HBS</div><div class="sub">Harvard Business School</div><div class="date">Feb 9–10, 2027</div><div class="loc">Boston, MA</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">12</span><img src="assets/thumbs/valencia.jpg"></div><div class="title">The Final Move</div><div class="sub">Atlantic 13 in Spain</div><div class="date">May 12–16, 2027</div><div class="loc">Valencia, Spain</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">01</span><img src="assets/thumbs/us-open.jpg"></div><div class="head"><div class="title">Before the First Serve</div><div class="sub">The Journey Begins at the US Open</div></div><div class="date">Aug 27, 2026</div><div class="loc">New York, NY</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">03</span><img src="assets/thumbs/fbi.jpg"></div><div class="head"><div class="title">Inside the FBI</div><div class="sub">Leadership Under Pressure</div></div><div class="date">Oct 13, 2026</div><div class="loc">Washington, DC</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">05</span><img src="assets/thumbs/holiday.jpg"></div><div class="head"><div class="title">Holiday Party Meets Broadway</div><div class="sub">A Chapter Celebration with Spouses</div></div><div class="date">Dec 1, 2026</div><div class="loc">New York, NY</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">08</span><img src="assets/thumbs/harvard.jpg"></div><div class="head"><div class="title">Pushing the Limits at HBS</div><div class="sub">Harvard Business School</div></div><div class="date">Feb 9–10, 2027</div><div class="loc">Boston, MA</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">12</span><img src="assets/thumbs/valencia.jpg"></div><div class="head"><div class="title">The Final Move</div><div class="sub">Atlantic 13 in Spain</div></div><div class="date">May 12–16, 2027</div><div class="loc">Valencia, Spain</div></div>
       </div>
     </div>
 
@@ -112,9 +112,9 @@
     <div class="section opt">
       <div class="section-label"><span class="txt">Optional Connection Experiences</span><span class="line"></span><span class="count">3 Shared Escapes</span></div>
       <div class="grid">
-        <div class="card"><div class="photo-wrap"><span class="move">02</span><img src="assets/thumbs/cranberry.jpg"></div><div class="title">Cranberries, Chocolate &amp; Wellness</div><div class="sub">Family Harvest Day</div><div class="date">Oct 3, 2026</div><div class="loc">Chatsworth, NJ</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">07</span><img src="assets/thumbs/stbarths.jpg"></div><div class="title">Caribbean Escape</div><div class="sub">St. Barths</div><div class="date">January 2027</div><div class="loc">St. Barths</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">11</span><img src="assets/thumbs/aspen.jpg"></div><div class="title">Alignment, Legacy &amp; the Life We Build</div><div class="sub">Couples Retreat</div><div class="date">Apr 9–11, 2027</div><div class="loc">Aspen, CO</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">02</span><img src="assets/thumbs/cranberry.jpg"></div><div class="head"><div class="title">Cranberries, Chocolate &amp; Wellness</div><div class="sub">Family Harvest Day</div></div><div class="date">Oct 3, 2026</div><div class="loc">Chatsworth, NJ</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">07</span><img src="assets/thumbs/stbarths.jpg"></div><div class="head"><div class="title">Caribbean Escape</div><div class="sub">St. Barths</div></div><div class="date">January 2027</div><div class="loc">St. Barths</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">11</span><img src="assets/thumbs/aspen.jpg"></div><div class="head"><div class="title">Alignment, Legacy &amp; the Life We Build</div><div class="sub">Couples Retreat</div></div><div class="date">Apr 9–11, 2027</div><div class="loc">Aspen, CO</div></div>
       </div>
     </div>
 
@@ -122,17 +122,17 @@
     <div class="section virt">
       <div class="section-label"><span class="txt">Virtual Business Events</span><span class="line"></span><span class="count">5 Working Sessions</span></div>
       <div class="grid">
-        <div class="card"><div class="photo-wrap"><span class="move">04</span><img src="assets/thumbs/wealth.jpg"></div><div class="title">Generational Wealth</div><div class="sub">Designing the System Before It's Needed</div><div class="date">Nov 12, 2026</div><div class="loc">Virtual</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">06</span><img src="assets/thumbs/scaling.jpg"></div><div class="title">Scaling Without Breaking</div><div class="sub">In the Age of AI</div><div class="date">January 2027</div><div class="loc">Virtual</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">09</span><img src="assets/thumbs/ceo.jpg"></div><div class="title">The CEO's Highest-Leverage Decisions</div><div class="sub">&nbsp;</div><div class="date">March 2027</div><div class="loc">Virtual</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">10</span><img src="assets/thumbs/strategy.jpg"></div><div class="title">Strategy into Execution</div><div class="sub">Through Management Systems</div><div class="date">April 2027</div><div class="loc">Virtual</div></div>
-        <div class="card"><div class="photo-wrap"><span class="move">13</span><img src="assets/thumbs/ai.jpg"></div><div class="title">AI Show &amp; Tell</div><div class="sub">What Leaders Are Actually Using</div><div class="date">June 2027</div><div class="loc">Virtual</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">04</span><img src="assets/thumbs/wealth.jpg"></div><div class="head"><div class="title">Generational Wealth</div><div class="sub">Designing the System Before It's Needed</div></div><div class="date">Nov 12, 2026</div><div class="loc">Virtual</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">06</span><img src="assets/thumbs/scaling.jpg"></div><div class="head"><div class="title">Scaling Without Breaking</div><div class="sub">In the Age of AI</div></div><div class="date">January 2027</div><div class="loc">Virtual</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">09</span><img src="assets/thumbs/ceo.jpg"></div><div class="head"><div class="title">The CEO's Highest-Leverage Decisions</div><div class="sub">The Art of Capital Allocation</div></div><div class="date">March 2027</div><div class="loc">Virtual</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">10</span><img src="assets/thumbs/strategy.jpg"></div><div class="head"><div class="title">Strategy into Execution</div><div class="sub">Through Management Systems</div></div><div class="date">April 2027</div><div class="loc">Virtual</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">13</span><img src="assets/thumbs/ai.jpg"></div><div class="head"><div class="title">AI Show &amp; Tell</div><div class="sub">What Leaders Are Actually Using</div></div><div class="date">June 2027</div><div class="loc">Virtual</div></div>
       </div>
     </div>
 
   </div>
 
-  <div class="foot">YPO Atlantic 13 &nbsp;·&nbsp; FY 2026–2027 &nbsp;·&nbsp; Members Only</div>
+  <div class="foot">Prepared exclusively for the members of YPO Atlantic 13.</div>
 
 </body>
 </html>
