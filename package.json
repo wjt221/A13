@@ -1,5 +1,6 @@
 {
+  "description": "Tooling to build the A13 one-page events calendar PDF (see make-thumbs.js + print-calendar.html)",
   "dependencies": {
-    "pdfkit": "^0.18.0"
+    "sharp": "^0.34.5"
   }
 }

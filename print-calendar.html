@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A2218; --harbor:#0D9488; --terra:#B7603B; --cranberry:#8A1E2D;
+    --ink:#1A2A1E; --ink-2:#3D5246; --ink-3:#7A9A87; --rule:rgba(10,34,24,.12);
+    --serif:'Playfair Display',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+    --label:'Outfit',system-ui,sans-serif; --white:#fff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  @page{ size:letter; margin:0; }
+  html,body{ width:8.5in; height:11in; }
+  body{ font-family:var(--sans); color:var(--ink); background:#fff;
+        -webkit-font-smoothing:antialiased; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  /* ── HEADER ─────────────────────────────────────── */
+  .hdr{ background:var(--navy); color:#fff; padding:.34in .5in .3in;
+        display:flex; align-items:center; justify-content:space-between; }
+  .hdr-left{ display:flex; align-items:center; gap:.28in; }
+  .hdr img{ height:.62in; width:auto; display:block; }
+  .hdr-titles .kicker{ font-family:var(--label); font-size:7.5pt; letter-spacing:.32em;
+        text-transform:uppercase; color:#7FB3A4; margin-bottom:.06in; }
+  .hdr-titles h1{ font-family:var(--serif); font-style:italic; font-weight:500;
+        font-size:21pt; line-height:1; color:#fff; }
+  .hdr-right{ text-align:right; }
+  .hdr-right .yr{ font-family:var(--label); font-weight:600; font-size:12pt;
+        letter-spacing:.06em; color:#fff; }
+  .hdr-right .sub{ font-family:var(--label); font-size:6.8pt; letter-spacing:.22em;
+        text-transform:uppercase; color:#7FB3A4; margin-top:.04in; }
+
+  .theme-strip{ background:#08160F; color:#5E8E7C; text-align:center;
+        font-family:var(--label); font-size:7pt; letter-spacing:.42em;
+        text-transform:uppercase; padding:.07in 0; }
+
+  /* ── BODY ───────────────────────────────────────── */
+  .wrap{ padding:.3in .5in .2in; }
+  .section{ margin-bottom:.26in; }
+  .section:last-child{ margin-bottom:0; }
+  .section-label{ display:flex; align-items:center; gap:.13in; margin-bottom:.22in; }
+  .section-label .txt{ font-family:var(--label); font-size:9.5pt; font-weight:600;
+        letter-spacing:.2em; text-transform:uppercase; white-space:nowrap; }
+  .section-label .line{ flex:1; height:1.5px; }
+  .section-label .count{ font-family:var(--label); font-size:7.2pt; font-weight:500;
+        letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); white-space:nowrap; }
+
+  .grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:.16in; }
+  .card{ width:1.36in; }
+  .card .photo-wrap{ position:relative; width:100%; height:1.3in; overflow:hidden;
+        border-radius:2px; background:#e8ece9; }
+  .card .photo-wrap img{ width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+  .card .move{ position:absolute; top:0; left:0; color:#fff;
+        font-family:var(--label); font-size:6.5pt; font-weight:700; letter-spacing:.14em;
+        padding:.035in .08in; border-bottom-right-radius:2px; }
+  .card .title{ font-family:var(--serif); font-style:italic; font-weight:500;
+        font-size:10.5pt; line-height:1.12; color:var(--navy); margin:.1in 0 .03in;
+        min-height:.34in; }
+  .card .sub{ font-family:var(--sans); font-style:italic; font-size:6.8pt;
+        line-height:1.18; color:var(--ink-3); margin-bottom:.06in; }
+  .card .date{ font-family:var(--label); font-size:8pt; font-weight:600;
+        letter-spacing:.02em; color:var(--ink); }
+  .card .loc{ font-family:var(--label); font-size:6.2pt; font-weight:500;
+        letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); margin-top:.025in; }
+
+  /* category accents */
+  .core   .txt{color:var(--navy);}   .core   .line{background:var(--navy);}   .core   .move{background:var(--navy);}
+  .opt    .txt{color:var(--terra);}  .opt    .line{background:var(--terra);}  .opt    .move{background:var(--terra);}
+  .virt   .txt{color:var(--harbor);} .virt   .line{background:var(--harbor);} .virt   .move{background:var(--harbor);}
+
+  /* ── FOOTER ─────────────────────────────────────── */
+  .foot{ position:fixed; bottom:.22in; left:0; right:0; text-align:center;
+        font-family:var(--label); font-size:6.4pt; letter-spacing:.22em;
+        text-transform:uppercase; color:var(--ink-3); }
+</style>
+</head>
+<body>
+
+  <div class="hdr">
+    <div class="hdr-left">
+      <img src="assets/YPO_US_Atlantic13White-01.png" alt="YPO Atlantic 13">
+      <div class="hdr-titles">
+        <div class="kicker">See the Whole Board</div>
+        <h1>The Learning Year</h1>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="yr">2026 – 2027</div>
+      <div class="sub">Chapter Calendar</div>
+    </div>
+  </div>
+  <div class="theme-strip">A Year of Twelve Moves Across the Strategic Board</div>
+
+  <div class="wrap">
+
+    <!-- CORE -->
+    <div class="section core">
+      <div class="section-label"><span class="txt">Core In-Person Events</span><span class="line"></span><span class="count">5 Signature Gatherings</span></div>
+      <div class="grid">
+        <div class="card"><div class="photo-wrap"><span class="move">01</span><img src="assets/thumbs/us-open.jpg"></div><div class="title">Before the First Serve</div><div class="sub">The Journey Begins at the US Open</div><div class="date">Aug 27, 2026</div><div class="loc">New York, NY</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">03</span><img src="assets/thumbs/fbi.jpg"></div><div class="title">Inside the FBI</div><div class="sub">Leadership Under Pressure</div><div class="date">Oct 13, 2026</div><div class="loc">Washington, DC</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">05</span><img src="assets/thumbs/holiday.jpg"></div><div class="title">Holiday Party Meets Broadway</div><div class="sub">&nbsp;</div><div class="date">Dec 1, 2026</div><div class="loc">New York, NY</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">08</span><img src="assets/thumbs/harvard.jpg"></div><div class="title">Pushing the Limits at HBS</div><div class="sub">Harvard Business School</div><div class="date">February 2027</div><div class="loc">Boston, MA</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">12</span><img src="assets/thumbs/valencia.jpg"></div><div class="title">The Final Move</div><div class="sub">Atlantic 13 in Spain</div><div class="date">May 12–16, 2027</div><div class="loc">Valencia, Spain</div></div>
+      </div>
+    </div>
+
+    <!-- OPTIONAL -->
+    <div class="section opt">
+      <div class="section-label"><span class="txt">Optional Connection Experiences</span><span class="line"></span><span class="count">3 Shared Escapes</span></div>
+      <div class="grid">
+        <div class="card"><div class="photo-wrap"><span class="move">02</span><img src="assets/thumbs/cranberry.jpg"></div><div class="title">Cranberries, Chocolate &amp; Wellness</div><div class="sub">Family Harvest Day</div><div class="date">Oct 3, 2026</div><div class="loc">Chatsworth, NJ</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">07</span><img src="assets/thumbs/stbarths.jpg"></div><div class="title">Caribbean Escape</div><div class="sub">St. Barths</div><div class="date">January 2027</div><div class="loc">St. Barths</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">11</span><img src="assets/thumbs/aspen.jpg"></div><div class="title">Alignment, Legacy &amp; the Life We Build</div><div class="sub">Couples Retreat</div><div class="date">Apr 9–11, 2027</div><div class="loc">Aspen, CO</div></div>
+      </div>
+    </div>
+
+    <!-- VIRTUAL -->
+    <div class="section virt">
+      <div class="section-label"><span class="txt">Virtual Business Events</span><span class="line"></span><span class="count">5 Working Sessions</span></div>
+      <div class="grid">
+        <div class="card"><div class="photo-wrap"><span class="move">04</span><img src="assets/thumbs/wealth.jpg"></div><div class="title">Generational Wealth</div><div class="sub">Designing the System Before It's Needed</div><div class="date">Nov 12, 2026</div><div class="loc">Virtual</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">06</span><img src="assets/thumbs/scaling.jpg"></div><div class="title">Scaling Without Breaking</div><div class="sub">In the Age of AI</div><div class="date">January 2027</div><div class="loc">Virtual</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">09</span><img src="assets/thumbs/ceo.jpg"></div><div class="title">The CEO's Highest-Leverage Decisions</div><div class="sub">&nbsp;</div><div class="date">March 2027</div><div class="loc">Virtual</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">10</span><img src="assets/thumbs/strategy.jpg"></div><div class="title">Strategy into Execution</div><div class="sub">Through Management Systems</div><div class="date">April 2027</div><div class="loc">Virtual</div></div>
+        <div class="card"><div class="photo-wrap"><span class="move">13</span><img src="assets/thumbs/ai.jpg"></div><div class="title">AI Show &amp; Tell</div><div class="sub">What Leaders Are Actually Using</div><div class="date">June 2027</div><div class="loc">Virtual</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">YPO Atlantic 13 &nbsp;·&nbsp; FY 2026–2027 &nbsp;·&nbsp; Members Only</div>
+
+</body>
+</html>
